@@ -48,6 +48,8 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
     }
 	li {
 		display: inline;
+		margin: 0;
+		padding: 0;
 	}
 </style>
 <!-- TemplateEndEditable -->
@@ -93,12 +95,12 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
   	  <ul id="nav" class="dropdown dropdown-horizontal">
 	<!-- TemplateBeginEditable name="Dropdown Menu" -->
     
-	    <li><a href="./">Item 1</a></li>
-	    <li><a href="./" class="dir">Item 2</a>
+	    <li><a href="./">Logout</a></li>
+	    <li><a href="./DOTlog_intranet_entry_only.hmtl" class="dir">Log Report</a>
 		  <ul>
-			<li><a href="./">Item A</a></li>
-			<li><a href="./">Item B</a></li>
-			<li><span class="dir">Item C</span>
+			<li><a href="./DOTlog_intranet_entry_with_history.hmtl">With History</a></li>
+			<li><a href="./DOTlog_intranet_entry_with_search.hmtl">With Search</a></li>
+<!--			<li><span class="dir">Item C</span>
 				<ul>
 					<li><a href="./"></a></li>
 					<li><a href="./">AA</a></li>
@@ -106,50 +108,15 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 					<li><a href="./">CC</a></li>
 					<li><a href="./">DD</a></li>
 				</ul>
-			</li>
+			</li>       
 			<li><a href="./">Item D</a></li>
 			<li><a href="./">Item E</a></li>
 			<li><a href="./">Item F</a></li>
 			<li><a href="./">Item G</a></li>
+-->      
 		  </ul>
 	    </li>
-	    <li><a href="./" class="dir">Item 3</a>
-		  <ul>
-			<li><a href="./">Item H</a></li>
-			<li><a href="./">Item I</a></li>
-			<li><a href="./">Item J</a></li>
-			<li><a href="./">Item K</a></li>
-			<li><a href="./">Item L</a></li>
-		  </ul>
-	    </li>
-	    <li><a href="./" class="dir">Item 4</a>
-		  <ul>
-			<li><a href="./" class="dir">Item M</a>
-				<ul>
-					<li><a href="./">EE</a></li>
-					<li><a href="./">FF</a></li>
-				</ul>
-			</li>
-			<li><a href="./" class="dir">Item N</a>
-				<ul>
-					<li><a href="./">GG</a></li>
-					<li><a href="./">HH</a></li>
-				</ul>
-			</li>
-			<li><a href="./">Item O</a></li>
-			<li><a href="./">Item P</a></li>
-			<li><a href="./">Item Q</a></li>
-		  </ul>
-	    </li>
-	    <li><a href="./">Item 5</a></li>
-	    <li><a href="./" class="dir">Item 6</a>
-		  <ul>
-			<li><a href="./">Item R</a></li>
-			<li><a href="./">Item S</a></li>
-			<li><a href="./">Item T</a></li>
-		  </ul>
-	    </li>
-        
+	    <li><a href="./DOTlog_intranet_search.html">Search</a></li>
 	<!-- TemplateEndEditable -->
 	  </ul>
 	</div>
@@ -158,12 +125,7 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
-     <ul>
-       <li><a href="DOTlog_intranet_home.html">Home</a></li>
-       <li><a href="DOTlog_intranet_events.html">My Events</a></li>
-       <li><a href="DOTlog_intranet_log_event.html">New Event</a></li>
-       <li><a href="DOTlog_intranet_search.html">Search</a>     </li>
-     </ul>
+    <h2>Search Events</h2>
 <form name="LOG_QUERY" method="post" action="">
       <p>
          <input type="text" name="db_search_bar" id="db_search_bar" value="Search">
