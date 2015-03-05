@@ -1,0 +1,34 @@
+@charset "utf-8";
+/* CSS Document */
+
+#content #col_one{
+	width: 310px;
+	float: left;
+	padding-right: 20px;
+}
+
+#content #col_two{
+	float: left;
+	width: 310px;
+	padding-right: 20px;
+}
+
+#content #col_three{
+	float: left;
+	width: 310px;
+}
+
+
+/* THIS STYLES THE MENU LISTS */
+
+#content #col_one ul, #content #col_two ul, #content #col_three ul {
+	margin-bottom: 10px;
+	margin-top: 5px;
+	margin-left: 0;
+}
+
+#content #col_one ul ul, #content #col_two ul ul, #content #col_three ul ul {
+	margin-bottom: 0;
+	margin-top: 5px;
+}
+/* END STYLE MENU LISTS */
