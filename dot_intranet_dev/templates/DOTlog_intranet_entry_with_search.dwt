@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- TemplateBeginEditable name="websitetitle" -->
+<title>Employee Intranet || Alaska DOT&amp;PF</title>
+<!-- TemplateEndEditable -->
+
+<!-- TemplateBeginEditable name="keywords" -->
+<meta name="keywords" content="employee intranet State Alaska Department Transportation Public Facilities DOT DOTPF DOT&amp;PF ">
+<!-- TemplateEndEditable -->
+
+<meta name="description" content="">
+<meta name="author" content="&copy;Alaska Department of Transportation and Public Facilities, all rights reserved.">
+
+
+	<link rel="shortcut icon" href="http://www.dot.alaska.gov/favicon.ico"> 
+    <link rel="icon" type="image/ico" href="http://www.dot.alaska.gov/favicon.ico">
+
+<link href="/style_sheets/dot_main-intranet_style.css" rel="stylesheet" type="text/css" media="projection, screen">
+<link href="/style_sheets/menu-intra.css" rel="stylesheet" type="text/css" />
+<link href="/style_sheets/print_intra.css" rel="stylesheet" type="text/css" media="print">
+<!--[if IE 6]>
+	<link href="/style_sheets/ie6.css" rel="stylesheet" type="text/css" media="projection, screen">
+<![endif]-->
+<!-- This is the son of suckerfish dropdown javascript code for IE-->
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+sfHover = function() {
+	var sfEls = document.getElementById("menu_list").getElementsByTagName("LI");
+	for (var i=0; i<sfEls.length; i++) {
+		sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		}
+	}
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+//--><!]]></script>
+
+<!-- TemplateBeginEditable name="optional_css_area" -->
+<style>
+    ul {
+    	list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+	li {
+		display: inline;
+	}
+</style>
+<!-- TemplateEndEditable -->
+
+</head>
+<body>
+	<a id="top"></a>
+  <a href="#main_content" class="hidden">Skip to content</a>
+	  <div id="container">
+
+<!-- DOTPF INTRANET TOP MENU -->
+	<!--#include virtual="/ssis/dotpf_intranet_topnav.html" -->
+<!---->
+
+    <div id="header"><!-- BEGIN HEADER -->
+    
+<!-- HEADER BANNER -->
+	<!-- TemplateBeginEditable name="main header" -->
+    	<a id="title" href="http://web.dot.state.ak.us">
+      		<span>
+            	<img src="/images/hdrs/header_plain_dotpf.gif" alt="DOT&amp;PF Intranet Header" width="1000" height="90">
+            </span>
+            	Alaska DOT &amp; PF Employee Intranet / Division or Section Name
+		</a>
+	<!-- TemplateEndEditable -->
+<!---->
+
+<!-- SOA SEARCH BOX - SERVER SIDE INCLUDE -->
+<!---->
+
+    </div><!-- END HEADER -->
+
+    <a id="main_content"></a>
+
+<!-- BEGIN BREADCRUMBS -->
+	<div id="breadcrumbs">
+   	  <a href="http://web.dot.state.ak.us">DOT&amp;PF Employee Intranet</a>> <!-- TemplateBeginEditable name="Breadcrumbs" --><a href="">Breadcrumbs</a>
+	  <!-- TemplateEndEditable -->
+	</div> 
+<!-- END BREADCRUMBS -->
+      
+    <div id="content">
+    
+<!-- BEGIN YOUR CONTENT HERE -->
+	<!-- TemplateBeginEditable name="main content" -->
+     <ul>
+       <li><a href="DOTlog_intranet_home.html">Home</a></li>
+       <li><a href="DOTlog_intranet_events.html">My Events</a></li>
+       <li><a href="DOTlog_intranet_log_event.html">New Event</a></li>
+       <li><a href="DOTlog_intranet_search.html">Search</a>     </li>
+     </ul>
+<form name="LOG_QUERY" method="post" action="">
+      <p>
+         <input type="text" name="db_search_bar" id="db_search_bar" value="Search">
+      </p>
+       <p>
+         <label for="DATE_RANGE_START2">From:</label>
+         <input type="text" name="DATE_RANGE_BEGIN" id="DATE_RANGE_START2" value="mm/dd/yy">
+         <label for="DATE_RANGE_END">To:</label>
+         <input type="text" name="DATE_RANGE_END" id="DATE_RANGE_END" value="mm/dd/yy">
+       </p>
+       <p>
+         <label for="AIRPORT_ID">Airport:</label>
+         <select name="AIRPORT_ID">
+         	<option value="none">none</option>
+       	   <option value="Cicle City">Cicle City</option>
+            <option value="Fort Yukon">Fort Yukon</option>
+            <option value="Kaltag">Kaltag</option>
+         </select>
+       </p>
+       <p>
+         <label for="EVENT_CATEGORY">Category:</label>
+         <select name="EVENT_CATEGORY" id="EVENT_CATEGORY">
+         <option value="none">none</option>
+         	<option value="Hazard">Hazard</option>
+            <option value="Lighting">Lighting</option>
+            <option value="Medevac">Medevac</option>
+         </select>
+      </p>
+</form>
+     <h2>Add New Event</h2>
+     <form name="form5" method="post" action="">
+       <p>
+<label for="AIRPORT_ID">Airport:</label>
+         <select name="AIRPORT_ID">
+         	<option value="none">none</option>
+         	<option value="Cicle City">Cicle City</option>
+            <option value="Fort Yukon">Fort Yukon</option>
+            <option value="Kaltag">Kaltag</option>
+         </select>
+       </p>
+       <p>
+         <label for="EVENT_CATEGORY">Category:</label>
+         <select name="EVENT_CATEGORY" id="EVENT_CATEGORY">
+         <option value="none">none</option>
+         	<option value="Hazard">Hazard</option>
+            <option value="Lighting">Lighting</option>
+            <option value="Medevac">Medevac</option>
+         </select>
+         
+         <label for="log report"></label>
+       </p>
+       <p>
+         <label>
+           <textarea name="log report" cols="80" rows="10" id="log report">Report Details</textarea>
+           <br>
+           <input type="checkbox" name="NEW_EVENT_OPTIONS" value="yes" id="NEW_EVENT_OPTIONS_0">
+         </label>
+
+         <label>Important</label>
+         <br>
+         <input type="submit" name="new_event_submit" id="new_event_submit" value="Submit">
+       </p>
+     </form>
+	<!-- TemplateEndEditable -->
+<!-- END YOUR CONTENT HERE -->
+
+      <div class="clear"></div>
+    </div>
+    
+<!-- SOA AND DOT FOOTERS - SERVER SIDE INCLUDES -->    
+	<!--#include virtual="/ssis/dot_intranet_footer.html" -->
+</div>   
+</body>
+</html>
