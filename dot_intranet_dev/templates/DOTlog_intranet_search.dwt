@@ -88,17 +88,28 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 	  <!-- TemplateEndEditable -->
 	</div> 
 <!-- END BREADCRUMBS -->
-      
+      <!-- BEGIN MENU -->   
+ 	<div id="menu"> 
+  	  <ul id="nav" class="dropdown dropdown-horizontal">
+	<!-- TemplateBeginEditable name="Dropdown Menu" -->
+    
+	    <li><a href="./">Logout</a></li>
+	    <li><a href="./DOTlog_intranet_entry_only.html" class="dir">Log Report</a>
+		  <ul>
+			<li><a href="./DOTlog_intranet_entry_with_history.html">With History</a></li>
+			<li><a href="./DOTlog_intranet_entry_with_search.html">With Search</a></li>
+		  </ul>
+	    </li>
+	    <li><a href="./DOTlog_intranet_search.html">Search</a></li>
+	<!-- TemplateEndEditable -->
+	  </ul>
+	</div>
+<!-- END MENU -->
     <div id="content">
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
-     <ul>
-       <li><a href="DOTlog_intranet_home.html">Home</a></li>
-       <li><a href="DOTlog_intranet_events.html">My Events</a></li>
-       <li><a href="DOTlog_intranet_log_event.html">New Event</a></li>
-       <li><a href="DOTlog_intranet_search.html">Search</a>     </li>
-     </ul>
+<h2>Search Events</h2>
 <form name="LOG_QUERY" method="post" action="">
       <p>
          <input type="text" name="db_search_bar" id="db_search_bar" value="Search">

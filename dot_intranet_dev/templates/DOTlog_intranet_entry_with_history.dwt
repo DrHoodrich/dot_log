@@ -96,24 +96,10 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
 	<!-- TemplateBeginEditable name="Dropdown Menu" -->
     
 	    <li><a href="./">Logout</a></li>
-	    <li><a href="./DOTlog_intranet_entry_only.hmtl" class="dir">Log Report</a>
+	    <li><a href="./DOTlog_intranet_entry_only.html" class="dir">Log Report</a>
 		  <ul>
-			<li><a href="./DOTlog_intranet_entry_with_history.hmtl">With History</a></li>
-			<li><a href="./DOTlog_intranet_entry_with_search.hmtl">With Search</a></li>
-<!--			<li><span class="dir">Item C</span>
-				<ul>
-					<li><a href="./"></a></li>
-					<li><a href="./">AA</a></li>
-					<li><a href="./">BB</a></li>
-					<li><a href="./">CC</a></li>
-					<li><a href="./">DD</a></li>
-				</ul>
-			</li>       
-			<li><a href="./">Item D</a></li>
-			<li><a href="./">Item E</a></li>
-			<li><a href="./">Item F</a></li>
-			<li><a href="./">Item G</a></li>
--->      
+			<li><a href="./DOTlog_intranet_entry_with_history.html">With History</a></li>
+			<li><a href="./DOTlog_intranet_entry_with_search.html">With Search</a></li>
 		  </ul>
 	    </li>
 	    <li><a href="./DOTlog_intranet_search.html">Search</a></li>
