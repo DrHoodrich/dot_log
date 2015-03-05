@@ -111,27 +111,49 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
        </p>
        <p>
          <label for="AIRPORT_ID">Airport:</label>
-         <input type="text" name="AIRPORT_ID" id="AIRPORT_ID" value="Recent">
+         <select name="AIRPORT_ID">
+         	<option value="none">none</option>
+       	   <option value="Cicle City">Cicle City</option>
+            <option value="Fort Yukon">Fort Yukon</option>
+            <option value="Kaltag">Kaltag</option>
+         </select>
        </p>
        <p>
          <label for="EVENT_CATEGORY">Category:</label>
-         <input type="text" name="EVENT_CATEGORY" id="EVENT_CATEGORY" value="Recent">
+         <select name="EVENT_CATEGORY" id="EVENT_CATEGORY">
+         <option value="none">none</option>
+         	<option value="Hazard">Hazard</option>
+            <option value="Lighting">Lighting</option>
+            <option value="Medevac">Medevac</option>
+         </select>
       </p>
 </form>
      <h2>Add New Event</h2>
      <form name="form5" method="post" action="">
        <p>
-         <label for="NEW_EVENT_AIRPORT_ID">Airport:</label>
-         <input type="text" name="NEW_EVENT_AIRPORT_ID" id="NEW_EVENT_AIRPORT_ID">
-         <label for="NEW_EVENT_DATA"></label>
-         <textarea name="NEW_EVENT_DATA" id="NEW_EVENT_DATA"></textarea>
+<label for="AIRPORT_ID">Airport:</label>
+         <select name="AIRPORT_ID">
+         	<option value="none">none</option>
+         	<option value="Cicle City">Cicle City</option>
+            <option value="Fort Yukon">Fort Yukon</option>
+            <option value="Kaltag">Kaltag</option>
+         </select>
        </p>
        <p>
-         <label for="NEW_EVENT_CATEGORY">Category:</label>
-         <input type="text" name="NEW_EVENT_CATEGORY" id="NEW_EVENT_CATEGORY">
+         <label for="EVENT_CATEGORY">Category:</label>
+         <select name="EVENT_CATEGORY" id="EVENT_CATEGORY">
+         <option value="none">none</option>
+         	<option value="Hazard">Hazard</option>
+            <option value="Lighting">Lighting</option>
+            <option value="Medevac">Medevac</option>
+         </select>
+         
+         <label for="log report"></label>
        </p>
        <p>
          <label>
+           <textarea name="log report" cols="80" rows="10" id="log report">Report Details</textarea>
+           <br>
            <input type="checkbox" name="NEW_EVENT_OPTIONS" value="yes" id="NEW_EVENT_OPTIONS_0">
          </label>
 
@@ -140,14 +162,6 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
          <input type="submit" name="new_event_submit" id="new_event_submit" value="Submit">
        </p>
      </form>
-     <p class="subtitle">subpage template does not include:</p>
-        <p>Horizontal Navigation</p>
-        <p>Side Menu Bar</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>
-        <p>&nbsp;</p>      
-
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
 
