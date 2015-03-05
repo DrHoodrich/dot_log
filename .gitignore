@@ -13,3 +13,9 @@ hs_err_pid*
 
 # Windows FS
 Thumbs.db
+
+# DOT Template
+_notes
+subpage*
+regions*
+photo*
