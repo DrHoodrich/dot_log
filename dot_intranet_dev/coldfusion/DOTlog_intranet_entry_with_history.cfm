@@ -61,16 +61,12 @@
     <h2>Search Events</h2>
 
     <form name="LOG_QUERY" method="post" action=""> <!---Action is the page to send it to --->
-      <p>
-         <input type="text" name="db_search_bar" id="db_search_bar" value="Search">
-      </p>
-       <p>
+      
+         <input type="text" name="db_search_bar" id="db_search_bar" value="Search"><br>
          <label for="date_range_start">from:</label>
          <input type="text" name="date_range_begin" id="date_range_start" value="mm/dd/yyyy">
          <label for="date_range_end">to:</label>
-         <input type="text" name="date_range_end" id="date_range_end" value="mm/dd/yyyy">
-       </p>
-       <p>
+         <input type="text" name="date_range_end" id="date_range_end" value="mm/dd/yyyy"><br>
          <label for="airport_id">airport:</label>
          <select name="airport_id">
             <cfscript>
@@ -79,9 +75,8 @@
                 writeOutput('<option value=airports[ii]>#airports[ii]#</option>');
               }
             </cfscript>
-         </select>
-       </p>
-       <p>
+         </select><br>
+    
          <label for="event_category">Category:</label>
          <select name="event_category" id="event_category">
          
@@ -92,9 +87,31 @@
               }
             </cfscript>
          </select>
-      </p>
+    
 </form>
-
+<br>
+<cfscript>
+  records = new Record();
+  descriptions = records.getDescriptions();
+  airport = records.getAirport();
+  user = records.getReporter();
+  category = records.getCategory();
+  date = records.getDate();
+</cfscript>
+<cfscript>
+  writeOutput('<table width="783" height="180" border="1">');
+  for (ii = 1; ii<=arrayLen(descriptions); ++ii)
+  {
+  writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #date[ii]# <br>');
+  writeOutput(' Reporter: #user[ii]# <br>Airport: #airport[ii]# <br> Category: #category[ii]# <br>');
+  writeOutput('<td width="560" align="left" valign="top">#descriptions[ii]#</td>');
+  writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
+  writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
+  writeOutput('<label for="event_#ii#_important">Important</label>');
+  writeOutput('<label for="entry_1_important"></label></form></td>');
+  }
+  writeOutput('</table>');
+</cfscript>
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
 
