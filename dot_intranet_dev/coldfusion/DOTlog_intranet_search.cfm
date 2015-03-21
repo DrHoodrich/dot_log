@@ -1,4 +1,4 @@
-<cfset pageTitle = "DOTLog Record Entry"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "DOTLog Search"> <!--- Variable that is used in the html included header --->
 <cfinclude template="header.cfm">
 
 <body>
