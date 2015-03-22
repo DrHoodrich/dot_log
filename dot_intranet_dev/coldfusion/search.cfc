@@ -4,6 +4,7 @@ component Category {
         //variables.hubAirportID = [];
         variables.categoryStub = queryNew("category_id, name");
         variables.possibleCategoryNames = [];
+        
 
         public Category function init()
         {

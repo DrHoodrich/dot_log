@@ -51,7 +51,7 @@
 
   <cfscript>
     user = new user("joe"); //should be passed in by the login page
-
+    userID = user.getID();
     //query for the airports
     airports = user.getAirportID();
 
@@ -60,7 +60,12 @@
   </cfscript>
     <h2>DOTLog Log Record</h2>
 
-<form name="form5" method="post" action="">
+<form name="form5" method="post" action="record_action.cfm">
+
+<cfscript>
+  writeOutput('<input type = "hidden" name="USER_ID" value="#userID#">');
+</cfscript>
+
        
 <label for="AIRPORT_ID">Airport:</label>
          <select name="AIRPORT_ID">
@@ -68,7 +73,7 @@
             <cfscript>
               writeOutput('<option value="none"></option>');
               for (ii = 1; ii <= arrayLen(airports); ++ii) {
-                writeOutput('<option value=airports[ii]>#airports[ii]#</option>');
+                writeOutput('<option value=#airports[ii]#>#airports[ii]#</option>');
               }
             </cfscript>
 
@@ -79,16 +84,16 @@
           <cfscript>
               writeOutput('<option value="none"></option>');
               for (ii = 1; ii <= arrayLen(possibleCategories); ++ii) {
-                writeOutput('<option value=airports[ii]>#possibleCategories[ii]#</option>');
+                writeOutput('<option value=#possibleCategories[ii]#>#possibleCategories[ii]#</option>');
               }
           </cfscript>
          </select>
          
-         <label for="log report"></label>
+         <label for="log_report"></label>
        </p>
        <p>
          <label>
-           <textarea name="log report" cols="80" rows="10" id="log report">Report Details</textarea>
+           <textarea name="log_report" cols="80" rows="10" id="log_report">Report Details</textarea>
            <br>
            <input type="checkbox" name="NEW_EVENT_OPTIONS" value="yes" id="NEW_EVENT_OPTIONS_0">
          </label>
@@ -100,41 +105,9 @@
        <input type="submit" name="new_event_submit" id="new_event_submit" value="Submit">
      </form>
      
-
-<!---
-    <form name="LOG_QUERY" method="post" action=""> <!---Action is the page to send it to --->
-      
-         <input type="text" name="db_search_bar" id="db_search_bar" value="Search"><br>
-         <label for="date_range_start">from:</label>
-         <input type="text" name="date_range_begin" id="date_range_start" value="mm/dd/yyyy">
-         <label for="date_range_end">to:</label>
-         <input type="text" name="date_range_end" id="date_range_end" value="mm/dd/yyyy"><br>
-         <label for="airport_id">airport:</label>
-         <select name="airport_id">
-            <cfscript>
-              writeOutput('<option value="none">none</option>');
-              for (ii = 1; ii <= arrayLen(airports); ++ii) {
-                writeOutput('<option value=airports[ii]>#airports[ii]#</option>');
-              }
-            </cfscript>
-         </select><br>
-    
-         <label for="event_category">Category:</label>
-         <select name="event_category" id="event_category">
-         
-         <cfscript>
-              writeOutput('<option value="none">none</option>');
-              for (ii = 1; ii <= arrayLen(possibleCategories); ++ii) {
-                writeOutput('<option value=airports[ii]>#possibleCategories[ii]#</option>');
-              }
-            </cfscript>
-         </select>
-    
-</form>
---->
 <br>
 <cfscript>
-  records = new Record();
+  records = new Record(user.getAirportID()[1]);
   descriptions = records.getDescriptions();
   airport = records.getAirport();
   user = records.getReporter();
