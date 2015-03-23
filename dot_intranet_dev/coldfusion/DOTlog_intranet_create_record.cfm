@@ -18,7 +18,7 @@
       		<span>
             	<img src="/images/hdrs/header_plain_dotpf.gif" alt="DOT&amp;PF Intranet Header" width="1000" height="90">
             </span>
-            	Alaska DOT &amp; PF Employee Intranet / Division or Section Name
+            	Alaska DOT &amp; PF Employee Intranet / Aviation
 		</a>
 	<!-- TemplateEndEditable -->
 <!------>
@@ -42,100 +42,90 @@
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
-  
 
-  <!--- TODO 
-        * Get the hub ID from user to generate the list of airports
-        * Get commonly used Categories?
-  --->
+<!--- Hard coded until LDAP info. ---> 
+	<cfscript>
+		user = new user("joe"); //should be passed in by the login page
+		userID = user.getID();
+		airports = user.getAirportID();
 
-  <cfscript>
-    user = new user("joe"); //should be passed in by the login page
-    userID = user.getID();
-    //query for the airports
-    airports = user.getAirportID();
-
-    cat = new category();
-    possibleCategories = cat.getCategoryNames();
-  </cfscript>
-    <h2>DOTLog Log Record</h2>
+		cat = new category();
+		possibleCategories = cat.getCategoryNames();
+	</cfscript>
+    
+<h2>DOTLog Log Record</h2>
 
 <form name="form5" method="post" action="record_action.cfm">
 
+<!--- Need to change how user info is passed into the action page --->
 <cfscript>
-  writeOutput('<input type = "hidden" name="USER_ID" value="#userID#">');
+	writeOutput('<input type = "hidden" name="USER_ID" value="#userID#">');
 </cfscript>
 
        
-<label for="AIRPORT_ID">Airport:</label>
-         <select name="AIRPORT_ID">
+<label for="AIRPORT_CODE">Airport:</label>
+	<select name="AIRPORT_CODE">
+			<cfscript>
+				writeOutput('<option value="none"></option>');
+				for (ii = 1; ii <= arrayLen(airports); ++ii) {
+					writeOutput('<option value=#airports[ii]#>#airports[ii]#</option>');
+				}
+			</cfscript>
+	</select>
 
-            <cfscript>
-              writeOutput('<option value="none"></option>');
-              for (ii = 1; ii <= arrayLen(airports); ++ii) {
-                writeOutput('<option value=#airports[ii]#>#airports[ii]#</option>');
-              }
-            </cfscript>
+	 <br>
+<label for="EVENT_CATEGORY">Category:</label>
+	<select name="EVENT_CATEGORY" id="EVENT_CATEGORY">
+		<cfscript>
+			writeOutput('<option value="none"></option>');
+			for (ii = 1; ii <= arrayLen(possibleCategories); ++ii) {
+				writeOutput('<option value=#possibleCategories[ii]#>#possibleCategories[ii]#</option>');
+			}
+		</cfscript>
+ 	</select>
+    	
+		<br>
+<textarea name="EVENT_DESCRIPTION" cols="80" rows="10" id="EVENT_DESCRIPTION">Report Details</textarea>
 
-         </select>
-       <br>
-         <label for="EVENT_CATEGORY">Category:</label>
-         <select name="EVENT_CATEGORY" id="EVENT_CATEGORY">
-          <cfscript>
-              writeOutput('<option value="none"></option>');
-              for (ii = 1; ii <= arrayLen(possibleCategories); ++ii) {
-                writeOutput('<option value=#possibleCategories[ii]#>#possibleCategories[ii]#</option>');
-              }
-          </cfscript>
-         </select>
-         
-         <label for="log_report"></label>
-       </p>
-       <p>
-         <label>
-           <textarea name="log_report" cols="80" rows="10" id="log_report">Report Details</textarea>
-           <br>
-           <input type="checkbox" name="NEW_EVENT_OPTIONS" value="yes" id="NEW_EVENT_OPTIONS_0">
-         </label>
+		<br>
+<label for="INCLUDE_WEEKLY_REPORT">Include in weekly report:</label>
+	<input type="checkbox" name="INCLUDE_WEEKLY_REPORT" value="yes" id="INCLUDE_WEEKLY_REPORT">
+		
+		<br>
+<input type="submit" name="add_event" id="add_event" value="Submit">
 
-         <label>Important</label>
-         <br>
-         
-       </p>
-       <input type="submit" name="new_event_submit" id="new_event_submit" value="Submit">
-     </form>
+</form>
      
-<br>
+		<br>
+
+<!--- Gets the latest records and displays under form entry --->		
 <cfscript>
-  records = new Record(user.getAirportID()[1]);
-  descriptions = records.getDescriptions();
-  airport = records.getAirport();
-  user = records.getReporter();
-  category = records.getCategory();
-  date = records.getDate();
-</cfscript>
-<cfscript>
+	records = new Record(user.getAirportID()[1]); 
+	descriptions = records.getDescriptions();
+	airport = records.getAirport();
+	user = records.getReporter();
+	category = records.getCategory();
+	date = records.getDate();
+
   writeOutput('<table width="783" height="180" border="1">');
-  for (ii = 1; ii<=arrayLen(descriptions); ++ii)
-  {
-  writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #date[ii]# <br>');
-  writeOutput(' Reporter: #user[ii]# <br>Airport: #airport[ii]# <br> Category: #category[ii]# <br>');
-  writeOutput('<td width="560" align="left" valign="top">#descriptions[ii]#</td>');
-  writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
-  writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
-  writeOutput('<label for="event_#ii#_important">Important</label>');
-  writeOutput('<label for="entry_1_important"></label></form></td>');
+  for (ii = 1; ii<=arrayLen(descriptions); ++ii) {
+		writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #date[ii]# <br>');
+		writeOutput(' Reporter: #user[ii]# <br>Airport: #airport[ii]# <br> Category: #category[ii]# <br>');
+		writeOutput('<td width="560" align="left" valign="top">#descriptions[ii]#</td>');
+		writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
+		writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
+		writeOutput('<label for="event_#ii#_important">Important</label>');
+		writeOutput('<label for="entry_1_important"></label></form></td>');
   }
   writeOutput('</table>');
 </cfscript>
+
+
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
 
       <div class="clear"></div>
     </div>
     
-<!-- SOA AND DOT FOOTERS - SERVER SIDE INCLUDES -->    
-	<!--#include virtual="/ssis/dot_intranet_footer.html" -->
-</div>   
-</body>
-</html>
+<!-- SOA AND DOT FOOTERS - SERVER SIDE INCLUDES -->
+<cfinclude template="footer.cfm">
