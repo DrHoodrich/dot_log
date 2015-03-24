@@ -1,0 +1,20 @@
+@charset "utf-8";
+/* CSS Document */
+
+#content {
+	margin: 10px 0;
+	padding-top: 1px;
+	background: url(/images/styls/dropdownBG_trans.png) repeat-y right top;
+}
+
+#content #main{
+	float: left;
+	width: 750px;
+	padding-top: 5px;
+}
+
+#content #sidebar{
+	float: right;
+	width: 210px;
+	padding: 5px 0 5px 5px;
+}

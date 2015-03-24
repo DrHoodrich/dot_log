@@ -1,0 +1,593 @@
+@charset "utf-8";
+/*---------------------------- These are the required elements and should not be touched ---------------------------*/
+/*------------------------------ These elements style all pages within the DOT website -----------------------------*/
+
+body{
+	background:#121212 url('../images/dotpf/intra_bg.jpg') repeat;
+	width: 100%;
+	padding: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin: auto;
+	font-family: Arial, Helvetica, Tahoma;
+}
+
+/*Clears both left and right float*/
+.clear{ clear: both;}
+
+/*Float items for left and right of content below it*/
+.left{ float: left;}
+.right{ float: right;}
+
+/*Hide elements for screen readers*/
+.hidden{
+	position: absolute;
+	left: 0px;
+	top: -200px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+
+/*IDs are elements that can be used only once per page on the website*/
+#container{
+	width: 1000px;
+	text-align: left;
+	margin: auto;
+	background: #FFF;
+}
+
+/*This controls the main content area*/
+#content{
+	padding: 10px;
+	background: #fff;
+	font-size: .8em;
+}
+
+#content ul, ol, dl {
+	font-size: 1em;
+	margin-left: 20px;
+}
+
+div#content ul ul, ol ol {
+	margin-left: 10px;	
+}
+
+#content ul ul ul {
+	list-style: disc;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl{
+	margin: 0;
+	padding: 5px 0;
+	font-weight: normal;
+}
+
+h1{
+	color: 	#fff;
+	font-family: Georgia, "Times New Roman", Times, serif;	;
+	font-size: 1.7em;
+	background: #15365b url('../images/styls/dot-intra_HeaderBar.gif') bottom;
+	border-bottom: 2px solid #FFCC00;	
+	display: block;
+	width: 100%;
+	padding: 3px 0;	
+	text-indent: 5px;
+}
+
+.h1a{
+	color: 	#fff;
+	font-family: Georgia, "Times New Roman", Times, serif;	
+	font-size: 1.5em;
+	background: #15365b url('../images/styls/dot-intra_HeaderBar.gif') bottom;
+	border-bottom: 2px solid #FFCC00;	
+	display: block;
+	width: 100%;
+	padding: 3px 0;	
+	text-indent: 5px;	
+}
+
+h2{ color: #333333; font-size: 2em; font-weight: bold;}
+h3{ color: #003333; font-size: 1.6em; font-weight: bold; padding-left: 7px;}
+h4{	color: #336666; font-size: 1.4em; font-weight: bold; padding-left: 7px;}
+h5{ color: #000; font-size: 1em; font-weight: normal; padding-left: 7px;}
+h6{ color: #000; font-size: 1em; font-weight: normal; padding-left: 7px;}
+
+.center {text-align: center}
+
+.indent{margin-left: 30px;}
+
+#content li, #main li {
+	padding-bottom: 5px;
+}
+
+
+/*-------------------------------------- Historical Classes --------------------------------------*/
+.titlecopy { color: #333333; font-size: 2em; font-weight: bold;}
+
+.subtitle { color: #003333; font-size: 1.6em; font-weight: bold; }
+
+.subtitlecopy { color: #006666; font-size: 1.4em; font-weight: bold;}
+
+.caption { color: #333; font-size: .9em; font-weight: normal; }
+
+.linkcaption { color: #003399; font-size: 9px; }
+	a.linkcaption:link { color: #003399; font-size: 9px; }
+	a.linkcaption:visited { color: #732217; font-size: 9px; }
+	a.linkcaption:hover { color: #000039; font-size: 9px; }
+	a.linkcaption:active { color: #666699; font-size: 9px; }
+
+.linkcopybody { color: #003399; font-size: 1em; text-decoration: underline; }
+	a.linkcopybody:link { color: #003399; font-size: 1em; text-decoration: underline; }
+	a.linkcopybody:visited { color: #732217; font-size: 1em; text-decoration: underline; }
+	a.linkcopybody:hover { color: #000039; font-size: 1em; text-decoration: underline; }
+	a.linkcopybody:active { color: #666699; font-size: 1em; text-decoration: underline; }
+
+.linkcopy { color: #003399; font-size: 1em; text-decoration: none; }
+	a.linkcopy:link { color: #003399; font-size: 1em; text-decoration: none }
+	a.linkcopy:visited { color: #732217; font-size: 1em; text-decoration: none }
+	a.linkcopy:hover { color: #000039; font-size: 1em; text-decoration: underline }
+	a.linkcopy:active { color: #666699; font-size: 1em; text-decoration: none }
+
+a{ color: #003399; text-decoration: none;}
+a:visited{ color: #732217;}
+a:hover, a:focus{ color: #000039; text-decoration: underline;}
+
+ul, ol, dl{
+	padding: 0 0 0 20px;
+}
+
+img{
+	border-style: none;
+}
+
+p{
+	padding-left: 10px;	
+}
+
+ul, ol {
+	font-size: .8em;
+}
+
+p a{
+	text-decoration: underline;
+}
+
+/*------------------- These all control the look and feel of the gold bar at the top of the page -------------------*/
+/*-------------------- This is for the <div> container that holds the entire top bar -------------------------------*/
+#top_bar{
+	display: block;
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	width: 1000px;
+	min-height: 27px;
+	background: #f9c033 url('../images/dotpf/top_bar.gif') repeat-x;
+	position: relative;	
+}
+
+/*Puts the rounded right corner on the top bar*/
+#top_bar_right{
+	background: no-repeat top right;
+	width: 7px;
+	height: 27px;
+	float: right;
+}
+
+/*This Incidents the State of Alaska Button on the left hand corner of the top bar*/
+#top_bar a#dot{
+	display: block;
+	float: left;
+	width: 258px;
+	height: 21px;
+	padding: 4px 0 0 15px;
+	color:#ffffff;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#top_bar a#soa:hover{
+	text-decoration: underline;	
+}
+
+/*This positions the button image over the text*/
+#top_bar a#dot span{
+	display: block;
+	width: 258px;
+	height: 27px;
+	background: url('../images/dotpf/topbardotpf_intra.gif') no-repeat;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/*This is the "container" for the list of links on the top bar*/
+#top_bar ul{
+	padding: 4px 0 0 10px;
+	margin: 0;
+	float: right;
+	line-height: 1.3em;													
+}
+
+/*This is the styling for each list item in the top bar list of links*/
+#top_bar ul li{
+	display: inline;
+	list-style: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: .85em;
+	padding: 0 7px;
+}
+
+/*Style for the actual links in the top bar*/
+#top_bar ul li a{
+	color: #ffffff;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+/*Style for the hover / focus state of the list of links in the top bar*/
+#top_bar ul li a:hover, #top_bar ul li a:focus{
+	text-decoration: underline;
+}
+/*----------------------------------------- END Top Gold Bar look and feel -----------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------- This control the header element -----------------------------------------*/
+/*--------------------- This is the container as well as the holder of the actual header image ---------------------*/
+#header{
+	display: block;
+	width: 1000px;
+	min-height: 90px;
+	background: url('../images/hdrs/dot_intranet_HeaderBG.gif') repeat-x #112039;
+	clear: both;
+	position: relative;
+}
+
+/*This Incidents the link for the header with an invisible link block*/
+/*This styles the text just in case the image doesn't load*/
+#header a#title{
+	color: #ffffff;
+	float: left;
+	font-size: 1.2em;
+	padding: 15px 0 0 15px;
+	font-weight: bold;
+	display: block;
+	width: 600px;
+	height: 75px;
+}
+
+/* This hides the text so that you just have a link element, but screenreaders also have the link available*/
+#header a#title span{
+	display: block;
+	width: 625px;
+	height: 90px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+/*----------------------------------------- END Header look and feel -----------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------- This control the header photo ------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+#header_photo{
+	border-top: 1px solid #006666;
+	border-bottom: 1px solid #006666;
+	display: block;
+	width: 1000px;
+	height: 125px;
+	background: #fff;
+	clear: both;
+	position: relative;
+}
+
+
+/*---------------------------------------------- This styles the photo banner --------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+/*This is for the header image*/
+#photo_banner{
+	border-top: 1px solid #006666;
+	border-bottom: 1px solid #006666;
+	padding: 0;
+	margin: 0;
+	height: 125px;
+	position: relative;
+	clear: both;
+}
+
+#photo_banner img{
+	padding: 0;
+	margin: 0;
+}
+/*----------------------------------------------- End of photo banner style ----------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------- This styles the breadcrumbs ---------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+#breadcrumbs{
+	width: 985px;
+	border-bottom: solid 1px #d1d3d6;
+	color: #293042;
+	font-size: .7em;
+	padding: 2px 0 2px 15px;
+	margin: 0;
+}
+
+#breadcrumbs a{
+	color: #293042;
+	text-decoration: none;
+	padding: 0 5px 0 0;
+}
+
+#breadcrumbs a:hover, #breadcrumbs a:focus{
+	text-decoration: underline;	
+}
+/*--------------------------------------------------- End breadcrumbs style ----------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+
+/*------------------------- These div.box Incident a way to make certain sections stand out --------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+.box{
+	width: auto;
+	background: #EAF3F7;
+	border: 1px solid #a6a7a7;
+	color: #171C34;
+	margin: 5px 0;	
+}
+
+.box ul{
+	padding: 0;
+	margin: 0;
+}
+
+.box li{
+	border-bottom: 1px solid #bdc0cd;
+	padding: 5px 0 5px 10px;
+	list-style-position: inside;
+	color: #171C34;
+	font-size: 1em;
+}
+
+.box p{
+	padding-right: 10px;	
+}
+/*-------------------------------------------------- End div.box sections ------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+
+
+/*---------- This is the style for the DOT footer; defines the background that runs the bottom of the page ---------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+#dot_footer{
+	display: block;
+	width: 100%;
+	min-height: 82px;
+	text-align: center;
+	margin: auto;
+	background: #efefef;
+	padding-top: 0;
+}
+
+#dot_footer_content{
+	display: block;
+	width: 1000px;
+	min-height: 80px;
+	padding-top: 5px;
+	background: #666666;
+	background: url('../images/dotpf/footer_intraBG.gif');
+	text-align: left;
+	margin: auto;
+	color: #fff; 
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#dot_footer_content .right, #dot_footer_content .left{
+	padding: 3px 5px;	
+}
+
+#dot_footer_content .right{
+	text-align: right;
+	float: none;
+	font-size: .6em;
+}
+
+#dot_footer_content .left{
+	text-align: left;	
+}
+
+#dot_footer_content ul{
+	list-style: none;
+	display: inline;
+	padding: 0;
+	font-size: .75em;
+}
+
+#dot_footer_content ul li{
+	float: left;
+	padding: 0 10px 3px 0;
+}
+
+#dot_footer_content ul li a, #dot_footer_content a{
+	color: #fff;
+	text-decoration: underline;
+	font-weight: normal;
+}
+
+#dot_footer_content ul li a:hover, #dot_footer_content ul li a:focus, #dot_footer_content a:hover, #dot_footer_content a:focus{
+	text-decoration: none;
+}
+
+#dot_footer_content .right .center_item{
+	border-left: #000000 solid 1px;
+	border-right: #000000 solid 1px;
+	padding: 0 4px;
+}
+
+#dot_footer_content .right .right_item{
+	border-left: #000000 solid 1px;
+	padding: 0 0 0 4px;
+}
+
+#dot_footer_content .right .left_item{
+	border-right: #000000 solid 1px;
+	padding: 0 4px 0 0;
+}
+/*------------------------------------------------ END DOT Footer Area ---------------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+
+/*----------------------------------------------Addendum style sheet added ----------------------------------------*/
+/*------------------------------------------------------------------------------------------------------------------*/
+
+/* General Styles */
+img.doc_img {
+	border: none;
+	vertical-align: middle;
+}
+
+.v_top {
+	vertical-align: top;
+}
+.v_middle {
+	vertical-align: middle;
+}
+
+.v_bottom {
+	vertical-align: bottom;
+}
+
+.text_left {
+	text-align: left;
+}
+
+.text_center {
+	text-align: center;
+}
+
+.text_right {
+	text-align: right;
+}
+
+/* End General Styles */
+
+/* Sidebar Menu */
+#sidebar ul {
+	list-style: none;
+	margin: 3px 0 7px 0;
+	padding: 0;
+}
+
+
+#sidebar  li {
+	padding: 2px 5px 4px 15px;
+	background: url(/images/styls/bullet_l1.png) no-repeat 2px 6px;
+}
+
+#sidebar ul ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#sidebar  li li { 
+	margin-left: 0;
+	padding: 2px 5px 2px 20px;
+	background: url(/images/styls/bullet_l2.png) no-repeat 2px 6px;
+}
+
+
+
+/*  End Sidebar Menu */
+
+
+/* Banner Caption */
+table#banner_caption {
+	width: 100%;
+	border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table#banner_caption td {
+	height: 15px;
+	padding: 1px;
+	background-color: #eeeeee;
+	text-align: center;
+}
+/*  End Banner Caption */
+
+/*  Removes dotted underline on abbreviation tag in Firefox */
+abbr {
+	border: none;
+	border-width: 0;
+}
+/*  End Removes dotted underline in Firefox */
+
+/********************/
+/* EXPANDABLE LIST  */
+/********************/
+#listContainer{
+  margin-top:15px;
+}
+
+#expList ul, #expList li {
+    list-style: none;
+    margin:0;
+    padding:0;
+    cursor: pointer;
+}
+#expList p {
+    margin:0;
+    display:block;
+}
+#expList p:hover {
+    background-color:#121212;
+}
+
+#expList li {
+    line-height:140%;
+    text-indent:0px;
+    background-position: 1px 8px;
+    padding-left: 15px;
+    background-repeat: no-repeat;
+}
+
+#expList li a {
+	padding-left: 16px;
+	background: url(/images/styls/bullet_l2.png) no-repeat;
+	background-position: 0 8px;
+}
+
+
+/* Collapsed state for list element */
+#expList .collapsed {
+    background-image: url(/images/styls/menu_collapsed.png);
+}
+/* Expanded state for list element
+/* NOTE: This class must be located UNDER the collapsed one */
+#expList .expanded {
+    background-image: url(/images/styls/menu_expanded.png);
+}
+#expList {
+    clear: both;
+}
+
+.listControl{
+  margin-bottom: 5px;
+}
+.listControl a {
+    border: 1px solid #FFCC33;
+    color: #003366;
+    cursor: pointer;
+    height: 1.5em;
+    line-height: 1.5em;
+    margin-right: 5px;
+    padding: 2px 10px;
+}
+.listControl a:hover {
+    background-color: #E3ECEF;
+    font-weight:normal;
+}
+/********************/
+/* END EXPANDABLE LIST  */
+/********************/
