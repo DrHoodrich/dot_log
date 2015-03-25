@@ -8,7 +8,7 @@
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
 <h2>DOTLog Add New Category</h2>
-<cfform>
+<cfform name="recordCreation" method="post" action="admin_action.cfm">
   <label for="categoryName">Category Title:</label>
 	   <cfinput type = "text" name = "categoryName" message = "Category Name is Required" required = "yes"></cfinput> <br>
 	<cfinput type="submit" name="add_user" id="add_user" value="Submit">

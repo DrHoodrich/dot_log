@@ -14,10 +14,12 @@
 	<cfscript>
 		user = new dotlog.components.user("joe"); //should be passed in by the login page
 		userID = user.getID();
-		airports = user.getAirportID();
+		airportIDs = user.getAirportIDs();
+		airportNames = user.getAirportNames();
 
-		cat = new dotlog.components.category();
-		possibleCategories = cat.getCategoryNames();
+		categories = new dotlog.components.category();
+		categoryNames = categories.getCategoryNames();
+		categoryIDs = categories.getCategoryIDs();
 	</cfscript>
 
 <cfform name="recordCreation" method="post" action="record_action.cfm">
@@ -31,8 +33,8 @@
 	<cfselect name="airportCode">
 			<cfscript>
 				writeOutput('<option value="none"></option>');
-				for (ii = 1; ii <= arrayLen(airports); ++ii) {
-					writeOutput('<option value=#airports[ii]#>#airports[ii]#</option>');
+				for (ii = 1; ii <= arrayLen(airportIDs); ++ii) {
+					writeOutput('<option value=#airportIDs[ii]#>#airportNames[ii]#</option>');
 				}
 			</cfscript>
 	</cfselect>
@@ -42,8 +44,8 @@
 	<cfselect name="eventCategory" id="eventCategory">
 		<cfscript>
 			writeOutput('<option value="none"></option>');
-			for (ii = 1; ii <= arrayLen(possibleCategories); ++ii) {
-				writeOutput('<option value=#possibleCategories[ii]#>#possibleCategories[ii]#</option>');
+			for (ii = 1; ii <= arrayLen(categoryNames); ++ii) {
+				writeOutput('<option value=#categoryIDs[ii]#>#categoryNames[ii]#</option>');
 			}
 		</cfscript>
  	</cfselect>
@@ -62,7 +64,7 @@
 		<br>
 <!--- Gets the latest records and displays under form entry --->		
 <cfscript>
-	records = new dotlog.components.Record(user.getAirportID()[1]); 
+	records = new dotlog.components.Record(airportIDs[1]); 
 	descriptions = records.getDescriptions();
 	airport = records.getAirport();
 	user = records.getReporter();
