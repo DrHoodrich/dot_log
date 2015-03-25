@@ -1,32 +1,30 @@
 <cfscript>
 component Category {
-//        full_name = "";
-        //hubAirportID = [];
-        categoryStub = queryNew("category_id, name");
-        possibleCategoryNames = [];
+        result = new query();
+        databaseConnector = new database();
+
+        arrayCategoryNames = [];
+        arrayCategoryID = [];
 
         public Category function init()
         {
-                /*TODO - pull from the database: make sure enabled */
-                queryAddRow(categoryStub);
-                querySetCell(categoryStub, 'category_id', '1');
-                querySetCell(categoryStub, 'name', 'Lighting');
+                result = databaseConnector.getCategories();
 
-
-                queryAddRow(categoryStub);
-                querySetCell(categoryStub, 'category_id', '2');
-                querySetCell(categoryStub, 'name', 'Fuel');
-
+                for (var ii = 1; ii <= result.recordcount; ++ii) {
+                        arrayCategoryNames[ii] = result["name"][ii];
+                        arrayCategoryID[ii] = result["category_id"][ii];
+                }                              
                 return this;
         }
 
         public array function getCategoryNames() 
         {
-                /*TODO - format to the database result*/
-                for (var ii = 1; ii <= categoryStub.recordcount; ++ii) {
-                        possibleCategoryNames[ii] = categoryStub["name"][ii];
-                }
-                return possibleCategoryNames;
+                return arrayCategoryNames;
+        }
+
+        public array function getCategoryIDs()
+        {
+                return arrayCategoryID;
         }
 }
 </cfscript>

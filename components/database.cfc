@@ -13,9 +13,6 @@ component Database {
 		return this;
 	}
 
-	/*
-	@hint this gets all the records from the database for a specified airport.
-	*/
 	public query function getRecentHubRecords(required numeric airportID)
 	{
 		DBqueryHandler.setName("getAirportRecords");
@@ -27,7 +24,32 @@ component Database {
 		return queryResult.getResult();
 	}
 
-	public void function saveRecord(required string userID, required eventDescription) {
+	public void function addCategory(required string categoryName)
+	{
+		DBqueryHandler.setName("newCategory");
+		DBqueryHandler.addParam(name = "categoryName", value = arguments.categoryName, cfsqltype = "cf_sql_varchar");
+		DBqueryHandler.addParam(name = "airportID", value = 666, cfsqltype = "cf_sql_number");
+		queryResult = DBqueryHandler.execute(sql = "INSERT INTO #categoryTableName# 
+			(Name, Airport_ID) 
+			VALUES (:categoryName, :airportID)");
+	}
+
+	public query function getCategories()
+	{
+		DBqueryHandler.setName("getCategories");
+		queryResult = DBqueryHandler.execute(sql = "SELECT Category_ID, Name FROM #categoryTableName#");
+		return queryResult.getResult();
+	}
+
+	public query function getAirports()
+	{
+		DBqueryHandler.setName("getAirports");
+		queryResult = DBqueryHandler.execute(sql = "SELECT Airport_ID, Name FROM #airportTableName#");
+		return queryResult.getResult();
+	}
+
+	public void function saveRecord(required string userID, required eventDescription) 
+	{
 		var recordSubmittionTime = CREATEODBCDATETIME( now() );
 
 		DBqueryHandler.setName("insertRecord");

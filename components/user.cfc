@@ -4,45 +4,38 @@
 * A sample of documenting a component.
 */
 component User displayname = "User Class" hint = "Used to get user data" {
+        databaseConnector = new database();
         full_name = "";
-        hubAirportID = [];
         userID = -1;
-
-        /**
-        * Constructor 
-        * @description None
-        * @Postconditions.hint None
-        * @ThrowSafety.hint: Non Throw
-        * @name.hint is the name of the DOTLog user
-        */
+        arrayAirportNames = [];
+        arrayAirportIDs = [];
+        
         public User function init(required string name)
         {
                 full_name = arguments.name;
                 userID = 1;
+
+                result = databaseConnector.getAirports();
+                for (var ii = 1; ii <= result.recordcount; ++ii) {
+                        arrayAirportNames[ii] = result["Name"][ii];
+                        arrayAirportIDs[ii] = result["Airport_ID"][ii];
+                }                              
                 return this;
         }
 
-        /**
-        * Get the full name of the user
-        * @
-        */
         public string function getName() 
         {
                 return full_name;
         }
 
-        public array function getAirportName()
+        public array function getAirportNames()
         {
-                hubAirportID[1] = "Clear";
-                hubAirportID[2] = "Fairbanks";
-                return hubAirportID;
+                return arrayAirportNames;
         }
 
-        public array function getAirportID()
+        public array function getAirportIDs()
         {
-                hubAirportID[1] = "25";
-                hubAirportID[2] = "1";
-                return hubAirportID;
+                return arrayAirportIDs;
         }
 
         public numeric function getID()
