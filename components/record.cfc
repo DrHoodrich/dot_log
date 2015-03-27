@@ -8,11 +8,11 @@ component Record {
         arrayRecordTimes = [];
         arrayDescriptions = [];
 
-        databaseConnector = new database();
+        //databaseConnector = new database();
 
         public Record function init(required numeric airportID)
         {                  
-                result = databaseConnector.getRecentHubRecords(arguments.airportID);
+                result = Session.databaseConnector.getRecentHubRecords(arguments.airportID);
 
                 for (var ii = 1; ii <= result.recordcount; ++ii) {
                         arrayAirportCodes[ii] = result["airport_id"][ii];
