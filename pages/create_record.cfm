@@ -1,4 +1,4 @@
-<cfset pageTitle = "DOTLog Record Creation">
+<cfset pageTitle = "DOTLog Log Event">
 <cfinclude template="../includes/header.cfm">
 <cfinclude template="../includes/banner.cfm">
     <a id="main_content"></a>
@@ -8,7 +8,7 @@
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
-<h2>DOTLog Log Record</h2>
+<cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <!--- Hard coded until LDAP info. ---> 
 	<cfscript>
