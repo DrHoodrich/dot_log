@@ -4,18 +4,23 @@
 * A sample of documenting a component.
 */
 component User displayname = "User Class" hint = "Used to get user data" {
-        databaseConnector = new database();
+        
+        userName = "";
         full_name = "";
+        initials = "";
         userID = -1;
         arrayAirportNames = [];
         arrayAirportIDs = [];
         
-        public User function init(required string name)
+        public User function init(required string userName)
         {
-                full_name = arguments.name;
-                userID = 1;
+                userName = arguments.userName;
+                var result = Session.databaseConnector.getUser(arguments.userName);
+                full_name = result["Name"][1];
+                userID = result["User_ID"][1];
 
-                result = databaseConnector.getAirports();
+
+                result = Session.databaseConnector.getAirports();
                 for (var ii = 1; ii <= result.recordcount; ++ii) {
                         arrayAirportNames[ii] = result["Name"][ii];
                         arrayAirportIDs[ii] = result["Airport_ID"][ii];
