@@ -1,18 +1,19 @@
-<cfset pageTitle = "DOTLog Search"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "DOTLog Search Stub"> <!--- Variable that is used in the html included header --->
 <cfinclude template="../includes/header.cfm">
+<cfinclude template="../includes/banner.cfm">
 <cfinclude template="../includes/breadcrumb.cfm">
 <cfinclude template="../includes/nav.cfm">
     <div id="content">
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
-<h2>Search Events</h2>
+<cfoutput><h2>#pageTitle#</h2></cfoutput>
   <cfscript>
     /**TODO
      * Get the hub ID from user to generate the list of airports
      * Get commonly used Categories?
      */
-
+/*
     user = new dotlog.components.user("joe"); //should be passed in by the login page
     airports = user.getAirportID();
 
@@ -69,6 +70,7 @@
     writeOutput('<label for="entry_1_important"></label></form></td>');
   }
   writeOutput('</table>');
+*/
 </cfscript>
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
