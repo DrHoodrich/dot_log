@@ -1,5 +1,6 @@
-<cfset pageTitle = "Add User"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "DOTLog Add User"> <!--- Variable that is used in the html included header --->
 <cfinclude template="../includes/header.cfm">
+<cfinclude template="../includes/banner.cfm">
 	<a id="main_content"></a>
 <cfinclude template="../includes/breadcrumb.cfm">
 <cfinclude template="../includes/nav.cfm">
@@ -7,7 +8,7 @@
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
-<h2>DOTLog Add User</h2>
+<cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfform>
 	User Name:<cfinput type = "text" name = "userName" message = "User Name" required = "yes"></cfinput> <br>
 	User Initials:<cfinput type = "text" name = "userInitials" message = "User Initials" required = "yes"></cfinput> <br>
