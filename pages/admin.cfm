@@ -1,22 +1,11 @@
-<cfset pageTitle = "Admin"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "DOTLog Admin Dashboard Stub">
 <cfinclude template="../includes/header.cfm">
+<cfinclude template="../includes/banner.cfm">
     <a id="main_content"></a>
 <cfinclude template="../includes/breadcrumb.cfm">
 <cfinclude template="../includes/nav.cfm">
     <div id="content">
-    
-<!-- BEGIN YOUR CONTENT HERE -->
-	<!-- TemplateBeginEditable name="main content" -->
-<h2>DOTLog Admin</h2>
-<!--- Hard coded until LDAP info. ---> 
-	<cfscript>
-		user = new dotlog.components.user("joe"); //should be passed in by the login page
-		userID = user.getID();
-		airports = user.getAirportID();
 
-		cat = new dotlog.components.category();
-		possibleCategories = cat.getCategoryNames();
-	</cfscript>
-	<!-- TemplateEndEditable -->
-<!-- END YOUR CONTENT HERE -->
+<cfoutput><h2>#pageTitle#</h2></cfoutput>
+
 <cfinclude template="../includes/footer.cfm">
