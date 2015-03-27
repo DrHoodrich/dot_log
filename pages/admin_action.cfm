@@ -1,4 +1,4 @@
-<cfset pageTitle = "DOTLog Record Creation">
+<cfset pageTitle = "Category Addition Review">
 <cfinclude template="../includes/header.cfm">
 <cfinclude template="../includes/banner.cfm">
     <a id="main_content"></a>
@@ -6,7 +6,7 @@
 <cfinclude template="../includes/nav.cfm">
     <div id="content">
 
-<h2>Category Addition Review</h2>
+<cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
 	databaseConnector = new dotlog.components.database();
 	databaseConnector.addCategory(Form.categoryName);

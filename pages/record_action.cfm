@@ -6,7 +6,7 @@
 <cfinclude template="../includes/nav.cfm">
     <div id="content">
 
-<h2>Event Review</h2>
+<cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
 	databaseConnector = new dotlog.components.database();
 	databaseConnector.saveRecord(Form.userID, Form.eventDescription);
