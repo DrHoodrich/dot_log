@@ -41,6 +41,14 @@ component Database {
 		return queryResult.getResult();
 	}
 
+	public query function getUser(required string userName)
+	{
+		DBqueryHandler.setName("getUser");
+		DBqueryHandler.addParam(name = "userName", value = arguments.userName, cfsqltype = "cf_sql_varchar");
+		queryResult = DBqueryHandler.execute(sql = "SELECT USERNAME, USER_ID, INITIALS, AIRPORT_ID, PERMISSIONS, NAME FROM #userTableName#");
+		return queryResult.getResult();
+	}
+
 	public query function getAirports()
 	{
 		DBqueryHandler.setName("getAirports");
