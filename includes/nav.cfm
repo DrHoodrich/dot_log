@@ -15,7 +15,7 @@
 				<li><a href="./edit_airport.cfm">Edit Airport</a></li>
 			</ul>
 		</li>
-		<li><a href="./logout.cfm">Logout</a></li>
+		<li><a href="./login.cfm">Logout</a></li>
 	<!-- TemplateEndEditable -->
 	  </ul>
 	</div>
