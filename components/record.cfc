@@ -2,51 +2,54 @@
 component Record {
         result = new query();
 
-        arrayAirportCodes = [];
-        arrayReporters = [];
-        arrayCategories = [];
-        arrayRecordTimes = [];
-        arrayDescriptions = [];
+        RecordAirportFAACodes = [];
+        RecordUsers = [];
+        RecordCategories = [];
+        RecordTimes = [];
+        RecordText = [];
+        RecordInWeeklyReport = [];
+        RecordEventTimes = [];
 
         databaseConnector = new database();
 
-        public Record function init(required numeric airportID)
+        public Record function init(required string airportCode)
         {                  
-                result = databaseConnector.getRecentHubRecords(arguments.airportID);
+                result = databaseConnector.getRecentHubRecords(arguments.airportCode);
 
                 for (var ii = 1; ii <= result.recordcount; ++ii) {
-                        arrayAirportCodes[ii] = result["airport_id"][ii];
-                        arrayReporters[ii] = result["user_id"][ii];
-                        arrayCategories[ii] = result["category_id"][ii];
-                        arrayRecordTimes[ii] = result["time_of_event"][ii];
-                        arrayDescriptions[ii] = result["description"][ii];
+                        RecordAirportFAACodes[ii] = result["faa_code"][ii];
+                        RecordUsers[ii] = result["username"][ii];
+                        RecordCategories[ii] = result["category_title"][ii];
+                        RecordTimes[ii] = result["event_time"][ii];
+                        RecordText[ii] = result["record_text"][ii];
+                        RecordInWeeklyReport[ii] = result["in_weekly_report"][ii];
                 }                              
                 return this;
         }
 
-        public array function getAirport() 
+        public array function getRecordAirportFAACodes() 
         {
-                return arrayAirportCodes;
+                return RecordAirportFAACodes;
         }
 
-        public array function getReporter() 
+        public array function getRecordUsers() 
         {
-                return arrayReporters;
+                return RecordUsers;
         }
 
-        public array function getCategory() 
+        public array function getRecordCategories() 
         {
-                return arrayCategories;
+                return RecordCategories;
         }
 
-        public array function getDate() 
+        public array function getRecordTimes() 
         {
-                return arrayRecordTimes;
+                return RecordTimes;
         }
 
-        public array function getDescriptions()
+        public array function getRecordText()
         {
-                return arrayDescriptions;
+                return RecordText;
         }
 }
 </cfscript>

@@ -12,40 +12,41 @@
 
 <!--- Hard coded until LDAP info. ---> 
 	<cfscript>
-		user = new dotlog.components.user("joe"); //should be passed in by the login page
-		userID = user.getID();
-		airportIDs = user.getAirportIDs();
-		airportNames = user.getAirportNames();
+		user = new dotlog.components.user("us"); //should be passed in by the login page
+		username = "us";
+		airport_faa_codes = user.getAirportFAACodes();
+		airport_names = user.getAirportNames();
 
 		categories = new dotlog.components.category();
-		categoryNames = categories.getCategoryNames();
-		categoryIDs = categories.getCategoryIDs();
+		category_titles = categories.getCategoryTitles();
 	</cfscript>
 
 <cfform name="recordCreation" method="post" action="record_action.cfm">
 
 <!--- Need to change how user info is passed into the action page --->
 <cfscript>
-	writeOutput('<input type="hidden" name="userID" value="#userID#">');
+	writeOutput('<input type="hidden" name="username" value="#username#">');
 </cfscript>
        
-<label for="airportCode">Airport:</label>
-	<cfselect name="airportCode">
+<label for="faaCode">Airport:</label>
+	<cfselect name="faaCode">
 			<cfscript>
 				writeOutput('<option value="none"></option>');
-				for (ii = 1; ii <= arrayLen(airportIDs); ++ii) {
-					writeOutput('<option value=#airportIDs[ii]#>#airportNames[ii]#</option>');
+				for (ii = 1; ii <= arrayLen(airport_faa_codes); ++ii) {
+					writeOutput('<option value="#airport_faa_codes[ii]#">#airport_names[ii]#</option>');
 				}
+
 			</cfscript>
 	</cfselect>
 
 	 <br>
-<label for="eventCategory">Category:</label>
-	<cfselect name="eventCategory" id="eventCategory">
+<label for="CategoryTitle">Category:</label>
+	<cfselect name="CategoryTitle">
 		<cfscript>
+
 			writeOutput('<option value="none"></option>');
-			for (ii = 1; ii <= arrayLen(categoryNames); ++ii) {
-				writeOutput('<option value=#categoryIDs[ii]#>#categoryNames[ii]#</option>');
+			for (ii = 1; ii <= arrayLen(category_titles); ++ii) {
+				writeOutput('<option value="#category_titles[ii]#">#category_titles[ii]#</option>');
 			}
 		</cfscript>
  	</cfselect>
@@ -64,19 +65,19 @@
 		<br>
 <!--- Gets the latest records and displays under form entry --->		
 <cfscript>
-	records = new dotlog.components.Record(airportIDs[1]); 
-	descriptions = records.getDescriptions();
-	airport = records.getAirport();
-	user = records.getReporter();
-	category = records.getCategory();
-	date = records.getDate();
+	records = new dotlog.components.Record(airport_faa_codes[1]); 
+	texts = records.getRecordText();
+	airports = records.getRecordAirportFAACodes();
+	users = records.getRecordUsers();
+	categories = records.getRecordCategories();
+	dates = records.getRecordTimes();
 
   //TODO: see about using cftable
   writeOutput('<table width="783" height="180" border="1">');
-  for (ii = 1; ii <= arrayLen(descriptions); ++ii) {
-		writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #date[ii]# <br>');
-		writeOutput(' Reporter: #user[ii]# <br>Airport: #airport[ii]# <br> Category: #category[ii]# <br>');
-		writeOutput('<td width="560" align="left" valign="top">#descriptions[ii]#</td>');
+  for (ii = 1; ii <= arrayLen(texts); ++ii) {
+		writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #dates[ii]# <br>');
+		writeOutput('Reporter: #user[ii]# <br>Airport: #airports[ii]# <br> Category: #categories[ii]# <br>');
+		writeOutput('<td width="560" align="left" valign="top">#texts[ii]#</td>');
 		writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
 		writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
 		writeOutput('<label for="event_#ii#_important">Important</label>');

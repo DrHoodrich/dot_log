@@ -9,6 +9,17 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
   <cfscript>
+  DBqueryHandler = new query();
+
+    DBqueryHandler.setDataSource("DOTlogDB");
+
+    DBqueryHandler.setName("irrelevant");
+
+    queryResult = DBqueryHandler.execute(sql = "SELECT * FROM DL_AIRPORTS WHERE faa_code = 'AUK'");
+    queryResult.getResult();
+
+    writedump(queryResult)
+
     /**TODO
      * Get the hub ID from user to generate the list of airports
      * Get commonly used Categories?

@@ -10,8 +10,8 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfform name="recordCreation" method="post" action="admin_action.cfm">
-  <label for="categoryName">Category Title:</label>
-	   <cfinput type = "text" name = "categoryName" message = "Category Name is Required" required = "yes"></cfinput> <br>
+  	<label for="categoryTitle">Category Title:</label>
+	   <cfinput type = "text" name = "categoryTitle" message = "Category Title is Required" required = "yes"></cfinput> <br>
 	<cfinput type="submit" name="add_user" id="add_user" value="Submit">
 </cfform>
 	<!-- TemplateEndEditable -->

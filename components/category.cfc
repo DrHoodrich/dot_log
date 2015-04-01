@@ -3,28 +3,28 @@ component Category {
         result = new query();
         databaseConnector = new database();
 
-        arrayCategoryNames = [];
-        arrayCategoryID = [];
+        CategoryTitles = [];
+         CategoryDescriptions = [];
 
         public Category function init()
         {
                 result = databaseConnector.getCategories();
 
                 for (var ii = 1; ii <= result.recordcount; ++ii) {
-                        arrayCategoryNames[ii] = result["name"][ii];
-                        arrayCategoryID[ii] = result["category_id"][ii];
+                        CategoryTitles[ii] = result["category_title"][ii];
+                        CategoryDescriptions[ii] = result["description"][ii];
                 }                              
                 return this;
         }
 
-        public array function getCategoryNames() 
+        public array function getCategoryTitles() 
         {
-                return arrayCategoryNames;
+                return CategoryTitles;
         }
 
-        public array function getCategoryIDs()
+         public array function getCategoryDescriptions() 
         {
-                return arrayCategoryID;
+                return CategoryDescriptions;
         }
 }
 </cfscript>

@@ -9,34 +9,33 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
 	databaseConnector = new dotlog.components.database();
-	databaseConnector.saveRecord(Form.userID, Form.eventDescription);
+	writedump(Form);
+	databaseConnector.saveRecord(Form.eventDescription, Form.username, Form.faaCode, Form.CategoryTitle);
 
-	user = new dotlog.components.user("joe"); //should be passed in by the login page
-	userID = user.getID();
-	airportIDs = user.getAirportIDs();
-	airportNames = user.getAirportNames();
+	user = new dotlog.components.user("us"); //should be passed in by the login page
+	username = "us";
+	airport_faa_codes = user.getAirportFAACodes();
+	airport_names = user.getAirportNames();
 
 	categories = new dotlog.components.category();
-	categoryNames = categories.getCategoryNames();
-	categoryIDs = categories.getCategoryIDs();
+	category_titles = categories.getCategoryTitles();
 
-	records = new dotlog.components.Record(airportIDs[1]); 
-	descriptions = records.getDescriptions();
-	airport = records.getAirport();
-	user = records.getReporter();
-	category = records.getCategory();
-	date = records.getDate();
+	records = new dotlog.components.Record(airport_faa_codes[1]); 
+	texts = records.getRecordTexts();
+	airports = records.getRecordAirportFAACodes();
+	users = records.getRecordUsers();
+	dates = records.getRecordTimes();
 
   //TODO: fix indexing of airports and category names from ii
   writeOutput('<table width="783" height="180" border="1">');
   for (ii = 1; ii <= arrayLen(descriptions); ++ii) {
-		writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #date[ii]# <br>');
-		writeOutput(' Reporter: #user[ii]# <br>Airport: #airportNames[1]# <br> Category: #categoryNames[1]# <br>');
-		writeOutput('<td width="560" align="left" valign="top">#descriptions[ii]#</td>');
+		writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #dates[ii]# <br>');
+		writeOutput('Reporter: #users[ii]# <br>Airport: #airport_faa_codes[1]# <br> Category: #category_titles[1]# <br>');
+		writeOutput('<td width="560" align="left" valign="top">#texts[ii]#</td>');
 		writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
-		writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
-		writeOutput('<label for="event_#ii#_important">Important</label>');
-		writeOutput('<label for="entry_1_important"></label></form></td>');
+		writeOutput('<input type="checkbox" name="event_1_in_weekly_report" id="event_1_in_weekly_report">');
+		writeOutput('<label for="event_#ii#_in_weekly_report">Included in Weekly Report</label>');
+		writeOutput('<label for="entry_1_in_weekly_report"></label></form></td>');
   }
   writeOutput('</table>');
 </cfscript>
