@@ -1,52 +1,66 @@
-<cfscript>
 component Record {
-        result = new query();
+        property name="recordText" type="string" default="" hint=""; 
+        property name="username" type="string" default="" hint="";
+        property name="faaCode" type="string" default="" hint="";
+        property name="eventTime" type="string" default="" hint="";
+        property name="recordTime" type="numeric" default="" hint="";
+        property name="inWeeklyReport" type="numeric" default="" hint="";
+        property name="categoryTitle" type="string" default="" hint="";
 
-        arrayAirportCodes = [];
-        arrayReporters = [];
-        arrayCategories = [];
-        arrayRecordTimes = [];
-        arrayDescriptions = [];
-
-        //databaseConnector = new database();
-
-        public Record function init(required numeric airportID)
+        public Record function init(required string recordText,
+                                    required string username,
+                                    required string faaCode,
+                                    required string eventTime,
+                                    required string recordTime,
+                                    required numeric inWeeklyReport,
+                                    required string categoryTitle)
         {                  
-                result = Session.databaseConnector.getRecentHubRecords(arguments.airportID);
-
-                for (var ii = 1; ii <= result.recordcount; ++ii) {
-                        arrayAirportCodes[ii] = result["airport_id"][ii];
-                        arrayReporters[ii] = result["user_id"][ii];
-                        arrayCategories[ii] = result["category_id"][ii];
-                        arrayRecordTimes[ii] = result["time_of_event"][ii];
-                        arrayDescriptions[ii] = result["description"][ii];
-                }                              
+                variables.recordText = arguments.recordText;
+                variables.username = arguments.username;
+                variables.faaCode = arguments.faaCode;
+                variables.eventTime = arguments.eventTime;
+                variables.recordTime = arguments.recordTime;
+                variables.inWeeklyReport = arguments.inWeeklyReport;
+                variables.categoryTitle = arguments.categoryTitle;
                 return this;
         }
 
-        public array function getAirport() 
+        public string function getRecordText()
         {
-                return arrayAirportCodes;
+                return variables.recordText;
         }
 
-        public array function getReporter() 
+        public string function getUsername() 
         {
-                return arrayReporters;
+                return variables.username;
         }
 
-        public array function getCategory() 
+        public string function getAirportFAACode() 
         {
-                return arrayCategories;
+                return variables.faaCode;
         }
 
-        public array function getDate() 
+        public string function getEventTime()
         {
-                return arrayRecordTimes;
+                return variables.eventTime;
         }
 
-        public array function getDescriptions()
+        public string function getRecordTime() 
         {
-                return arrayDescriptions;
+                return variables.recordTime;
+        }
+
+        public boolean function isInWeeklyReport()
+        {
+                if (variables.inWeeklyReport) {
+                        return True;
+                } else {
+                        return False;
+                }
+        }
+
+        public string function getCategory() 
+        {
+                return variables.categoryTitle;
         }
 }
-</cfscript>
