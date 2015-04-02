@@ -1,30 +1,39 @@
-<cfscript>
-component Category {
-        result = new query();
-        databaseConnector = new database();
+component Category
+{
+        property name="categoryTitle" type="string" default="" hint=""; 
+        property name="description" type="string" default="" hint="";
+        property name="enabled" type="numeric" default="" hint="";
+        property name="inWeeklyReport" type="numeric" default="" hint="";
 
-        CategoryTitles = [];
-         CategoryDescriptions = [];
-
-        public Category function init()
+        public Category function init(required string categoryTitle,
+                                        required string description,
+                                        required numeric enabled,
+                                        required numeric inWeeklyReport)
         {
-                result = databaseConnector.getCategories();
-
-                for (var ii = 1; ii <= result.recordcount; ++ii) {
-                        CategoryTitles[ii] = result["category_title"][ii];
-                        CategoryDescriptions[ii] = result["description"][ii];
-                }                              
-                return this;
+               variables.categoryTitle = arguments.categoryTitle;
+               variables.description = arguments.description;
+               variables.enabled = arguments.enabled;
+               variables.inWeeklyReport = arguments.inWeeklyReport;
+               return this;
         }
 
-        public array function getCategoryTitles() 
+        public string function getCategoryTitle() 
         {
-                return CategoryTitles;
+                return variables.categoryTitle;
         }
 
-         public array function getCategoryDescriptions() 
+        public string function getDescription()
         {
-                return CategoryDescriptions;
+                return variables.description;
+        }
+
+        public boolean function isEnabled() 
+        {
+                return variables.enabled;
+        }
+
+        public boolean function isInWeeklyReport()
+        {
+                return inWeeklyReport;
         }
 }
-</cfscript>

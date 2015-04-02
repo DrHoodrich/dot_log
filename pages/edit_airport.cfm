@@ -1,4 +1,4 @@
-<cfset pageTitle = "Search"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "Edit Airport"> <!--- Variable that is used in the html included header --->
 <cfinclude template="../includes/header.cfm">
 <cfinclude template="../includes/banner.cfm">
   <a id="main_content"></a>
@@ -9,10 +9,10 @@
 <!-- BEGIN YOUR CONTENT HERE -->
   <!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
-<cfform name="search" action="search_action.cfm" method="post">
-  Userame:<cfinput type = "text" name = "username" message = "username" required = "no"></cfinput> <br>
-  FAA Code:<cfinput type = "text" name = "faaCode" message = "faaCode" required = "no"></cfinput> <br>
-  <cfinput type="submit" name="submitSearch_button" id="searchRecords" value="search"> 
+
+<cfform name="listChildAirports" action="airport_edit_action.cfm" method="post">
+  Parent FAA Code:<cfinput type="text" name = "parentFAACode" message="parentFAACode" required="yes"></cfinput> <br>
+    <cfinput type="submit" name="submitFAACode_button" id="listAirports" value="search"></cfinput>
 </cfform>
   <!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->

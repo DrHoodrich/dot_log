@@ -8,35 +8,39 @@
 
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-	databaseConnector = new dotlog.components.database();
-	writedump(Form);
-	databaseConnector.saveRecord(Form.eventDescription, Form.username, Form.faaCode, Form.CategoryTitle);
+	writeDump(FORM);
+	if ( isNull(FORM.includeWeeklyReport) ) {
+		reporting = 0;
+	} else {
+		reporting = 1;
+	}
+	record = new dotlog.components.record(recordText = FORM.eventDescription,
+										  username = FORM.userid,
+										  faaCode = FORM.airportCode,
+										  eventTime =  CREATEODBCDATETIME( now() ),
+										  recordTime =  CREATEODBCDATETIME( now() ),
+										  inWeeklyReport = reporting,
+										  categoryTitle = FORM.categoryTitle);
+	application.recordDAO.createRecord(record);	
 
-	user = new dotlog.components.user("us"); //should be passed in by the login page
-	username = "us";
-	airport_faa_codes = user.getAirportFAACodes();
-	airport_names = user.getAirportNames();
+	user = application.userDAO.getUserByUsername("us");
+	airports = application.airportDAO.getChildAirports(user.getAirportFAACode());
+	categories = application.categoryDAO.getAllCategories();
 
-	categories = new dotlog.components.category();
-	category_titles = categories.getCategoryTitles();
+	writeOutput('<table width="783" height="180" border="1">');
+		for (ii = 1; ii <= arrayLen(airports); ++ii) {
+			records = application.recordDAO.getRecordsByAirportFAACode(airports[ii].getFAACode());
 
-	records = new dotlog.components.Record(airport_faa_codes[1]); 
-	texts = records.getRecordTexts();
-	airports = records.getRecordAirportFAACodes();
-	users = records.getRecordUsers();
-	dates = records.getRecordTimes();
-
-  //TODO: fix indexing of airports and category names from ii
-  writeOutput('<table width="783" height="180" border="1">');
-  for (ii = 1; ii <= arrayLen(descriptions); ++ii) {
-		writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #dates[ii]# <br>');
-		writeOutput('Reporter: #users[ii]# <br>Airport: #airport_faa_codes[1]# <br> Category: #category_titles[1]# <br>');
-		writeOutput('<td width="560" align="left" valign="top">#texts[ii]#</td>');
-		writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
-		writeOutput('<input type="checkbox" name="event_1_in_weekly_report" id="event_1_in_weekly_report">');
-		writeOutput('<label for="event_#ii#_in_weekly_report">Included in Weekly Report</label>');
-		writeOutput('<label for="entry_1_in_weekly_report"></label></form></td>');
-  }
-  writeOutput('</table>');
+			for (jj = 1; jj <= arrayLen(records); ++jj) {
+				writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
+				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportFAACode()# <br> Category: #records[jj].getCategory()# <br>');
+				writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
+				writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
+				writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
+				writeOutput('<label for="event_#jj#_important">Important</label>');
+				writeOutput('<label for="entry_1_important"></label></form></td>');
+	  		}
+		}
+	writeOutput('</table>');
 </cfscript>
 <cfinclude template="../includes/footer.cfm">

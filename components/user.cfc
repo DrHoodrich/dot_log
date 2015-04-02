@@ -1,47 +1,75 @@
-<cfscript>
 /**
 * @author Spring 2015 CS 471 Group 1
 * A sample of documenting a component.
 */
-component User displayname = "User Class" hint = "Used to get user data" {
-        databaseConnector = new database();
-        full_name = "";
-        userID = -1;
-        AirportNames = [];
-        AirportFAACodes = [];
+
+/**
+* @hint a user class bean
+* Simple class for representing users of DOTLog
+*/
+
+component User 
+{
+     property name="username" type="string" default="" hint="The DOT based username."; 
+     property name="firstName" type="string" default="" hint="The DOT based username.";
+     property name="lastName" type="string" default="" hint="The DOT based username.";
+     property name="permissions" type="numeric" default="" hint="The DOT based username.";
+     property name="airportFAACode" type="string" default="" hint="DOT employee hub airport.";
+     property name="enabled" type="numeric" default="" hint="If the employee is enabled to use DOTLog.";
         
-        public User function init(required string dot_username)
+        public User function init(required string username,
+                                  required string firstName,
+                                  required string lastName,
+                                  required string faaCode,
+                                  required numeric permissions,
+                                  required numeric enabled)
         {
-                full_name = arguments.dot_username;
-                userID = 1;
+                variables.username = arguments.username;
+                variables.firstName = arguments.firstName;
+                variables.lastName = arguments.lastName;
+                variables.permissions = arguments.permissions;
+                variables.airportFAACode = arguments.faaCode;
+                variables.enabled = arguments.enabled;
 
-                result = databaseConnector.getAirports();
-
-                for (var ii = 1; ii <= result.recordcount; ++ii) {
-                        arrayAirportNames[ii] = result["airport_name"][ii];
-                        arrayAirportFAACodes[ii] = result["faa_code"][ii];
-                }                              
                 return this;
         }
 
-        public string function getName() 
+        public string function getFirstName()
         {
-                return full_name;
+            return firstName;
         }
 
-        public array function getAirportNames()
+        public string function getLastName()
         {
-                return arrayAirportNames;
+            return lastName;
         }
 
-        public array function getAirportFAACodes()
+        public string function getFullName() 
         {
-                return arrayAirportFAACodes;
+                return firstName & " " & lastName;
         }
 
-        public numeric function getID()
+        public string function getAirportFAACode()
         {
-                return userID;
+                return airportFAACode;
+        }
+
+        public string function getUsername()
+        {
+                return username;
+        }
+
+        public string function getInitials()
+        {
+                return Left(firstName, 1)&"."&Left(lastName, 1)&".";
+        }
+
+        public boolean function isEnabled()
+        {
+            if (enabled >= 1) {
+                return true;
+            } else {
+                return false;
+            }
         }
 }
-</cfscript>
