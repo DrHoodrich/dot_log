@@ -10,7 +10,7 @@ component UserDAO
 		return this;
 	}
 
-	public array function getUsersbyAirportFAACode(required string faaCode)
+	public array function getUsersByAirportFAACode(required string faaCode)
 	{
 		var userObjects = [];
 
@@ -25,12 +25,11 @@ component UserDAO
 		queryService.setUsername(DSusername);
 		queryService.setPassword(DSpassword);
 
-		queryService.addParam(name = "faa_codes", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "faa_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
 		queryResult = queryService.execute(sql = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled 
-			FROM DL_USERS WHERE faa_code = :faa_codes");
+			FROM DL_USERS WHERE faa_code = :faa_code");
 		result = queryResult.getResult();
-		writeDump(arguments.faaCode);
-		writeDump(result);
+
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
 			 objUser = new User(username = result["username"][ii],
 							firstName= result["FIRST_NAME"][ii],
@@ -43,7 +42,7 @@ component UserDAO
 		return userObjects;
 	} 
 
-	public User function getUserbyUsername(required string username)
+	public User function getUserByUsername(required string username)
 	{
 		var objUser = '';
 
