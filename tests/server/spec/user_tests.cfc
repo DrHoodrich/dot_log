@@ -44,6 +44,11 @@ component userTest extends = "mxunit.framework.TestCase" {
     	assertEquals(expected, actual);
     }
 
+    public void function getEmailAddress()
+    {
+        fail("Email Address field is not defined in the database.");
+    }
+
     public void function isEnabled()
     {
         assert(testUser.isEnabled());
