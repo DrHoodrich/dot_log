@@ -1,4 +1,3 @@
-
 /**
 * @author Spring 2015 CS 471 Group 1
 * A sample of documenting a component.
