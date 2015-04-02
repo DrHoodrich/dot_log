@@ -1,4 +1,3 @@
-<cfscript>
 component Datasource
 {
 	variables.instance = {
@@ -28,4 +27,3 @@ component Datasource
 		return variables.instance.password;
 	}
 }
-</cfscript>
