@@ -12,40 +12,35 @@
 
 <!--- Hard coded until LDAP info. ---> 
 	<cfscript>
-		user = new dotlog.components.user("joe"); //should be passed in by the login page
-		userID = user.getID();
-		airportIDs = user.getAirportIDs();
-		airportNames = user.getAirportNames();
-
-		categories = new dotlog.components.category();
-		categoryNames = categories.getCategoryNames();
-		categoryIDs = categories.getCategoryIDs();
+		user = application.userDAO.getUserByUsername("us");
+		airports = application.airportDAO.getChildAirports(user.getAirportFAACode());
+		categories = application.categoryDAO.getAllCategories();
 	</cfscript>
 
 <cfform name="recordCreation" method="post" action="record_action.cfm">
 
 <!--- Need to change how user info is passed into the action page --->
 <cfscript>
-	writeOutput('<input type="hidden" name="userID" value="#userID#">');
+	writeOutput('<input type="hidden" name="userID" value="#user.getUsername()#">');
 </cfscript>
        
 <label for="airportCode">Airport:</label>
 	<cfselect name="airportCode">
 			<cfscript>
 				writeOutput('<option value="none"></option>');
-				for (ii = 1; ii <= arrayLen(airportIDs); ++ii) {
-					writeOutput('<option value=#airportIDs[ii]#>#airportNames[ii]#</option>');
+				for (ii = 1; ii <= arrayLen(airports); ++ii) {
+					writeOutput('<option value=#airports[ii].getFAACode()#>#airports[ii].getAirportName()#</option>');
 				}
 			</cfscript>
 	</cfselect>
 
 	 <br>
-<label for="eventCategory">Category:</label>
-	<cfselect name="eventCategory" id="eventCategory">
+<label for="categoryTitle">Category:</label>
+	<cfselect name="categoryTitle" id="categoryTitle">
 		<cfscript>
 			writeOutput('<option value="none"></option>');
-			for (ii = 1; ii <= arrayLen(categoryNames); ++ii) {
-				writeOutput('<option value=#categoryIDs[ii]#>#categoryNames[ii]#</option>');
+			for (ii = 1; ii <= arrayLen(categories); ++ii) {
+				writeOutput('<option value=#categories[ii].getCategoryTitle()#>#categories[ii].getCategoryTitle()#</option>');
 			}
 		</cfscript>
  	</cfselect>
@@ -55,7 +50,7 @@
 
 		<br>
 <label for="includeWeeklyReport">Include in weekly report:</label>
-	<cfinput type="checkbox" name="includeWeeklyReport" value="yes" id="includeWeeklyReport">
+	<cfinput type="checkbox" name="includeWeeklyReport" value="1" id="includeWeeklyReport">
 		
 		<br>
 <cfinput type="submit" name="addEvent" id="addEvent" value="Submit">
@@ -64,25 +59,21 @@
 		<br>
 <!--- Gets the latest records and displays under form entry --->		
 <cfscript>
-	records = new dotlog.components.Record(airportIDs[1]); 
-	descriptions = records.getDescriptions();
-	airport = records.getAirport();
-	user = records.getReporter();
-	category = records.getCategory();
-	date = records.getDate();
+	writeOutput('<table width="783" height="180" border="1">');
+		for (ii = 1; ii <= arrayLen(airports); ++ii) {
+			records = application.recordDAO.getRecordsByAirportFAACode(airports[ii].getFAACode());
 
-  //TODO: see about using cftable
-  writeOutput('<table width="783" height="180" border="1">');
-  for (ii = 1; ii <= arrayLen(descriptions); ++ii) {
-		writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #date[ii]# <br>');
-		writeOutput(' Reporter: #user[ii]# <br>Airport: #airport[ii]# <br> Category: #category[ii]# <br>');
-		writeOutput('<td width="560" align="left" valign="top">#descriptions[ii]#</td>');
-		writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
-		writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
-		writeOutput('<label for="event_#ii#_important">Important</label>');
-		writeOutput('<label for="entry_1_important"></label></form></td>');
-  }
-  writeOutput('</table>');
+			for (jj = 1; jj <= arrayLen(records); ++jj) {
+				writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
+				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportFAACode()# <br> Category: #records[jj].getCategory()# <br>');
+				writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
+				writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
+				writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
+				writeOutput('<label for="event_#jj#_important">Important</label>');
+				writeOutput('<label for="entry_1_important"></label></form></td>');
+	  		}
+		}
+	writeOutput('</table>');
 </cfscript>
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->

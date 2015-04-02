@@ -5,13 +5,15 @@ component
 	this.ApplicationTimeout = CreateTimeSpan( 0, 0, 1, 0 );
 	this.SessionManagement = true;
 	this.rootDir = getDirectoryFromPath( getCurrentTemplatePath() );
-	//this.mxunitDir = (this.rootDir & "../mxunit/"); 
-//	this.mappings[ "/mxunit" ] = this.rootDir & "mxunit/";
-//	this.mappings[ "/spec" ] = this.rootDir & "component/";
-	this.mappings[ "/dotlog" ] = this.rootDir;
+	this.mappings[ "/dotlog" ] = this.rootDir;	
 
-
-	//myfile = FileOpen("c:\temp\test1.txt", "append");
-//	fileWrite("c:\cflog.txt",this.rootDir & "  " &  this.mappings["/mxunit"]);
+	public void function onApplicationStart()
+	{
+		var datasource = new dotlog.components.datasource(DSName = "DOTlogDB", username = "", password = "");
+		Application.airportDAO = new dotlog.components.airportDAO(datasource);
+		Application.categoryDAO = new dotlog.components.categoryDAO(datasource);
+		Application.userDAO = new dotlog.components.userDAO(datasource);
+		Application.recordDAO = new dotlog.components.recordDAO(datasource);
+	}
 }
 </cfscript>

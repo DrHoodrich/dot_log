@@ -2,7 +2,7 @@
  	<div id="menu"> 
   	  <ul id="nav" class="dropdown dropdown-horizontal">
 	<!-- TemplateBeginEditable name="Dropdown Menu" -->
-	    <li><a href="./login.cfm">Search</a></li>
+	    <li><a href="./search.cfm">Search</a></li>
 	    <li><a href="./create_record.cfm">Add Event</a>
         <li><a href="./search.cfm">Reporting</a></li>
         <li class = "dir"><a href="./admin.cfm">Admin</a>

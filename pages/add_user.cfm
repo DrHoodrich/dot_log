@@ -8,7 +8,7 @@
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
-<h2>DOTLog Add User</h2>
+<cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfform name="createUser" action="addNewUser_action.cfm" method="post">
 	Userame:<cfinput type = "text" name = "username" message = "username" required = "yes"></cfinput> <br>
 	First Name:<cfinput type = "text" name = "firstName" message = "First Name" required = "yes"></cfinput> <br>

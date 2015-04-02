@@ -1,5 +1,6 @@
 <cfset pageTitle = "DOTLog Login"> <!--- Variable that is used in the html included header --->
 <cfinclude template="../includes/header.cfm">
+<cfinclude template="../includes/banner.cfm">
   <a id="main_content"></a>
 <cfinclude template="../includes/breadcrumb.cfm">
 <cfinclude template="../includes/nav.cfm">
