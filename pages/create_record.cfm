@@ -12,7 +12,7 @@
 
 <!--- Hard coded until LDAP info. ---> 
 	<cfscript>
-		user = application.userDAO.getUserByUsername("us");
+		user = application.userService.getUserByUsername("us");
 		airports = application.airportDAO.getChildAirports(user.getAirportFAACode());
 		categories = application.categoryDAO.getAllCategories();
 	</cfscript>
@@ -61,7 +61,7 @@
 <cfscript>
 	writeOutput('<table width="783" height="180" border="1">');
 		for (ii = 1; ii <= arrayLen(airports); ++ii) {
-			records = application.recordDAO.getRecordsByAirportFAACode(airports[ii].getFAACode());
+			records = application.recordService.getRecordsByAirportFAACode(airports[ii].getFAACode());
 
 			for (jj = 1; jj <= arrayLen(records); ++jj) {
 				writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');

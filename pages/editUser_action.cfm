@@ -11,17 +11,56 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
+	existingUser = "";
 	if ( structKeyExists(FORM, 'submitUser_button') ) {
 		writeDump(FORM);
-		dataSource = new dotlog.components.datasource("DOTlogDB","","");
-		userDOA = new dotlog.components.userDAO(dataSource);
-		if( isNull(FORM.username) ) {
-			existingUser = userDOA.getUserbyUsername(FORM.username);
-			writeDump(existingUser);
+		if( !isNull(FORM.username) ) {
+			existingUser = application.userService.getUserByUsername("us");
+			
 		} else if ( !isNull(FORM.faaCode) ){
-			existingUsers = userDOA.getUsersByAirportFAACode(FORM.faaCode);
+			existingUser = application.userService.getUsersByAirportFAACode(FORM.faaCode);
 			writeDump(existingUsers);
 		}
+	} else if ( structKeyExists(FORM,"editUser_button")) {
+		writeDump(FORM);
+		if (structKeyExists(FORM, 'enabled') ) {
+			FORM.enabled = 1;
+		} else {
+			FORM.enabled = 0;
+		}
+
+		existingUser = new dotlog.components.user(argumentCollection = FORM);
+		writeDump(existingUser.getAirportFAACode());
+
+		writeDump(existingUser);
+		tmp = application.userService.saveUser(existingUser);
+		writeDump(tmp);
+		existingUser = application.userService.getUserByUsername("us");
+		writeDump(existingUser);
 	}
+	structClear(FORM);
 </cfscript>
+
+<cfif structKeyExists(FORM, 'editUser_button') IS False >
+	<cfform name="editUser" method="post" action="editUser_action.cfm">
+		<label for="Username">username:</label>
+			<cfinput type="text" name="Username" value="#existingUser.getUsername()#"> <br>
+
+		<label for="faaCode">airport:</label>
+			<cfinput type="text" name="faaCode" value="#existingUser.getAirportFAACode()#"> <br>
+
+		<label for="FirstName">first name:</label>
+			<cfinput type="text" name="FirstName" value="#existingUser.getFirstName()#"> <br>
+
+		<label for="LastName">last name:</label>
+			<cfinput type="text" name="LastName" value="#existingUser.getLastName()#"> <br>
+
+		<label for="Permissions">permissions:</label>
+			<cfinput type="text" name="Permissions" value="#existingUser.getPermissions()#"> <br>
+
+		<label for="enabled">Enabled:</label>
+			<cfinput type="checkbox" name="enabled" value="#existingUser.isEnabled()#" checked="#existingUser.isEnabled()#" id="enabled"> <br>
+		<cfinput type="submit" name="editUser_button" id="editUser_button" value="Edit">
+	</cfform>
+</cfif>
 <cfinclude template="../includes/footer.cfm">

@@ -9,7 +9,7 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 	<cfscript>
-		user = application.userDAO.getUserByUsername("us");
+		user = application.userService.getUserByUsername("us");
 	</cfscript>
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
