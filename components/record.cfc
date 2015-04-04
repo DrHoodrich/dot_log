@@ -1,11 +1,15 @@
 component Record {
-        property name="recordText" type="string" default="" hint=""; 
-        property name="username" type="string" default="" hint="";
-        property name="faaCode" type="string" default="" hint="";
-        property name="eventTime" type="string" default="" hint="";
-        property name="recordTime" type="numeric" default="" hint="";
-        property name="inWeeklyReport" type="numeric" default="" hint="";
-        property name="categoryTitle" type="string" default="" hint="";
+        variables.instance.instance = {
+           // recordID = '',
+            recordText = '',
+            username = '',
+            faaCode = '',
+            eventTime = '',
+            recordTime = '',
+            inWeeklyReport = '',
+            categoryTitle = ''
+        };
+        
 
         public Record function init(required string recordText,
                                     required string username,
@@ -15,44 +19,49 @@ component Record {
                                     required numeric inWeeklyReport,
                                     required string categoryTitle)
         {                  
-                variables.recordText = arguments.recordText;
-                variables.username = arguments.username;
-                variables.faaCode = arguments.faaCode;
-                variables.eventTime = arguments.eventTime;
-                variables.recordTime = arguments.recordTime;
-                variables.inWeeklyReport = arguments.inWeeklyReport;
-                variables.categoryTitle = arguments.categoryTitle;
+                variables.instance.recordText = arguments.recordText;
+                variables.instance.username = arguments.username;
+                variables.instance.faaCode = arguments.faaCode;
+                variables.instance.eventTime = arguments.eventTime;
+                variables.instance.recordTime = arguments.recordTime;
+                variables.instance.inWeeklyReport = arguments.inWeeklyReport;
+                variables.instance.categoryTitle = arguments.categoryTitle;
                 return this;
+        }
+
+        public numeric function getRecordID()
+        {
+            return variables.instance.recordID;
         }
 
         public string function getRecordText()
         {
-                return variables.recordText;
+                return variables.instance.recordText;
         }
 
         public string function getUsername() 
         {
-                return variables.username;
+                return variables.instance.username;
         }
 
         public string function getAirportFAACode() 
         {
-                return variables.faaCode;
+                return variables.instance.faaCode;
         }
 
         public string function getEventTime()
         {
-                return variables.eventTime;
+                return variables.instance.eventTime;
         }
 
         public string function getRecordTime() 
         {
-                return variables.recordTime;
+                return variables.instance.recordTime;
         }
 
         public boolean function isInWeeklyReport()
         {
-                if (variables.inWeeklyReport) {
+                if (variables.instance.inWeeklyReport) {
                         return True;
                 } else {
                         return False;
@@ -61,6 +70,6 @@ component Record {
 
         public string function getCategory() 
         {
-                return variables.categoryTitle;
+                return variables.instance.categoryTitle;
         }
 }

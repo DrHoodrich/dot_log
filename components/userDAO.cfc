@@ -59,7 +59,8 @@ component UserDAO
 
 		queryService.addParam(name = "username", value = arguments.username, cfsqltype = "cf_sql_varchar");
 		queryResult = queryService.execute(sql = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled 
-			FROM DL_USERS WHERE username = :username");
+			FROM DL_USERS 
+			WHERE username = :username");
 		result = queryResult.getResult();
 
 		if (result.RecordCount) {
@@ -73,31 +74,97 @@ component UserDAO
 		return objUser;
 	} 
 
-	public numeric function createUser(required dotlog.components.user user)
+	public boolean function saveUser(required user user)
 	{
-		var qInsert = '';
-		var insertResult = 0;
+		if (userExists(user)) {
+			return updateUser(arguments.user);
+		} else {
+			return createUser(arguments.user);
+		}
+	}
+
+	public boolean function updateUser(required user user)
+	{
+		if (user.isEnabled()) {
+			enableValue = 1;
+		} else {
+			enableValue = 0;
+		}
+
+		var queryService = new query();
+
+		queryService.setName("createUser");
+		queryService.setDataSource(variables.instance.datasource.getDSName());
+		queryService.setUsername(variables.instance.datasource.getUsername());
+		queryService.setPassword(variables.instance.datasource.getPassword());
+
+		queryService.addParam(name = "username", value = arguments.user.getUsername(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "firstName", value = arguments.user.getFirstName(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "lastName", value = arguments.user.getLastName(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "airportFAACode", value = arguments.user.getAirportFAACode(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "permissions", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_number");
+		queryService.addParam(name = "enabled", value = enableValue, cfsqltype = "cf_sql_number");
+
+		transaction action="begin"
+		{
+			try {
+				queryResult = queryService.execute(sql = "UPDATE DL_USERS SET
+					USERNAME = :username, FIRST_NAME = :firstName, LAST_NAME = :lastName, FAA_CODE = :airportFAACode, USER_PERMISSIONS = :permissions, ENABLED = :enabled 
+					WHERE USERNAME = :username");
+				return true;
+			} catch (database excpt) {
+				transactionRollback();
+				return false;
+			}
+		}
+	}
+
+	public boolean function createUser(required user user)
+	{
+		if (user.isEnabled()) {
+			enableValue = 1;
+		} else {
+			enableValue = 0;
+		}
 
 		queryService = new query();
 
 		queryService.setName("createUser");
 		queryService.setDataSource(variables.instance.datasource.getDSName());
+		queryService.setUsername(variables.instance.datasource.getUsername());
+		queryService.setPassword(variables.instance.datasource.getPassword());
 
 		queryService.addParam(name = "username", value = arguments.user.getUsername(), cfsqltype = "cf_sql_varchar");
 		queryService.addParam(name = "firstName", value = arguments.user.getFirstName(), cfsqltype = "cf_sql_varchar");
 		queryService.addParam(name = "lastName", value = arguments.user.getLastName(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "airportFAACode", value = arguments.user.getAirportIDs(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "permissions", value = arguments.user.getLastName(), cfsqltype = "cf_sql_number");
-		if (user.isEnabled) {
-			queryService.addParam(name = "enabled", value = 1, cfsqltype = "cf_sql_number");
-		} else {
-			queryService.addParam(name = "enabled", value = 0, cfsqltype = "cf_sql_number");
+		queryService.addParam(name = "airportFAACode", value = arguments.user.getAirportFAACode(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "permissions", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_number");
+		queryService.addParam(name = "enabled", value = enableValue, cfsqltype = "cf_sql_number");
+
+		transaction action="begin"
+		{
+			try {
+				queryResult = queryService.execute(sql = "INSERT INTO DL_USERS 
+					(USERNAME, FIRST_NAME, LAST_NAME, FAA_CODE, USER_PERMISSIONS, ENABLED) 
+					VALUES (:username, :firstName, :lastName, :airportFAACode, :permissions, :enabled)");
+				return true;
+			} catch (any excpt) {
+				transactionRollback();
+				return false;
+			}
 		}
+	}
 
-		queryResult = queryService.execute(sql = "INSERT INTO DL_USERS 
-			(DOT_USERNAME, FIRST_NAME, LAST_NAME, FAA_CODE, USER_PERMISSIONS, ENABLED) 
-			VALUES (:username, :firstName, :lastName, :airportFAACode, :permissions, :enabled)");
+	public boolean function userExists(required user user)
+	{
+		var queryService = new query();
+		queryService.setDataSource(variables.instance.datasource.getDSName());
+		queryService.setUsername(variables.instance.datasource.getUsername());
+		queryService.setPassword(variables.instance.datasource.getPassword());
 
-		return insertResult.generatedKey();
+		queryService.addParam(name = "username", value = user.getUsername(), cfsqltype = "cf_sql_varchar");
+		queryResult = queryService.execute(sql = "SELECT count(1) username FROM DL_USERS WHERE username = :username"); 
+
+		return queryResult.getResult().recordCount;
 	}
 }

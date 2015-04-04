@@ -64,6 +64,11 @@ component User
                 return Left(firstName, 1)&"."&Left(lastName, 1)&".";
         }
 
+        public numeric function getPermissions()
+        {
+                return permissions;
+        }
+        
         public boolean function isEnabled()
         {
             if (enabled >= 1) {
