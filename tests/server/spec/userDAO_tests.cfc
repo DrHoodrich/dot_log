@@ -10,6 +10,7 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
     faaCode = "AUK";
     permissions = "1";
     enabled = "1";
+    emailAddr = "test";
 	public void function setUp()
 	{
 		datasource = new dotlog.components.datasource(DSName, DSuser, DSpasswd);
@@ -18,7 +19,8 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
                                               lastName,
                                               faaCode,
                                               permissions,
-                                              enabled);
+                                              enabled,
+                                              emailAddr);
 	}
 
 	public void function userDAOConstruction()
@@ -58,7 +60,8 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 	                                              lastName,
 	                                              faaCode,
 	                                              permissions,
-	                                              enabled);
+	                                              enabled,
+	                                              emailAddr);
 	    userDAO = new dotlog.components.userDAO(datasource);
 	    assert(userDAO.userExists(testUser));
 	}
@@ -71,13 +74,15 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 	    faaCode = "AUK";
 	    permissions = "1";
 	    enabled = "1";
+	    emailAddr = "test";
 	    testUser = new dotlog.components.user(username,
 	                                              firstName,
 	                                              lastName,
 	                                              faaCode,
 	                                              permissions,
-	                                              enabled);
+	                                              enabled,
+	                                              emailAddr);
 	    userDAO = new dotlog.components.userDAO(datasource);
-	    assert(userDAO.createUser(testUser));
+	    assertFalse(userDAO.createUser(testUser));
 	}
 }

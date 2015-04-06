@@ -5,6 +5,7 @@ component userTest extends = "mxunit.framework.TestCase" {
     faaCode = "AUK";
     permissions = "1";
     enabled = "1";
+    emailAddr = "test";
 
 	public void function setUp()
 	{
@@ -13,7 +14,8 @@ component userTest extends = "mxunit.framework.TestCase" {
                                               lastName,
                                               faaCode,
                                               permissions,
-                                              enabled);
+                                              enabled,
+                                              emailAddr);
 	}
 
 	public void function getUsername()
@@ -53,7 +55,9 @@ component userTest extends = "mxunit.framework.TestCase" {
 
     public void function getEmailAddress()
     {
-        fail("Email Address field is not defined in the database.");
+        expected = emailAddr;
+        actual = testUser.getEmailAddr();
+        assertEquals(expected, actual);
     }
 
     public void function isEnabled()
