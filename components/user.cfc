@@ -8,73 +8,80 @@
 * Simple class for representing users of DOTLog
 */
 
-component User 
+component User extends="coreUtils"
 {
-     property name="username" type="string" default="" hint="The DOT based username."; 
-     property name="firstName" type="string" default="" hint="The DOT based username.";
-     property name="lastName" type="string" default="" hint="The DOT based username.";
-     property name="permissions" type="numeric" default="" hint="The DOT based username.";
-     property name="airportFAACode" type="string" default="" hint="DOT employee hub airport.";
-     property name="enabled" type="numeric" default="" hint="If the employee is enabled to use DOTLog.";
+    variables.instance = {
+        username = '', 
+        firstName = '',
+        lastName = '',
+        permissions = '',
+        airportFAACode = '',
+        enabled = '',
+        emailAddr = '' 
+    };
+
         
         public User function init(required string username,
                                   required string firstName,
                                   required string lastName,
                                   required string faaCode,
                                   required numeric permissions,
-                                  required numeric enabled)
+                                  required numeric enabled,
+                                  required string emailAddr)
         {
-                variables.username = arguments.username;
-                variables.firstName = arguments.firstName;
-                variables.lastName = arguments.lastName;
-                variables.permissions = arguments.permissions;
-                variables.airportFAACode = arguments.faaCode;
-                variables.enabled = arguments.enabled;
+                variables.instance.username = arguments.username;
+                variables.instance.firstName = arguments.firstName;
+                variables.instance.lastName = arguments.lastName;
+                variables.instance.permissions = arguments.permissions;
+                variables.instance.airportFAACode = arguments.faaCode;
+                variables.instance.enabled = arguments.enabled;
+                variables.instance.emailAddr = arguments.emailAddr;
 
                 return this;
         }
 
         public string function getFirstName()
         {
-            return firstName;
+            return variables.instance.firstName;
         }
 
         public string function getLastName()
         {
-            return lastName;
+            return variables.instance.lastName;
         }
 
         public string function getFullName() 
         {
-                return firstName & " " & lastName;
+                return variables.instance.firstName & " " & variables.instance.lastName;
         }
 
         public string function getAirportFAACode()
         {
-                return airportFAACode;
+                return variables.instance.airportFAACode;
         }
 
         public string function getUsername()
         {
-                return username;
+                return variables.instance.username;
         }
 
         public string function getInitials()
         {
-                return Left(firstName, 1)&"."&Left(lastName, 1)&".";
+                return Left(variables.instance.firstName, 1)&"."&Left(variables.instance.lastName, 1)&".";
         }
 
         public numeric function getPermissions()
         {
-                return permissions;
+                return variables.instance.permissions;
         }
         
         public boolean function isEnabled()
         {
-            if (enabled >= 1) {
-                return true;
-            } else {
-                return false;
-            }
+            return (variables.instance.enabled);
+        }
+
+        public string function getEmailAddr()
+        {
+                return variables.instance.emailAddr;
         }
 }
