@@ -36,7 +36,8 @@ component UserDAO
 							lastName = result["LAST_NAME"][ii],
 							faaCode = result["FAA_CODE"][ii],
 							permissions = result["USER_PERMISSIONS"][ii],
-							enabled = result["ENABLED"][ii]);
+							enabled = result["ENABLED"][ii],
+							emailAddr = result["EMAIL_ADDR"][ii]);
 			 arrayAppend(userObjects, objUser);
 		}
 		return userObjects;
@@ -58,7 +59,7 @@ component UserDAO
 		queryService.setPassword(DSpassword);
 
 		queryService.addParam(name = "username", value = arguments.username, cfsqltype = "cf_sql_varchar");
-		queryResult = queryService.execute(sql = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled 
+		queryResult = queryService.execute(sql = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, email_addr
 			FROM DL_USERS 
 			WHERE username = :username");
 		result = queryResult.getResult();
@@ -69,7 +70,8 @@ component UserDAO
 							lastName = result["LAST_NAME"][1],
 							faaCode = result["FAA_CODE"][1],
 							permissions = result["USER_PERMISSIONS"][1],
-							enabled = result["ENABLED"][1]);
+							enabled = result["ENABLED"][1],
+							emailAddr = result["EMAIL_ADDR"][1]);
 		}
 		return objUser;
 	} 
@@ -85,25 +87,7 @@ component UserDAO
 
 	public boolean function updateUser(required user user)
 	{
-		if (user.isEnabled()) {
-			enableValue = 1;
-		} else {
-			enableValue = 0;
-		}
-
-		var queryService = new query();
-
-		queryService.setName("createUser");
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(variables.instance.datasource.getUsername());
-		queryService.setPassword(variables.instance.datasource.getPassword());
-
-		queryService.addParam(name = "username", value = arguments.user.getUsername(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "firstName", value = arguments.user.getFirstName(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "lastName", value = arguments.user.getLastName(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "airportFAACode", value = arguments.user.getAirportFAACode(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "permissions", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_number");
-		queryService.addParam(name = "enabled", value = enableValue, cfsqltype = "cf_sql_number");
+		var queryService = getQueryHandler("updateUser", arguments.user);
 
 		transaction action="begin"
 		{
@@ -121,26 +105,8 @@ component UserDAO
 
 	public boolean function createUser(required user user)
 	{
-		if (user.isEnabled()) {
-			enableValue = 1;
-		} else {
-			enableValue = 0;
-		}
-
-		queryService = new query();
-
-		queryService.setName("createUser");
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(variables.instance.datasource.getUsername());
-		queryService.setPassword(variables.instance.datasource.getPassword());
-
-		queryService.addParam(name = "username", value = arguments.user.getUsername(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "firstName", value = arguments.user.getFirstName(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "lastName", value = arguments.user.getLastName(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "airportFAACode", value = arguments.user.getAirportFAACode(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "permissions", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_number");
-		queryService.addParam(name = "enabled", value = enableValue, cfsqltype = "cf_sql_number");
-
+		queryService = getQueryHandler("createUser", user);
+		
 		transaction action="begin"
 		{
 			try {
@@ -157,14 +123,29 @@ component UserDAO
 
 	public boolean function userExists(required user user)
 	{
+		var queryService = getQueryHandler("SeeIfUserExists", arguments.user);
+
+		queryResult = queryService.execute(sql = "SELECT username FROM DL_USERS WHERE username = :username"); 
+
+		return queryResult.getResult().recordCount;
+	}
+
+	private base function getQueryHandler(required string queryName, required user user)
+	{
 		var queryService = new query();
+
+		queryService.setName(arguments.queryName);
 		queryService.setDataSource(variables.instance.datasource.getDSName());
 		queryService.setUsername(variables.instance.datasource.getUsername());
 		queryService.setPassword(variables.instance.datasource.getPassword());
 
-		queryService.addParam(name = "username", value = user.getUsername(), cfsqltype = "cf_sql_varchar");
-		queryResult = queryService.execute(sql = "SELECT count(1) username FROM DL_USERS WHERE username = :username"); 
+		queryService.addParam(name = "username", value = arguments.user.getUsername(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "firstName", value = arguments.user.getFirstName(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "lastName", value = arguments.user.getLastName(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "airportFAACode", value = arguments.user.getAirportFAACode(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "permissions", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_number");
+		queryService.addParam(name = "enabled", value = user.isEnabled(), cfsqltype = "cf_sql_number");
 
-		return queryResult.getResult().recordCount;
+		return queryService;
 	}
 }
