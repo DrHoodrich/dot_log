@@ -1,4 +1,4 @@
-component UserService
+component UserService extends="CoreUtils"
 {
 	variables.instance = {
 		userDAO = '',
@@ -32,9 +32,4 @@ component UserService
 		var queryFilter = { lastname = arguments.lastNameFilter };
 		return variables.instance.userGW.filterUsers(queryFilter);
 	}
-
-	public struct function getMemento()
-	{
-		return variables.instance;
-	} 
 }

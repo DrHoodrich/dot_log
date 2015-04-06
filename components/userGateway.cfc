@@ -46,7 +46,6 @@ component UserGateway
 
 	public query function filterUsers(struct searchFilter=structNew())
 	{
-		writeDump(arguments);
 		var userObjects = [];
 
 		DSname = variables.instance.datasource.getDSName();
@@ -74,8 +73,6 @@ component UserGateway
 				sqlString = sqlString & " AND faa_code LIKE :faa_code";
 			}
 		}
-		writeDump(sqlString);
-		writeDump(queryService);
 		queryResult = queryService.execute(sql=sqlString);
 		return queryResult.getResult();
 	}
