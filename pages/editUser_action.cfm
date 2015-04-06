@@ -13,16 +13,12 @@
 <cfscript>
 	existingUser = "";
 	if ( structKeyExists(FORM, 'submitUser_button') ) {
-		writeDump(FORM);
 		if( !isNull(FORM.username) ) {
-			existingUser = application.userService.getUserByUsername("us");
-			
+			existingUser = application.userService.getUserByUsername(FORM.username);
 		} else if ( !isNull(FORM.faaCode) ){
 			existingUser = application.userService.getUsersByAirportFAACode(FORM.faaCode);
-			writeDump(existingUsers);
 		}
 	} else if ( structKeyExists(FORM,"editUser_button")) {
-		writeDump(FORM);
 		if (structKeyExists(FORM, 'enabled') ) {
 			FORM.enabled = 1;
 		} else {
@@ -30,13 +26,8 @@
 		}
 
 		existingUser = new dotlog.components.user(argumentCollection = FORM);
-		writeDump(existingUser.getAirportFAACode());
-
-		writeDump(existingUser);
-		tmp = application.userService.saveUser(existingUser);
-		writeDump(tmp);
-		existingUser = application.userService.getUserByUsername("us");
-		writeDump(existingUser);
+		application.userService.saveUser(existingUser);
+		existingUser = application.userService.getUserByUsername(FORM.username);
 	}
 	structClear(FORM);
 </cfscript>
@@ -54,6 +45,9 @@
 
 		<label for="LastName">last name:</label>
 			<cfinput type="text" name="LastName" value="#existingUser.getLastName()#"> <br>
+
+		<label for="emailAddr">Email:</label>
+			<cfinput type="text" name="emailAddr" value="#existingUser.getEmailAddr()#"> <br>
 
 		<label for="Permissions">permissions:</label>
 			<cfinput type="text" name="Permissions" value="#existingUser.getPermissions()#"> <br>
