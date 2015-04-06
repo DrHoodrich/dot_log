@@ -1,6 +1,7 @@
-component Record {
-        variables.instance.instance = {
-           // recordID = '',
+component Record extends="CoreUtils"
+{
+        variables.instance = {
+            recordID = '',
             recordText = '',
             username = '',
             faaCode = '',
@@ -17,8 +18,10 @@ component Record {
                                     required string eventTime,
                                     required string recordTime,
                                     required numeric inWeeklyReport,
-                                    required string categoryTitle)
-        {                  
+                                    required string categoryTitle,
+                                    numeric recordID = -1)
+        {
+                variables.instance.recordID = recordID;
                 variables.instance.recordText = arguments.recordText;
                 variables.instance.username = arguments.username;
                 variables.instance.faaCode = arguments.faaCode;
@@ -61,11 +64,7 @@ component Record {
 
         public boolean function isInWeeklyReport()
         {
-                if (variables.instance.inWeeklyReport) {
-                        return True;
-                } else {
-                        return False;
-                }
+                return (variables.instance.inWeeklyReport);
         }
 
         public string function getCategory() 
