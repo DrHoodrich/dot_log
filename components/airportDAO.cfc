@@ -30,8 +30,6 @@ component UserDAO
 			FROM DL_AIRPORTS WHERE parent_faa_code = :parent_faa_code");
 		result = queryResult.getResult();
 
-		writeDump(result);
-
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
 			 childAirport = new Airport(FAACode = result["faa_code"][ii],
 										parentFAACode = result["parent_faa_code"][ii],

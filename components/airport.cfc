@@ -1,39 +1,41 @@
 component Airport
 {
-        property name="FAAcode" type="string" default="" hint=""; 
-        property name="parentFAACode" type="string" default="" hint="";
-        property name="airportName" type="string" default="" hint="";
-        property name="enabled" type="numeric" default="" hint="";
+    variables.instance = {
+        FAAcode = '', 
+        parentFAACode = '',
+        airportName = '',
+        enabled = ''
+    };
 
         public Airport function init(required string FAAcode,
                                         required string parentFAACode,
                                         required string airportName,
                                         required numeric enabled)
         {
-               variables.FAACode = arguments.FAACode;
-               variables.parentFAACode = arguments.parentFAACode;
-               variables.airportName = arguments.airportName;
-               variables.enabled = arguments.enabled;
+               variables.instance.FAACode = arguments.FAACode;
+               variables.instance.parentFAACode = arguments.parentFAACode;
+               variables.instance.airportName = arguments.airportName;
+               variables.instance.enabled = arguments.enabled;
                return this;
         }
 
         public string function getFAACode()
         {
-                return variables.FAAcode;
+                return variables.instance.FAAcode;
         }
 
         public string function getParentAirportFAACode()
         {
-                return variables.parentFAACode;
+                return variables.instance.parentFAACode;
         }
 
         public string function getAirportName()
         {
-                return variables.airportName;
+                return variables.instance.airportName;
         }
 
         public boolean function isEnabled() 
         {
-                return variables.enabled;
+                return variables.instance.enabled;
         }
 }
