@@ -1,12 +1,14 @@
-component
+component extends = "taffy.core.api"
 {
 	this.Name =  "DOTLog";
-	this.ApplicationTimeout = CreateTimeSpan( 0, 0, 1, 0 );
+	this.ApplicationTimeout = CreateTimeSpan( 0, 0, 0, 0 );
 	this.SessionManagement = true;
 	this.rootDir = getDirectoryFromPath( getCurrentTemplatePath() );
-	this.mappings[ "/dotlog" ] = this.rootDir;	
+	this.mappings[ "/dotlog" ] = this.rootDir;
+	this.mappings[ "/resources" ] = expandPath('./components');
+	this.mappings[ "/taffy" ] = expandPath("./taffy");
 
-	public void function onApplicationStart()
+	function onApplicationStart()
 	{
 		var datasource = new dotlog.components.datasource(DSName = "DOTlogDB", username = "", password = "");
 		Application.airportDAO = new dotlog.components.airportDAO(datasource);
@@ -14,7 +16,14 @@ component
 
 		Application.recordService = new dotlog.components.recordService(datasource);
 		Application.userService = new dotlog.components.userService(datasource);
+
+		return super.onApplicationStart();
+	}
+
+	function onRequestStart()
+	{
+		return super.onRequestStart();
 	}
 
 	
-}
+}// extends = "taffy.core.api"
