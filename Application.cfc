@@ -5,8 +5,6 @@ component
 	this.SessionManagement = true;
 	this.rootDir = getDirectoryFromPath( getCurrentTemplatePath() );
 	this.mappings[ "/dotlog" ] = this.rootDir;
-	this.mappings[ "/resources" ] = expandPath('./components');
-	this.mappings[ "/taffy" ] = expandPath("./taffy");
 
 	function onApplicationStart()
 	{
@@ -16,14 +14,12 @@ component
 
 		Application.recordService = new dotlog.components.recordService(datasource);
 		Application.userService = new dotlog.components.userService(datasource);
-
-		//return super.onApplicationStart();
 	}
 
 	function onRequestStart()
 	{
-		//return super.onRequestStart();
+
 	}
 
 	
-}// extends = "taffy.core.api"
+}
