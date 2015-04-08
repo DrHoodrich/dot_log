@@ -1,3 +1,6 @@
 [submodule "tests/mxunit"]
 	path = tests/mxunit
 	url = https://github.com/mxunit/mxunit.git
+[submodule "Taffy"]
+	path = api/Taffy
+	url = https://github.com/atuttle/Taffy
