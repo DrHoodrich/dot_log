@@ -1,4 +1,4 @@
-component extends = "taffy.core.api"
+component  
 {
 	this.Name =  "DOTLog";
 	this.ApplicationTimeout = CreateTimeSpan( 0, 0, 0, 0 );
@@ -17,12 +17,12 @@ component extends = "taffy.core.api"
 		Application.recordService = new dotlog.components.recordService(datasource);
 		Application.userService = new dotlog.components.userService(datasource);
 
-		return super.onApplicationStart();
+		//return super.onApplicationStart();
 	}
 
 	function onRequestStart()
 	{
-		return super.onRequestStart();
+		//return super.onRequestStart();
 	}
 
 	
