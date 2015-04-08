@@ -21,13 +21,10 @@ component extends = "taffy.core.resource" taffy_uri="/api/airports"
 		testArray = [];
 		arrayAppend(testArray, airportStr);
 		arrayAppend(testArray, airportStr2);
-		jsonString = serializeJSON(testArray);
 		
 		containingStr = structNew();
 		containingStr.aiprorts = testArray;
-		jsonString = serializeJSON(containingStr);
-		
 
-		return representationOf(jsonString).withStatus(200);
+		return representationOf(containingStr).withStatus(200);
 	}
 }
