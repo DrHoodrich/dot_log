@@ -10,9 +10,27 @@
   <!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
-<cfform name="listChildAirports" action="airport_edit_action.cfm" method="post">
-  Parent FAA Code:<cfinput type="text" name = "parentFAACode" message="parentFAACode" required="yes"></cfinput> <br>
-    <cfinput type="submit" name="submitFAACode_button" id="listAirports" value="search"></cfinput>
+<cfscript>
+  user = application.userService.getUserByUsername("us");
+  hubAirports = application.airportDAO.getChildAirports(user.getAirportFaaCode());
+
+	AirportNames = [];
+  for (ii = 1; ii <= ArrayLen(hubAirports); ++ii) {
+  	arrayAppend(airportNames, hubAirports[ii].getFaaCode() & " - " & hubAirports[ii].getAirportName());
+  }
+</cfscript>
+
+<cfform name="editAirportForm" action="airport_edit_action.cfm" method="post">
+	<cfselect name="faaCode">
+		<option value=""> --None-- </option>
+			<cfscript>
+			  for (ii = 1; ii <= arrayLen(hubAirports); ++ii) {
+			    writeOutput('<option value="#hubAirports[ii].getFaaCode()#">#hubAirports[ii].getFaaCode()#  --  #hubAirports[ii].getAirportName()# </option>');
+			  }  
+		</cfscript>
+	</cfselect><br>
+  <!--- Parent FAA Code:<cfinput type="text"name = "parentFAACode" message="parentFAACode" required="yes" autoSuggest="#ArrayToList(airportNames)#" typeahead="true" /> <br> --->
+    <cfinput type="submit" name="selectAirportToEdit_button" id="listAirports" value="Edit"/>
 </cfform>
   <!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->

@@ -15,7 +15,7 @@
   hubAirports = application.airportDAO.getChildAirports(user.getAirportFaaCode());
 </cfscript>
   
-<cfform action="airport_create_action.cfm" method="post" >
+<cfform name="createAirportForm" action="airport_create_action.cfm" method="post" >
 	Airport Code:<cfinput type = "Text" name = "FAAcode" message = "" required = "yes"></cfinput> <br>
   Airport Name:<cfinput type = "Text" name = "airportName" message = "" required = "yes"></cfinput> <br>
 
