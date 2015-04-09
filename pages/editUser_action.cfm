@@ -24,7 +24,6 @@
 		} else {
 			FORM.enabled = 0;
 		}
-
 		existingUser = new dotlog.components.user(argumentCollection = FORM);
 		application.userService.saveUser(existingUser);
 		existingUser = application.userService.getUserByUsername(FORM.username);
@@ -34,8 +33,8 @@
 
 <cfif structKeyExists(FORM, 'editUser_button') IS False >
 	<cfform name="editUser" method="post" action="editUser_action.cfm">
-		<label for="Username">username:</label>
-			<cfinput type="text" name="Username" value="#existingUser.getUsername()#"> <br>
+		<label for="Username">username: <cfoutput><strong>"#existingUser.getUsername()#"</strong></cfoutput></label>
+			<cfinput type="hidden" name="Username" value="#existingUser.getUsername()#"> <br>
 
 		<label for="faaCode">airport:</label>
 			<cfinput type="text" name="faaCode" value="#existingUser.getAirportFAACode()#"> <br>
