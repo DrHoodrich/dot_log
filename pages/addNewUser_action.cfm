@@ -14,10 +14,9 @@
 	if ( structKeyExists(FORM, 'submitUser_button') ) {
 		dataSource = new dotlog.components.datasource("DOTlogDB","","");
 		userDOA = new dotlog.components.userDAO(dataSource);
-		writeDump(FORM);
+		FORM.enabled = 1;
 		newUser = new dotlog.components.user(argumentCollection=FORM);
 		userDOA.createUser(newUser);
-		writeDump(newUser);
 	}
 </cfscript>
 <cfform name="createUser" action="addNewUser.cfm" method="post">

@@ -34,8 +34,6 @@ component RecordDAO extends="CoreUtils"
 
 
 		if (result.recordCount) {
-			writeDump(result);
-			writeDump("from getID: " & result["record_id"][1]);
 			return result["record_id"][1];
 		} else {
 			return -1;
@@ -78,11 +76,10 @@ component RecordDAO extends="CoreUtils"
 
 	private boolean function recordExists(required record record)
 	{
-		writeDump(record.getInstanceData());
+		
 		var queryHandler = getQueryHandler("doesRecordExist", arguments.record);
 		queryResult = queryHandler.execute(sql = "SELECT record_id FROM DL_RECORDS WHERE record_id = :record_id");
-		writeDump(queryResult);
-		writeDump("EXISTS: " & queryResult.getResult().recordCount);
+		
 		return queryResult.getResult().recordCount;
 	}
 
