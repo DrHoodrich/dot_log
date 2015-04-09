@@ -11,6 +11,10 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
+	user = application.userService.getUserByUsername("us");
+
+	FORM.enabled = 1;
+
 	if ( structKeyExists(FORM, 'submitFAACode_button') ) {
 		dataSource = new dotlog.components.datasource("DOTlogDB","","");
 		airportDOA = new dotlog.components.airportDAO(dataSource);

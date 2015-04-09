@@ -1,4 +1,4 @@
-component UserDAO
+component AirportDAO
 {
 	variables.instance = {
 		datasource = ''
@@ -40,4 +40,29 @@ component UserDAO
 		}
 		return childAirports;
 	} 
+
+	public boolean function saveAirport(required airport airport)
+	{
+		var queryService = new query();
+
+		queryService.setName("createAirport");
+		queryService.setDataSource(variables.instance.datasource.getDSName());
+		queryService.setUsername(variables.instance.datasource.getUsername());
+		queryService.setPassword(variables.instance.datasource.getPassword());
+
+		queryService.addParam(name = "faa_code", value = arguments.airport.getFAACode(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "parent_faa_code", value = arguments.airport.getParentAirportFAACode(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "airport_name", value = arguments.airport.getAirportName(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "enabled", value = arguments.airport.isEnabled(), cfsqltype = "cf_sql_number");
+
+		try {
+			queryResult = queryService.execute(sql = "INSERT INTO DL_AIRPORTS 
+						(faa_code, parent_faa_code, airport_name, enabled) 
+						VALUES (:faa_code, :parent_faa_code, :airport_name, :enabled)");
+		} catch (database excpt) {
+			writeDump(excpt.cause.message); // TODO give a nice errors to user, like if FAA already exists.
+			return false;
+		}
+		return true;
+	}
 }
