@@ -26,8 +26,6 @@
 		} else {
 			FORM.enabled = 0;
 		}
-			writeDump(FORM);
-
 		existingAirport = new dotlog.components.airport(argumentCollection = FORM);
 		successfulUpdate = airportDAO.saveAirport(existingAirport);
 	}

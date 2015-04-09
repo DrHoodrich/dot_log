@@ -18,8 +18,8 @@
 
 
   
-<cfform>
-  Category to edit:<cfselect name="oldCategoryTitle" id="categoryTitle">
+<cfform name="search" action="updateCategory.cfm" method="post">
+  Category to edit:<cfselect name="categoryTitle" id="categoryTitle">
     <cfscript>
           writeOutput('<option value="none"></option>');
           for (ii = 1; ii <= arrayLen(allCategories); ++ii) {
@@ -27,14 +27,7 @@
           }
     </cfscript>
   </cfselect>
-</cfform>
-
-
-<cfform name="search" action="category_edit_action.cfm" method="post">
-  New Category Title:<cfinput type="text" name = "username" message="username" required="yes"></cfinput> <br>
-  Category Description:<cfinput type="text" name="faaCode" message="faaCode" required="no"></cfinput> <br>
-  In Weekly Report:<cfinput type="checkbox" name="inWeeklyReport" required="no"></cfinput> <br>
-  <cfinput type="submit" name="submitSearch_button" id="searchRecords" value="search"></cfinput>
+  <cfinput type="submit" name="selectCategory_button" id="searchRecords" value="edit"></cfinput>
 </cfform>
   <!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->

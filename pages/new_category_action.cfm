@@ -1,4 +1,4 @@
-<cfset pageTitle = "Seach Results"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "Category Creation"> <!--- Variable that is used in the html included header --->
 <cfinclude template="../includes/header.cfm">
 <cfinclude template="../includes/banner.cfm">
 	<a id="main_content"></a>

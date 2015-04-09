@@ -10,6 +10,38 @@ component CategoryDAO
 		return this;
 	}
 
+	public category function getCategoryByTitle(required string categoryTitle)
+	{
+		var queryService = new query();
+		queryService.addParam(name = "category_title", value = arguments.categoryTitle, cfsqltype = "cf_sql_varchar");
+		DSname = variables.instance.datasource.getDSName();
+		DSusername = variables.instance.datasource.getUsername();
+		DSpassword = variables.instance.datasource.getPassword();
+
+		
+
+		queryService.setName("fetchCategory");
+		queryService.setDataSource(variables.instance.datasource.getDSName());
+		queryService.setUsername(DSusername);
+		queryService.setPassword(DSpassword);
+		
+ 		transaction action="begin" {
+			try {
+				queryResult = queryService.execute(sql = "SELECT category_title, description, enabled, in_weekly_report
+					FROM DL_CATEGORIES WHERE category_title = :category_title");
+			} catch (database excpt) {
+				transactionRollback();
+				rethrow();
+				return false;
+			}
+		}
+		result = queryResult.getResult();
+		return new Category(categoryTitle = result["category_title"][1],
+							description = result["description"][1],
+							enabled = result["enabled"][1],
+							inWeeklyReport = result["in_weekly_report"][1]);
+	}
+
 	public array function getEnabledCategories()
 	{
 		var categoryObjects = [];
@@ -76,6 +108,23 @@ component CategoryDAO
 		} else { 
 			return createCategory(arguments.category);	
 		} 
+	}
+
+	private boolean function updateCategory(required category category)
+	{
+		var queryHandler = getQueryHandler("updateCategory", arguments.category);
+		transaction action="begin" {
+			try {
+				queryResult = queryHandler.execute(sql = "UPDATE DL_CATEGORIES SET 
+					DESCRIPTION = :description, ENABLED = :enabled, IN_WEEKLY_REPORT = :in_weekly_report 
+						WHERE CATEGORY_TITLE = :category_title");
+			} catch (database excpt) {
+				transactionRollback();
+				rethrow();
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean function createCategory(required category category)
