@@ -12,7 +12,7 @@ component extends = "taffy.core.resource" taffy_uri="/api/airports"
 	function get()
 	{	
 		airportStr = structNew();
-		airportStr.faa_code = "fai";
+		airportStr.faa_code = "FAI";
 
 		airportStr2 = structNew();
 		airportStr2.faa_code = "Northern";
@@ -23,7 +23,7 @@ component extends = "taffy.core.resource" taffy_uri="/api/airports"
 		arrayAppend(testArray, airportStr2);
 		
 		containingStr = structNew();
-		containingStr.aiprorts = testArray;
+		containingStr.airports = testArray;
 
 		return representationOf(containingStr).withStatus(200);
 	}
