@@ -8,7 +8,7 @@
 
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-	writeDump(FORM);
+
 	if ( isNull(FORM.includeWeeklyReport) ) {
 		reporting = 0;
 	} else {
