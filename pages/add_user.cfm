@@ -9,22 +9,33 @@
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
+<cfscript>
+	user = application.userService.getUserByUsername("us");
+
+	hubAirports = application.airportDAO.getChildAirports(user.getAirportFaaCode());
+
+	AirportNames = [];
+  for (ii = 1; ii <= ArrayLen(hubAirports); ++ii) {
+  	arrayAppend(airportNames, hubAirports[ii].getFaaCode() & " - " & hubAirports[ii].getAirportName());
+  }
+
+</cfscript>
+	
 <cfform name="createUser" action="addNewUser_action.cfm" method="post">
 	Userame:<cfinput type = "text" name = "username" message = "username" required = "yes"></cfinput> <br>
 	First Name:<cfinput type = "text" name = "firstName" message = "First Name" required = "yes"></cfinput> <br>
 	Last Name:<cfinput type = "text" name = "lastName" message = "Last Name" required = "yes"></cfinput> <br>
-	Email:<cfinput type = "text" name = "emailAddress" message = "Email" required = "yes"></cfinput> <br>
+	Email:<cfinput type = "text" name = "emailAddr" message = "Email" required = "yes"></cfinput> <br>
 	
-	Hub/Region:<cfselect name = "airportID" id = "airportID">
-		<option value=1>Fair</option>
-		<option value=2>Fairbanks</option>
-		<option value=2>Clear</option>
+	Location:<cfselect name = "faaCode">
+		<option value=""> --None-- </option>
+			<cfscript>
+			  for (ii = 1; ii <= arrayLen(hubAirports); ++ii) {
+			    writeOutput('<option value="#hubAirports[ii].getFaaCode()#">#hubAirports[ii].getFaaCode()#  --  #hubAirports[ii].getAirportName()# </option>');
+			  }  
+		</cfscript>
 	</cfselect><br>
-	Airport:<cfselect name = "userAirport" id = "User Airport">
-		<option value=1>some</option>
-		<option value=2>other</option>
-		<option value=3>airports</option>
-	</cfselect><br>
+	
 	Account Type:<cfselect name = "permissions" id = "permissions">
 		<option value=1>user</option>
 		<option value=1337>admin</option>
