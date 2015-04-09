@@ -18,7 +18,7 @@
 		} else if ( !isNull(FORM.faaCode) ){
 			existingUser = application.userService.getUsersByAirportFAACode(FORM.faaCode);
 		}
-	} else if ( structKeyExists(FORM,"editUser_button")) {
+	} else if ( structKeyExists(FORM, "editUser_button")) {
 		if (structKeyExists(FORM, 'enabled') ) {
 			FORM.enabled = 1;
 		} else {
