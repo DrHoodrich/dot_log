@@ -67,5 +67,56 @@ component CategoryDAO
 			 arrayAppend(categoryObjects, categoryObject);
 		}
 		return categoryObjects;
-	} 
+	}
+
+	public boolean function saveCategory(required category category)
+	{
+		if (categoryExists(arguments.category)) {
+			return updateCategory(arguments.category);
+		} else { 
+			return createCategory(arguments.category);	
+		} 
+	}
+
+	private boolean function createCategory(required category category)
+	{
+		var queryHandler = getQueryHandler("createCategory", arguments.category);
+		
+ 		transaction action="begin" {
+			try {
+				queryResult = queryHandler.execute(sql = "INSERT INTO DL_CATEGORIES 
+					(CATEGORY_TITLE, DESCRIPTION, ENABLED, IN_WEEKLY_REPORT) 
+					VALUES (:category_title, :description, :enabled, :in_weekly_report)");
+			} catch (database excpt) {
+				transactionRollback();
+				rethrow();
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean function categoryExists(required category category)
+	{
+		var queryHandler = getQueryHandler("doesCategoryExist", arguments.category);
+		queryResult = queryHandler.execute(sql = "SELECT category_title FROM DL_CATEGORIES WHERE category_title = :category_title");
+		return queryResult.getResult().recordCount;
+	}
+
+	private base function getQueryHandler(required string queryName, required category category)
+	{
+		var queryService = new query();
+
+		queryService.setName(arguments.queryName);
+		queryService.setDataSource(variables.instance.datasource.getDSName());
+		queryService.setUsername(variables.instance.datasource.getUsername());
+		queryService.setPassword(variables.instance.datasource.getPassword());
+
+		queryService.addParam(name = "in_weekly_report", value = arguments.category.isInWeeklyReport(), cfsqltype = "cf_sql_number");
+		queryService.addParam(name = "enabled", value = arguments.category.isEnabled(), cfsqltype = "cf_sql_number");
+		queryService.addParam(name = "category_title", value = arguments.category.getCategoryTitle(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "description", value = arguments.category.getDescription(), cfsqltype = "cf_sql_varchar");
+
+		return queryService;
+	}
 }

@@ -13,7 +13,7 @@
 <cfscript>
 	if ( structKeyExists(FORM, 'newCategory_button') ) {
 		dataSource = new dotlog.components.datasource("DOTlogDB","","");
-		categoryDOA = new dotlog.components.categoryDAO(dataSource);
+		categoryDAO = new dotlog.components.categoryDAO(dataSource);
 		writeDump(FORM);
 
 		if ( !isNull(FORM.categoryTitle) ) {
@@ -25,6 +25,7 @@
 			}
 			writeDump(FORM);
 			newCategory = new dotlog.components.category(argumentCollection=FORM);
+			categoryDAO.saveCategory(newCategory);
 			
 		} 
 		writeDump(newCategory);
