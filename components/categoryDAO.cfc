@@ -12,27 +12,16 @@ component CategoryDAO
 
 	public category function getCategoryByTitle(required string categoryTitle)
 	{
-		var queryService = new query();
-		queryService.addParam(name = "category_title", value = arguments.categoryTitle, cfsqltype = "cf_sql_varchar");
-		DSname = variables.instance.datasource.getDSName();
-		DSusername = variables.instance.datasource.getUsername();
-		DSpassword = variables.instance.datasource.getPassword();
+		var queryHandler = new query();
 
-		queryService.setName("fetchCategory");
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
-		
- 		transaction action="begin" {
-			try {
-				queryResult = queryService.execute(sql = "SELECT category_title, description, enabled, in_weekly_report
-					FROM DL_CATEGORIES WHERE category_title = :category_title");
-			} catch (database excpt) {
-				transactionRollback();
-				rethrow();
-				return false;
-			}
-		}
+		queryHandler = setQueryHandlerDatasource(queryHandler);
+		queryHandler.setName("fetchCategory");
+		queryHandler.addParam(name = "category_title", value = arguments.categoryTitle, cfsqltype = "cf_sql_varchar");
+				
+		sqlString = "SELECT category_title, description, enabled, in_weekly_report "
+					& "FROM DL_CATEGORIES WHERE category_title = :category_title";
+
+		queryResult = executeQuery(queryHandler, sqlString);
 		result = queryResult.getResult();
 		return new Category(categoryTitle = result["category_title"][1],
 							description = result["description"][1],
@@ -42,69 +31,82 @@ component CategoryDAO
 
 	public boolean function saveCategory(required category category)
 	{
-		if (categoryExists(arguments.category)) {
+		if ( categoryExists(arguments.category) ) {
 			return updateCategory(arguments.category);
 		} else { 
-			return createCategory(arguments.category);	
+			return createCategory(arguments.category);
 		} 
 	}
 
 	private boolean function updateCategory(required category category)
 	{
 		var queryHandler = getQueryHandler("updateCategory", arguments.category);
-		transaction action="begin" {
-			try {
-				queryResult = queryHandler.execute(sql = "UPDATE DL_CATEGORIES SET 
-					DESCRIPTION = :description, ENABLED = :enabled, IN_WEEKLY_REPORT = :in_weekly_report 
-						WHERE CATEGORY_TITLE = :category_title");
-			} catch (database excpt) {
-				transactionRollback();
-				rethrow();
-				return false;
-			}
-		}
-		return true;
+
+		sqlString = "UPDATE DL_CATEGORIES SET "
+					& "DESCRIPTION = :description, ENABLED = :enabled, IN_WEEKLY_REPORT = :in_weekly_report "
+					& "WHERE CATEGORY_TITLE = :category_title";
+		queryResult = executeQuery(queryHandler, sqlString);
+		return len(queryResult.getPrefix().recordCount);
 	}
 
 	private boolean function createCategory(required category category)
 	{
 		var queryHandler = getQueryHandler("createCategory", arguments.category);
-		
- 		transaction action="begin" {
-			try {
-				queryResult = queryHandler.execute(sql = "INSERT INTO DL_CATEGORIES 
-					(CATEGORY_TITLE, DESCRIPTION, ENABLED, IN_WEEKLY_REPORT) 
-					VALUES (:category_title, :description, :enabled, :in_weekly_report)");
-			} catch (database excpt) {
-				transactionRollback();
-				rethrow();
-				return false;
-			}
-		}
-		return true;
+		sqlString = "INSERT INTO DL_CATEGORIES "
+					& "(CATEGORY_TITLE, DESCRIPTION, ENABLED, IN_WEEKLY_REPORT) "
+					& "VALUES (:category_title, :description, :enabled, :in_weekly_report)";
+		queryResult = executeQuery(queryHandler, sqlString);
+		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
 	private boolean function categoryExists(required category category)
 	{
 		var queryHandler = getQueryHandler("doesCategoryExist", arguments.category);
-		queryResult = queryHandler.execute(sql = "SELECT category_title FROM DL_CATEGORIES WHERE category_title = :category_title");
+		sqlString = "SELECT category_title "
+					& "FROM DL_CATEGORIES "
+					& "WHERE category_title = :category_title";
+		queryResult = executeQuery(queryHandler, sqlString);
 		return queryResult.getResult().recordCount;
 	}
 
 	private base function getQueryHandler(required string queryName, required category category)
 	{
-		var queryService = new query();
+		var queryHandler = new query();
 
-		queryService.setName(arguments.queryName);
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(variables.instance.datasource.getUsername());
-		queryService.setPassword(variables.instance.datasource.getPassword());
+		queryHandler.setName(arguments.queryName);
+		queryHandler.setDataSource(variables.instance.datasource.getDSName());
+		queryHandler.setUsername(variables.instance.datasource.getUsername());
+		queryHandler.setPassword(variables.instance.datasource.getPassword());
 
-		queryService.addParam(name = "in_weekly_report", value = arguments.category.isInWeeklyReport(), cfsqltype = "cf_sql_number");
-		queryService.addParam(name = "enabled", value = arguments.category.isEnabled(), cfsqltype = "cf_sql_number");
-		queryService.addParam(name = "category_title", value = arguments.category.getCategoryTitle(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "description", value = arguments.category.getDescription(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "in_weekly_report", value = arguments.category.isInWeeklyReport(), cfsqltype = "cf_sql_number");
+		queryHandler.addParam(name = "enabled", value = arguments.category.isEnabled(), cfsqltype = "cf_sql_number");
+		queryHandler.addParam(name = "category_title", value = arguments.category.getCategoryTitle(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "description", value = arguments.category.getDescription(), cfsqltype = "cf_sql_varchar");
 
-		return queryService;
+		return queryHandler;
+	}
+
+	private result function executeQuery(required base queryHandler, required string sqlString)
+	{
+		queryResult = '';
+		transaction action="begin" {
+			try {
+				queryResult = arguments.queryHandler.execute(sql = arguments.sqlString);
+			} catch (database exception) {
+				transactionRollBack();
+				// TODO - how to handle this exception
+			}
+			transactionCommit();
+		}
+		return queryResult;
+	}
+
+	private base function setQueryHandlerDatasource(required base queryHandler)
+	{
+		var returnedQueryHandler = arguments.queryHandler;
+		returnedQueryHandler.setDataSource(variables.instance.datasource.getDSName());
+		returnedQueryHandler.setUsername(variables.instance.datasource.getUsername());
+		returnedQueryHandler.setPassword(variables.instance.datasource.getPassword());
+		return returnedQueryHandler;
 	}
 }
