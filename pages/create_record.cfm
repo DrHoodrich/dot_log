@@ -13,7 +13,7 @@
 <!--- Hard coded until LDAP info. ---> 
 	<cfscript>
 		user = application.userService.getUserByUsername("us");
-		airports = application.airportDAO.getChildAirports(user.getAirportFAACode());
+		airports = application.airportService.getChildAirports(user.getAirportFAACode());
 		categories = application.categoryDAO.getAllCategories();
 	</cfscript>
 

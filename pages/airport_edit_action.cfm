@@ -11,12 +11,10 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-		dataSource = new dotlog.components.datasource("DOTlogDB","","");
-		airportDAO = new dotlog.components.airportDAO(dataSource);
-		existingAirport = "";
-
+		
+	existingAirport = "";
 	if ( structKeyExists(FORM, 'selectAirportToEdit_button') ) {
-		existingAirport = airportDAO.getAirportByFAACode(FORM.faaCode);
+		existingAirport = airportService.getAirportByFAACode(FORM.faaCode);
 		FORM.parentAirportFAACode = existingAirport.getParentAirportFAACode();
 		FORM.enabled = existingAirport.isEnabled();
 		FORM.airportName = existingAirport.getAirportName();
@@ -27,7 +25,7 @@
 			FORM.enabled = 0;
 		}
 		existingAirport = new dotlog.components.airport(argumentCollection = FORM);
-		successfulUpdate = airportDAO.saveAirport(existingAirport);
+		successfulUpdate = application.airportService.saveAirport(existingAirport);
 	}
 	structClear(FORM);
 </cfscript>

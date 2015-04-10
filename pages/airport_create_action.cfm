@@ -27,7 +27,7 @@
 
 		}
 		newAirport = new dotlog.components.airport(argumentCollection = FORM);
-		createResult = application.airportDAO.saveAirport(newAirport);
+		createResult = application.airportService.saveAirport(newAirport);
 		writeOutput(createResult);
 	}
 </cfscript>

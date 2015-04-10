@@ -12,7 +12,7 @@
 
 <cfscript>
   user = application.userService.getUserByUsername("us");
-  hubAirports = application.airportDAO.getChildAirports(user.getAirportFaaCode());
+  hubAirports = application.airportService.getChildAirports(user.getAirportFaaCode());
 </cfscript>
   
 <cfform name="createAirportForm" action="airport_create_action.cfm" method="post" >

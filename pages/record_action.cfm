@@ -24,7 +24,7 @@
 	application.recordService.saveRecord(record);	
 
 	user = application.userService.getUserByUsername("us");
-	airports = application.airportDAO.getChildAirports(user.getAirportFAACode());
+	airports = application.airportService.getChildAirports(user.getAirportFAACode());
 	categories = application.categoryDAO.getAllCategories();
 
 	writeOutput('<table width="783" height="180" border="1">');

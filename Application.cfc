@@ -9,11 +9,12 @@ component
 	function onApplicationStart()
 	{
 		var datasource = new dotlog.components.datasource(DSName = "DOTlogDB", username = "", password = "");
-		Application.airportDAO = new dotlog.components.airportDAO(datasource);
+		
 		Application.categoryDAO = new dotlog.components.categoryDAO(datasource);
 
 		Application.recordService = new dotlog.components.recordService(datasource);
 		Application.userService = new dotlog.components.userService(datasource);
+		Application.airportService = new dotlog.components.airportService(datasource);
 	}
 
 	function onRequestStart()

@@ -12,7 +12,7 @@
 
 <cfscript>
   user = application.userService.getUserByUsername("us");
-  hubAirports = application.airportDAO.getChildAirports(user.getAirportFaaCode());
+  hubAirports = application.airportService.getChildAirports(user.getAirportFaaCode());
 
 	AirportNames = [];
   for (ii = 1; ii <= ArrayLen(hubAirports); ++ii) {
