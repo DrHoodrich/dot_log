@@ -11,12 +11,10 @@
 <h2>DOTLog Add User</h2>
 
 <cfscript>
-	if ( structKeyExists(FORM, 'submitUser_button') ) {
-		dataSource = new dotlog.components.datasource("DOTlogDB","","");
-		userDOA = new dotlog.components.userDAO(dataSource);
+	if ( structKeyExists(FORM, 'submitUser_button') ) {		
 		FORM.enabled = 1;
 		newUser = new dotlog.components.user(argumentCollection=FORM);
-		userDOA.createUser(newUser);
+		application.userService.saveUser(newUser);
 	}
 </cfscript>
 <cfform name="createUser" action="addNewUser.cfm" method="post">

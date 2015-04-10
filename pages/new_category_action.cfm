@@ -12,10 +12,6 @@
 
 <cfscript>
 	if ( structKeyExists(FORM, 'newCategory_button') ) {
-		dataSource = new dotlog.components.datasource("DOTlogDB","","");
-		categoryDAO = new dotlog.components.categoryDAO(dataSource);
-		writeDump(FORM);
-
 		if ( !isNull(FORM.categoryTitle) ) {
 			FORM.enabled = 1;
 			if ( !isNull(FORM.inWeeklyReport) ) {
@@ -23,12 +19,10 @@
 			} else {
 				FORM.inWeeklyReport = 0;
 			}
-			writeDump(FORM);
+
 			newCategory = new dotlog.components.category(argumentCollection=FORM);
-			categoryDAO.saveCategory(newCategory);
-			
+			application.categoryService.saveCategory(newCategory);			
 		} 
-		writeDump(newCategory);
 	}
 </cfscript>
 	<!-- TemplateEndEditable -->

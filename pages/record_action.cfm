@@ -25,7 +25,7 @@
 
 	user = application.userService.getUserByUsername("us");
 	airports = application.airportService.getChildAirports(user.getAirportFAACode());
-	categories = application.categoryDAO.getAllCategories();
+	categories = application.categoryService.getAllCategories();
 
 	writeOutput('<table width="783" height="180" border="1">');
 		for (ii = 1; ii <= arrayLen(airports); ++ii) {

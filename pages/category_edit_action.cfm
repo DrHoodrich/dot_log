@@ -12,14 +12,12 @@
 
 <cfscript>
 	if ( structKeyExists(FORM, 'newCategory_button') ) {
-		dataSource = new dotlog.components.datasource("DOTlogDB","","");
-		recordDOA = new dotlog.components.recordDAO(dataSource);
 		records = [];
 		writeDump(FORM);
 		if ( !isNull(FORM.username) ) {
-			records = recordDOA.getRecordsByUsername(FORM.username);
+			records = application.recordService.getRecordsByUsername(FORM.username);
 		} else if ( !isNull(FORM.faaCode) ) {
-			records = recordDOA.getRecordsByAirportFAACode(FORM.faaCode);
+			records = application.recordService.getRecordsByAirportFAACode(FORM.faaCode);
 		}
 		writeDump(records);
 	}

@@ -10,8 +10,7 @@ component
 	{
 		var datasource = new dotlog.components.datasource(DSName = "DOTlogDB", username = "", password = "");
 		
-		Application.categoryDAO = new dotlog.components.categoryDAO(datasource);
-
+		Application.categoryService = new dotlog.components.categoryService(datasource);
 		Application.recordService = new dotlog.components.recordService(datasource);
 		Application.userService = new dotlog.components.userService(datasource);
 		Application.airportService = new dotlog.components.airportService(datasource);
@@ -20,7 +19,5 @@ component
 	function onRequestStart()
 	{
 
-	}
-
-	
+	}	
 }

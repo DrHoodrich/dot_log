@@ -11,20 +11,15 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	dataSource = new dotlog.components.datasource("DOTlogDB","","");
-	categoryDAO = new dotlog.components.categoryDAO(dataSource);
-  writeDump(FORM);
   if (!StructKeyExists(FORM, "enabled")) {
     FORM.enabled = 0;
   }
   if (!StructKeyExists(FORM, "inWeeklyReport")) {
     FORM.inWeeklyReport = 0;
   }
-  writeDump(FORM);
+  
   category =  new dotlog.components.category(argumentCollection=FORM);
-  saved = categoryDAO.saveCategory(category); 
-  writeDump(saved);
-
+  saved = application.categoryService.saveCategory(category); 
 </cfscript>
 
   <!-- TemplateEndEditable -->

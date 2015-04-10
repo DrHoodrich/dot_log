@@ -11,11 +11,7 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	dataSource = new dotlog.components.datasource("DOTlogDB","","");
-	categoryDAO = new dotlog.components.categoryDAO(dataSource);
-  category =  categoryDAO.getCategoryByTitle(FORM.categoryTitle);
-  writeDump(FORM);
-
+  category = application.categoryService.getCategoryByTitle(FORM.categoryTitle);
 </cfscript>
 
 <cfform name="updateCategory" action="saveCategory.cfm" method="post">

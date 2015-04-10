@@ -14,7 +14,7 @@
 	<cfscript>
 		user = application.userService.getUserByUsername("us");
 		airports = application.airportService.getChildAirports(user.getAirportFAACode());
-		categories = application.categoryDAO.getAllCategories();
+		categories = application.categoryService.getAllCategories();
 	</cfscript>
 
 <cfform name="recordCreation" method="post" action="record_action.cfm">

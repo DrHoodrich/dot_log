@@ -11,12 +11,8 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	dataSource = new dotlog.components.datasource("DOTlogDB","","");
-	categoryDOA = new dotlog.components.categoryDAO(dataSource);
-	allCategories = categoryDOA.getAllCategories();
+	allCategories = application.categoryService.getAllCategories();
 </cfscript>
-
-
   
 <cfform name="search" action="updateCategory.cfm" method="post">
   Category to edit:<cfselect name="categoryTitle" id="categoryTitle">
