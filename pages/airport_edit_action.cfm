@@ -14,7 +14,7 @@
 		
 	existingAirport = "";
 	if ( structKeyExists(FORM, 'selectAirportToEdit_button') ) {
-		existingAirport = airportService.getAirportByFAACode(FORM.faaCode);
+		existingAirport = application.airportService.getAirportByFAACode(FORM.faaCode);
 		FORM.parentAirportFAACode = existingAirport.getParentAirportFAACode();
 		FORM.enabled = existingAirport.isEnabled();
 		FORM.airportName = existingAirport.getAirportName();

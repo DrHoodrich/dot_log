@@ -14,24 +14,20 @@ component AirportDAO
 	{
 		var queryService = new query();
 
-				DSname = variables.instance.datasource.getDSName();
-		DSusername = variables.instance.datasource.getUsername();
-		DSpassword = variables.instance.datasource.getPassword();
-
+		queryService = setQueryHandlerDatasource(queryService);		
 		queryService.setName("fetchChildAirports");
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
-
 		queryService.addParam(name = "faa_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
-		queryResult = queryService.execute(sql = "SELECT faa_code, parent_faa_code, airport_name, enabled 
-			FROM DL_AIRPORTS WHERE faa_code = :faa_code");
-		result = queryResult.getResult();
+
+		sqlString = "SELECT faa_code, parent_faa_code, airport_name, enabled "
+					& "FROM DL_AIRPORTS WHERE faa_code = :faa_code";
+
+		queryResult = executeQuery(queryService, sqlString).getResult();
 		
-		return new Airport(FAACode = result["faa_code"][1],
-							parentFAACode = result["parent_faa_code"][1],
-							airportName = result["airport_name"][1],
-							enabled = result["enabled"][1]);
+		airport = new Airport(FAACode = queryResult["faa_code"][1],
+							parentFAACode = queryResult["parent_faa_code"][1],
+							airportName = queryResult["airport_name"][1],
+							enabled = queryResult["enabled"][1]);
+		return airport;
 	}
 
 	public boolean function saveAirport(required airport airport)
@@ -46,48 +42,38 @@ component AirportDAO
 	private boolean function airportExists(required airport airport)
 	{
 		var queryHandler = getQueryHandler("doesAirportExist", arguments.airport);
-		queryResult = queryHandler.execute(sql = "SELECT faa_code FROM DL_AIRPORTS WHERE faa_code = :faa_code");
+		sqlString = "SELECT faa_code FROM DL_AIRPORTS "
+					&"WHERE faa_code = :faa_code";
+		queryResult = executeQuery(queryHandler, sqlString);
 		return queryResult.getResult().recordCount;
 	}
 
 	private boolean function createAirport(required airport airport)
 	{
 		var queryHandler = getQueryHandler("createAirport", arguments.airport);
-
-		try {
-			queryResult = queryHandler.execute(sql = "INSERT INTO DL_AIRPORTS 
-						(faa_code, parent_faa_code, airport_name, enabled) 
-						VALUES (:faa_code, :parent_faa_code, :airport_name, :enabled)");
-		} catch (database excpt) {
-			writeDump(excpt.cause.message); // TODO give a nice errors to user, like if FAA already exists.
-			return false;
-		}
-		return true;
+		sqlString = "INSERT INTO DL_AIRPORTS " 
+					& "(faa_code, parent_faa_code, airport_name, enabled) "
+					& "VALUES (:faa_code, :parent_faa_code, :airport_name, :enabled)";
+		queryResult = executeQuery(queryHandler, sqlString);
+		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
 	private boolean function updateAirport(required airport airport)
 	{
 		var queryHandler = getQueryHandler("updateAirport", arguments.airport);
-
-		try {
-			queryResult = queryHandler.execute(sql = "UPDATE DL_AIRPORTS SET
-						parent_faa_code = parent_faa_code, airport_name = :airport_name, enabled = :enabled 
-						WHERE faa_code = :faa_code");
-		} catch (database excpt) {
-			writeDump(excpt.cause.message); // TODO give a nice errors to user, like if FAA already exists.
-			return false;
-		}
-		return true;
+		sqlString = "UPDATE DL_AIRPORTS SET "
+					& "parent_faa_code = parent_faa_code, airport_name = :airport_name, enabled = :enabled "
+					& "WHERE faa_code = :faa_code";
+		queryResult = executeQuery(queryHandler, sqlString);
+		return len(queryResult.getPrefix().recordCount);
 	}
 
 	private base function getQueryHandler(required string queryName, required airport airport)
 	{
 		var queryService = new query();
 
-		queryService.setName(arguments.queryName);
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(variables.instance.datasource.getUsername());
-		queryService.setPassword(variables.instance.datasource.getPassword());
+		queryService = setQueryHandlerDatasource(queryService);
+		queryService.setName(arguments.queryName);		
 
 		queryService.addParam(name = "faa_code", value = arguments.airport.getFAACode(), cfsqltype = "cf_sql_varchar");
 		queryService.addParam(name = "parent_faa_code", value = arguments.airport.getParentAirportFAACode(), cfsqltype = "cf_sql_varchar");
@@ -95,5 +81,29 @@ component AirportDAO
 		queryService.addParam(name = "enabled", value = arguments.airport.isEnabled(), cfsqltype = "cf_sql_number");
 
 		return queryService;
+	}
+
+	private result function executeQuery(required base queryHandler, required string sqlString)
+	{
+		queryResult = '';
+		transaction action="begin" {
+			try {
+				queryResult = arguments.queryHandler.execute(sql = arguments.sqlString);				
+			} catch (database exception) {
+				transactionRollBack();
+				// TODO - how to handle this exception
+			}
+			transactionCommit();
+		}
+		return queryResult;
+	}
+
+	private base function setQueryHandlerDatasource(required base queryHandler)
+	{		
+		var returnedQueryHandler = queryHandler;
+		returnedQueryHandler.setDataSource(variables.instance.datasource.getDSName());
+		returnedQueryHandler.setUsername(variables.instance.datasource.getUsername());
+		returnedQueryHandler.setPassword(variables.instance.datasource.getPassword());
+		return returnedQueryHandler;
 	}
 }

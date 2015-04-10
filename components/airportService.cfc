@@ -24,6 +24,6 @@ component AirportService
 
 	public airport function getAirportByFAACode(required string faaCode)
 	{
-		return variables.instance.airportDAO.getChildAirport(arguments.faaCode);		
+		return variables.instance.airportDAO.getAirportByFAACode(arguments.faaCode);		
 	}
 }

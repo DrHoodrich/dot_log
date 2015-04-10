@@ -13,7 +13,6 @@
 <cfscript>
 	user = application.userService.getUserByUsername("us");
 
-	writeDump(FORM);
 	if ( structKeyExists(FORM, 'createAirport_button') ) {
 		FORM.enabled = 1;
 		if ( len(FORM.parentFAACode) ) {

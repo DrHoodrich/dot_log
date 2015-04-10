@@ -10,9 +10,8 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
-<!--- Hard coded until LDAP info. ---> 
 	<cfscript>
-		user = application.userService.getUserByUsername("us");
+		user = application.userService.getUserByUsername("us");  // <= set by LDAP
 		airports = application.airportService.getChildAirports(user.getAirportFAACode());
 		categories = application.categoryService.getAllCategories();
 	</cfscript>
