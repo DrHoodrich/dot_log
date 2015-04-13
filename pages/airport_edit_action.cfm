@@ -11,7 +11,6 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-		
 	existingAirport = "";
 	if ( structKeyExists(FORM, 'selectAirportToEdit_button') ) {
 		existingAirport = application.airportService.getAirportByFAACode(FORM.faaCode);
