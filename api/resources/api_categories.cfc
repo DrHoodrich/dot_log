@@ -8,15 +8,17 @@ component extends = "taffy.core.resource" taffy_uri="/api/categories"
 
 	function get()
 	{	
-		enabledCategories = categoryDAO.getEnabledCategories();
+		//enabledCategories = categoryDAO.getEnabledCategories();
 
 		categoryStructs = [];
 
-		for (var ii = 1; ii <= arrayLen(enabledCategories); ++ii) {
-			categoryStruct = structNew(); // have to make a new struct every time so that the values aren't overwritten
-			categoryStruct.name = enabledCategories[ii].getCategoryTitle();
-			arrayAppend(categoryStructs, categoryStruct);
-		}
+		
+		categoryStruct.category_title = "Fire";
+		arrayAppend(categoryStructs, categoryStruct);
+
+		categoryStruct1.category_title = "Lighting";
+		arrayAppend(categoryStructs, categoryStruct1);
+		
 				
 		containingStructure = structNew();
 		containingStructure.categories = categoryStructs;
