@@ -14,6 +14,12 @@
 	} else {
 		reporting = 1;
 	}
+
+	reportedCategory = application.categoryService.getCategoryByTitle(FORM.categoryTitle);
+	if (reportedCategory.isInWeeklyReport()) {
+		reporting = 1;
+	}
+
 	record = new dotlog.components.record(recordText = FORM.eventDescription,
 										  username = FORM.userid,
 										  faaCode = FORM.airportCode,
