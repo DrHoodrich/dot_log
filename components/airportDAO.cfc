@@ -1,12 +1,14 @@
 component AirportDAO
 {
 	variables.instance = {
-		datasource = ''
+		datasource = '',
+		queryHandler = ''
 	};
 
 	public airportDAO function init(required dotlog.components.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
+		variables.instance.queryHandler = new queryHandler();
 		return this;
 	}
 
@@ -21,7 +23,7 @@ component AirportDAO
 		sqlString = "SELECT faa_code, parent_faa_code, airport_name, enabled "
 					& "FROM DL_AIRPORTS WHERE faa_code = :faa_code";
 
-		queryResult = executeQuery(queryHandler, sqlString).getResult();
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString).getResult();
 		
 		return new Airport(FAACode = queryResult["faa_code"][1],
 							parentFAACode = queryResult["parent_faa_code"][1],
@@ -43,7 +45,7 @@ component AirportDAO
 		var queryHandler = getQueryHandler("doesAirportExist", arguments.airport);
 		sqlString = "SELECT faa_code FROM DL_AIRPORTS "
 					&"WHERE faa_code = :faa_code";
-		queryResult = executeQuery(queryHandler, sqlString);
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return queryResult.getResult().recordCount;
 	}
 
@@ -53,7 +55,7 @@ component AirportDAO
 		sqlString = "INSERT INTO DL_AIRPORTS " 
 					& "(faa_code, parent_faa_code, airport_name, enabled) "
 					& "VALUES (:faa_code, :parent_faa_code, :airport_name, :enabled)";
-		queryResult = executeQuery(queryHandler, sqlString);
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
@@ -63,7 +65,7 @@ component AirportDAO
 		sqlString = "UPDATE DL_AIRPORTS SET "
 					& "parent_faa_code = parent_faa_code, airport_name = :airport_name, enabled = :enabled "
 					& "WHERE faa_code = :faa_code";
-		queryResult = executeQuery(queryHandler, sqlString);
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}
 
@@ -80,21 +82,6 @@ component AirportDAO
 		queryHandler.addParam(name = "enabled", value = arguments.airport.isEnabled(), cfsqltype = "cf_sql_number");
 
 		return queryHandler;
-	}
-
-	private result function executeQuery(required base queryHandler, required string sqlString)
-	{
-		queryResult = '';
-		transaction action="begin" {
-			try {
-				queryResult = arguments.queryHandler.execute(sql = arguments.sqlString);
-			} catch (database exception) {
-				transactionRollBack();
-				// TODO - how to handle this exception
-			}
-			transactionCommit();
-		}
-		return queryResult;
 	}
 
 	private base function setQueryHandlerDatasource(required base queryHandler)

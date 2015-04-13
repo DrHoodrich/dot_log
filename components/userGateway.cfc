@@ -1,12 +1,14 @@
 component UserGateway
 {
 	variables.instance = {
-		datasource = ''
+		datasource = '',
+		queryHandler = ''
 	};
 
 	public UserGateway function init(required dotlog.components.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
+		variables.instance.queryHandler = new queryHandler();
 		return this;
 	}
 
@@ -14,23 +16,6 @@ component UserGateway
 	{
 		var queryFilter = { faaCode = arguments.faaCode };
 		return filterUsers(queryFilter);
-
-		DSname = variables.instance.datasource.getDSName();
-		DSusername = variables.instance.datasource.getUsername();
-		DSpassword = variables.instance.datasource.getPassword();
-
-		var queryService = new query();
-
-		queryService.setName("fetchUsers");
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
-
-		queryService.addParam(name = "faa_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
-		queryResult = queryService.execute(sql = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled 
-			FROM DL_USERS 
-			WHERE faa_code = :faa_code");
-		result = queryResult.getResult();
 	} 
 
 	public query function getAllUsers()
@@ -46,22 +31,13 @@ component UserGateway
 
 	public query function filterUsers(struct searchFilter=structNew())
 	{
-		var userObjects = [];
-
-		DSname = variables.instance.datasource.getDSName();
-		DSusername = variables.instance.datasource.getUsername();
-		DSpassword = variables.instance.datasource.getPassword();
-
 		var queryService = new query();
-
 		queryService.setName("fetchUsers");
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
+		queryService = setQueryHandlerDatasource(queryService);
 
-		
-
-		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled FROM DL_USERS WHERE 1 = 1 ";
+		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled "
+					& "FROM DL_USERS "
+					& "WHERE 1 = 1 ";
 
 		if ( !structIsEmpty(searchFilter) ) {
 			if ( structKeyExists(searchFilter, "lastName") ) {
@@ -73,7 +49,16 @@ component UserGateway
 				sqlString = sqlString & " AND faa_code LIKE :faa_code";
 			}
 		}
-		queryResult = queryService.execute(sql=sqlString);
+		queryResult = executeQuery(queryService, sqlString);
 		return queryResult.getResult();
+	}
+
+	private base function setQueryHandlerDatasource(required base queryHandler)
+	{
+		var returnedQueryHandler = arguments.queryHandler;
+		returnedQueryHandler.setDataSource(variables.instance.datasource.getDSName());
+		returnedQueryHandler.setUsername(variables.instance.datasource.getUsername());
+		returnedQueryHandler.setPassword(variables.instance.datasource.getPassword());
+		return returnedQueryHandler;
 	}
 }

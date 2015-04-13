@@ -1,12 +1,14 @@
 component CategoryDAO
 {
 	variables.instance = {
-		datasource = ''
+		datasource = '',
+		queryHandler = ''
 	};
 
 	public CategoryDAO function init(required dotlog.components.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
+		variables.instance.queryHandler = new queryHandler();
 		return this;
 	}
 
@@ -21,7 +23,7 @@ component CategoryDAO
 		sqlString = "SELECT category_title, description, enabled, in_weekly_report "
 					& "FROM DL_CATEGORIES WHERE category_title = :category_title";
 
-		queryResult = executeQuery(queryHandler, sqlString);
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		result = queryResult.getResult();
 		return new Category(categoryTitle = result["category_title"][1],
 							description = result["description"][1],
@@ -45,7 +47,7 @@ component CategoryDAO
 		sqlString = "UPDATE DL_CATEGORIES SET "
 					& "DESCRIPTION = :description, ENABLED = :enabled, IN_WEEKLY_REPORT = :in_weekly_report "
 					& "WHERE CATEGORY_TITLE = :category_title";
-		queryResult = executeQuery(queryHandler, sqlString);
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}
 
@@ -55,7 +57,7 @@ component CategoryDAO
 		sqlString = "INSERT INTO DL_CATEGORIES "
 					& "(CATEGORY_TITLE, DESCRIPTION, ENABLED, IN_WEEKLY_REPORT) "
 					& "VALUES (:category_title, :description, :enabled, :in_weekly_report)";
-		queryResult = executeQuery(queryHandler, sqlString);
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
@@ -65,7 +67,7 @@ component CategoryDAO
 		sqlString = "SELECT category_title "
 					& "FROM DL_CATEGORIES "
 					& "WHERE category_title = :category_title";
-		queryResult = executeQuery(queryHandler, sqlString);
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return queryResult.getResult().recordCount;
 	}
 
@@ -84,29 +86,5 @@ component CategoryDAO
 		queryHandler.addParam(name = "description", value = arguments.category.getDescription(), cfsqltype = "cf_sql_varchar");
 
 		return queryHandler;
-	}
-
-	private result function executeQuery(required base queryHandler, required string sqlString)
-	{
-		queryResult = '';
-		transaction action="begin" {
-			try {
-				queryResult = arguments.queryHandler.execute(sql = arguments.sqlString);
-			} catch (database exception) {
-				transactionRollBack();
-				// TODO - how to handle this exception
-			}
-			transactionCommit();
-		}
-		return queryResult;
-	}
-
-	private base function setQueryHandlerDatasource(required base queryHandler)
-	{
-		var returnedQueryHandler = arguments.queryHandler;
-		returnedQueryHandler.setDataSource(variables.instance.datasource.getDSName());
-		returnedQueryHandler.setUsername(variables.instance.datasource.getUsername());
-		returnedQueryHandler.setPassword(variables.instance.datasource.getPassword());
-		return returnedQueryHandler;
 	}
 }

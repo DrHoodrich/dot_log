@@ -1,19 +1,21 @@
 component RecordDAO extends="CoreUtils"
 {
 	variables.instance = {
-		datasource = ''
+		datasource = '',
+		queryHandler = ''
 	};
 
 	public RecordDAO function init(required datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
+		variables.instance.queryHandler = new queryHandler();
 		return this;
 	} 
 
 	public boolean function saveRecord(required record record)
 	{
 		if ( record.getRecordID() ) {
-			if (recordExists(record)) {
+			if ( recordExists(record) ) {
 				return updateRecord(record);	
 			}
 			return createRecord(arguments.Record);
@@ -27,11 +29,15 @@ component RecordDAO extends="CoreUtils"
 		var queryHandler = getQueryHandler("updateRecord", arguments.record);
 
 		// Need to make sure that this is uniquely IDing
-		queryResult = queryHandler.execute(sql = "SELECT record_id FROM DL_RECORDS 
-			WHERE username = :username AND record_text = :record_text AND record_time = :record_time ");
+		sqlString = "SELECT record_id "
+				& "FROM DL_RECORDS "
+				& "WHERE username = :username "
+				& "AND record_text = :record_text "
+				& "AND record_time = :record_time";
+
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		
 		result = queryResult.getResult();
-
 
 		if (result.recordCount) {
 			return result["record_id"][1];
@@ -43,43 +49,31 @@ component RecordDAO extends="CoreUtils"
 	private boolean function createRecord(required record record)
 	{
 		var queryHandler = getQueryHandler("createRecord", arguments.record);
-		
- 		transaction action="begin" {
-			try {
-				queryResult = queryHandler.execute(sql = "INSERT INTO DL_RECORDS 
-					(record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title) 
-					VALUES (:record_text, :username, :faa_code, :event_time, :record_time, :in_weekly_report, :category_title)");
-			} catch (database excpt) {
-				transactionRollback();
-				return false;
-			}
-		}
-		return true;
+
+		sqlString = "INSERT INTO DL_RECORDS "
+					& "(record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title) "
+					& "VALUES (:record_text, :username, :faa_code, :event_time, :record_time, :in_weekly_report, :category_title)";
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
 	private boolean function updateRecord(required record record)
 	{
 		var queryHandler = getQueryHandler("updateRecord", arguments.record);
-
-		transaction action="begin" {
-			try {
-				queryResult = queryHandler.execute(sql = "UPDATE DL_RECORDS SET 
-					record_text = :record_text, faa_code = :faa_code, event_time = :event_time, in_weekly_report = :in_weekly_report, category_title = :category_title 
-					WHERE record_id = :record_id");
-			} catch (database excpt) {
-				transactionRollback();
-				return false;
-			}
-		}
-		return true;
+		sqlString = "UPDATE DL_RECORDS SET "
+					& "record_text = :record_text, faa_code = :faa_code, event_time = :event_time, in_weekly_report = :in_weekly_report, category_title = :category_title "
+					& "WHERE record_id = :record_id";
+		queryResult = variables.instance.queryHandler.queryHandler.executeQuery(queryHandler, sqlString);
+		return len(queryResult.getPrefix().recordCount);
 	}	
 
 	private boolean function recordExists(required record record)
-	{
-		
+	{		
 		var queryHandler = getQueryHandler("doesRecordExist", arguments.record);
-		queryResult = queryHandler.execute(sql = "SELECT record_id FROM DL_RECORDS WHERE record_id = :record_id");
-		
+		sqlString = "SELECT record_id "
+					& "FROM DL_RECORDS "
+					& "WHERE record_id = :record_id";
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);		
 		return queryResult.getResult().recordCount;
 	}
 
@@ -92,7 +86,7 @@ component RecordDAO extends="CoreUtils"
 		queryService.setUsername(variables.instance.datasource.getUsername());
 		queryService.setPassword(variables.instance.datasource.getPassword());
 
-		if (record.getRecordID()) {
+		if ( record.getRecordID() ) {
 			queryService.addParam(name = "record_id", value = arguments.record.getRecordID(), cfsqltype = "cf_sql_number");
 		}
 		queryService.addParam(name = "record_text", value = arguments.record.getRecordText(), cfsqltype = "cf_sql_varchar");
