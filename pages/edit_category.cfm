@@ -15,7 +15,7 @@
 </cfscript>
   
 <cfform name="search" action="updateCategory.cfm" method="post">
-  Category to edit:<cfselect name="categoryTitle" id="categoryTitle">
+  Category to Edit:<cfselect name="categoryTitle" id="categoryTitle">
     <cfscript>
           writeOutput('<option value="none"></option>');
           for (ii = 1; ii <= arrayLen(allCategories); ++ii) {

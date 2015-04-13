@@ -21,7 +21,7 @@
 
 
   <!---Need a better name :( --->
-  Hub/Region:<cfselect name = "parentFAACode"> 
+  Region/Hub Airport:<cfselect name = "parentFAACode"> 
 
 
     <option value=""> --New Hub-- </option>

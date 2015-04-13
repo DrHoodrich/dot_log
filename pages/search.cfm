@@ -1,26 +1,26 @@
 <cfset pageTitle = "Search"> <!--- Variable that is used in the html included header --->
 <cfinclude template="../includes/header.cfm">
 <cfinclude template="../includes/banner.cfm">
-  <a id="main_content"></a>
+	<a id="main_content"></a>
 <cfinclude template="../includes/breadcrumb.cfm">
 <cfinclude template="../includes/nav.cfm">
-    <div id="content">
-    
+	<div id="content">
+	
 <!-- BEGIN YOUR CONTENT HERE -->
   <!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfform name="search" action="search_action.cfm" method="post">
-	keyword:<cfinput type = "text" name = "keyword" message = " " required = "no"></cfinput> <br>
-	userame:<cfinput type = "text" name = "username" message = " " required = "no"></cfinput> <br>
- <!--- first name:<cfinput type = "text" name = "firstName" message = " " required = "no"></cfinput> <br>
-  last name:<cfinput type = "text" name = "lastName" message = " " required = "no"></cfinput> <br> --->
-	airport Code:<cfinput type = "text" name = "faaCode" message = "" required = "no"></cfinput> <br>
-	category:<cfinput type = "text" name = "categoryTitle" message = "categoryTitle" required = "no"></cfinput> <br>
-  from: <cfinput type = "datefield" name = "startDate" message = "" value="04/10/2015">
-  to: <cfinput type = "datefield" name = "endDate" message = "" value="04/10/2015"><br>
-   	
-   	
-  <cfinput type="submit" name="submitSearch_button" id="searchRecords" value="search"> <br>
+	Keyword:<cfinput type = "text" name = "keyword" message = " " required = "no"></cfinput> <br>
+	User:<cfinput type = "text" name = "username" message = " " required = "no"></cfinput> <br>
+	<!--- first name:<cfinput type = "text" name = "firstName" message = " " required = "no"></cfinput> <br>
+	last name:<cfinput type = "text" name = "lastName" message = " " required = "no"></cfinput> <br> --->
+	FAA Code:<cfinput type = "text" name = "faaCode" message = "" required = "no"></cfinput> <br>
+	Category:<cfinput type = "text" name = "categoryTitle" message = "categoryTitle" required = "no"></cfinput> <br>
+	From: <cfinput type = "datefield" name = "startDate" message = "" value="04/10/2015">
+	To: <cfinput type = "datefield" name = "endDate" message = "" value="04/10/2015"><br>
+	
+	
+	<cfinput type="submit" name="submitSearch_button" id="searchRecords" value="search"> <br>
 </cfform>
   <!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->

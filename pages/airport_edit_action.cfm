@@ -1,4 +1,4 @@
-<cfset pageTitle = "Edit Airfield"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "Edit Airport"> <!--- Variable that is used in the html included header --->
 <cfinclude template="../includes/header.cfm">
 <cfinclude template="../includes/banner.cfm">
 	<a id="main_content"></a>
@@ -32,13 +32,13 @@
 <cfif structKeyExists(FORM, 'editAirport_button') IS False>
 	<cfform name="editAirport" method="post" action="airport_edit_action.cfm">
 					
-		<label for="faaCode">airport FAA Code:</label>
+		<label for="faaCode">FAA Code:</label>
 			<cfoutput>
 				<strong>#existingAirport.getFAACode()#</strong>
 			</cfoutput> <br>
 			<cfinput type="hidden" name="FAACode" value="#existingAirport.getFAACode()#"/>
 
-		<label for="airportName">airport Name:</label>
+		<label for="airportName">Airport Name:</label>
 			<cfinput type="text" name="airportName" value="#existingAirport.getAirportName()#"> <br>
 
 		<label for="parentFAACode">Parent FAA Code:</label>

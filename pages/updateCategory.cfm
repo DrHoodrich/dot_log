@@ -19,8 +19,8 @@
   <cfinput name="categoryTitle" type="hidden" value="#category.getCategoryTitle()#"></cfinput>
   <cftextarea name="description" cols="40" rows="5" id="eventDescription" value="#category.getDescription()#"></cftextarea><br>
   Enabled:<cfinput type="checkbox" name="enabled" required="no" value="1" checked="#category.isEnabled()#"></cfinput> <br>
-    In Weekly Report:<cfinput type="checkbox" name="inWeeklyReport" required="no" value="1" checked="#category.isInWeeklyReport()#"></cfinput> <br>
-     <cfinput type="submit" name="updateCategory_button" value="update category"></cfinput>
+   Default Include In Weekly Report:<cfinput type="checkbox" name="inWeeklyReport" required="no" value="1" checked="#category.isInWeeklyReport()#"></cfinput> <br>
+     <cfinput type="submit" name="updateCategory_button" value="Update Category"></cfinput>
 </cfform>
   <!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
