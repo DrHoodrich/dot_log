@@ -16,7 +16,9 @@ component CategoryDAO
 	{
 		var queryHandler = new query();
 
-		queryHandler = setQueryHandlerDatasource(queryHandler);
+		queryHandler.setDataSource(variables.instance.datasource.getDSName());
+		queryHandler.setUsername(variables.instance.datasource.getUsername());
+		queryHandler.setPassword(variables.instance.datasource.getPassword());
 		queryHandler.setName("fetchCategory");
 		queryHandler.addParam(name = "category_title", value = arguments.categoryTitle, cfsqltype = "cf_sql_varchar");
 				
