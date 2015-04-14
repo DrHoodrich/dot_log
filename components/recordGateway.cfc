@@ -76,6 +76,10 @@ component RecordGateway
 				queryService.addParam(name = "faa_code", value = "%"&arguments.searchFilter.faaCode&"%", cfsqltype = "cf_sql_varchar");	
 				sqlString = sqlString & " AND LOWER(faa_code) LIKE LOWER(:faa_code)";
 			}
+			if ( structKeyExists(searchFilter, "date") ) {
+				queryService.addParam(name = "date", value = arguments.searchFilter.date, cfsqltype = "cf_sql_timestamp");	
+				sqlString = sqlString & " AND record_time > date";
+			}
 		}
 
 		queryResult = queryService.execute(sql=sqlString);
