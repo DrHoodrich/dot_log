@@ -1,21 +1,21 @@
 component Report
 {
 	variables.instance = {
-		report_id = '',
+		reportID = '',
 		username = '',
 		airportCode = '',
 		beginDate = '',
 		endDate = ''
 	};
 
-	public Report function init(required string report_id,
-								required string username,
+	public Report function init(required string username,
 								required string airportCode,
-								required Class beginDate,
-								required Class endDate
+								required string beginDate,
+								required string endDate,
+								required numeric reportID = -1
 								)
 	{
-		variables.instance.report_id = arguments.report_id;
+		variables.instance.reportID = arguments.reportID;
 		variables.instance.username = arguments.username;
 		variables.instance.airportCode = arguments.airportCode;
 		variables.instance.beginDate = arguments.beginDate;
@@ -33,12 +33,12 @@ component Report
 		return variables.instance.airportCode;
 	}
 
-	public Class function getBeginDate()
+	public string function getBeginDate()
 	{
 		return variables.instance.beginDate;
 	}
 
-	public Class function getEndDate()
+	public string function getEndDate()
 	{
 		return variables.instance.endDate;
 	}	
