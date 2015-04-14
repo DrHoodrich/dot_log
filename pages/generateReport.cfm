@@ -5,13 +5,14 @@
 <cfinclude template="../includes/nav.cfm">
     <div id="content">
 	<cfscript>
-		writeDump(FORM);
+		writeOutput("<strong>Submitted Report for [DATE RANGE GOES HERE!]</strong>");
 	</cfscript>
 		
     	<cfinclude template="./generatePDF.cfm">
 
-<cfmail from="tests@dotlog.gov" to="bucky@uafcsc.com" subject="Its late">
-	<cfmailparam disposition="attachment" file="test.pdf" type="application/pdf" content="#pdfData#" >
+<!--- <cfmail from="tests@dotlog.gov" to="bucky@uafcsc.com" subject="Its late">
+	<cfmailparam disposition="attachment" file="test.pdf" type="application/pdf" content="#pdfData#" > 
 
     NO BODY
 </cfmail>
+--->

@@ -2,12 +2,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <title>Hello World</title>
+    <title>A PDF!</title>
 </head>
 <body>
     <cfoutput><strong>DOTLog Northern Region #dateformat(now(), "yyyy-mm-dd")# Report  <hr></strong></cfoutput>
     <cfscript>
-
+	    
 	   if ( structKeyExists(FORM, "reports") ) {
 	   	writeOutput(FORM.reports);
 	   } else if ( structKeyExists(FORM, "submitReportEmail_button")) {
