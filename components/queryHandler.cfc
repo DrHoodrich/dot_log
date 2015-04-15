@@ -5,7 +5,6 @@ component QueryHandler
 		return this;
 	}
 
-
 	public result function executeQuery(required base queryHandler, required string sqlString)
 	{
 		queryResult = '';
