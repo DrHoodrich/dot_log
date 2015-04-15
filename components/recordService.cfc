@@ -27,5 +27,10 @@ component RecordService
 		return variables.instance.recordGW.getRecordsByAirportFAACode(arguments.faaCode);
 	}
 
-
+	public array function getRecordsAfterDate(required string date)
+	{
+		searchParam = {};
+		searchParam.date = arguments.date;
+		return variables.instance.recordGW.search(searchParam);
+	}
 }
