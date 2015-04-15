@@ -1,8 +1,15 @@
 component RecordGateway
 {
+	variables.instance = {
+		datasource = '',
+		queryHandler = ''
+
+	};
+
 	public RecordGateway function init(required dotlog.components.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
+		variables.instance.queryHandler = new queryHandler();
 		return this;
 	}
 
@@ -78,10 +85,10 @@ component RecordGateway
 			}
 			if ( structKeyExists(searchFilter, "date") ) {
 				queryService.addParam(name = "date", value = arguments.searchFilter.date, cfsqltype = "cf_sql_timestamp");	
-				sqlString = sqlString & " AND record_time > date";
+				sqlString = sqlString & " AND record_time >= :date";
 			}
 		}
-
+		
 		queryResult = queryService.execute(sql=sqlString);
 		result = queryResult.getResult();
 
