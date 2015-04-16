@@ -64,6 +64,7 @@ component UserDAO
 							enabled = result["ENABLED"][1],
 							emailAddr = result["EMAIL_ADDR"][1]);
 		}
+
 		return objUser;
 	}
 

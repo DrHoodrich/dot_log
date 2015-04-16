@@ -29,13 +29,13 @@ component UserGateway
 		return filterUsers(queryFilter);	
 	} 	
 
-	public query function filterUsers(struct searchFilter=structNew())
+	public array function filterUsers(struct searchFilter=structNew())
 	{
 		var queryService = new query();
 		queryService.setName("fetchUsers");
 		queryService = setQueryHandlerDatasource(queryService);
 
-		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled "
+		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, email_addr "
 					& "FROM DL_USERS "
 					& "WHERE 1 = 1 ";
 
@@ -49,8 +49,21 @@ component UserGateway
 				sqlString = sqlString & " AND faa_code LIKE :faa_code";
 			}
 		}
-		queryResult = executeQuery(queryService, sqlString);
-		return queryResult.getResult();
+		queryResult = variables.instance.queryHandler.executeQuery(queryService, sqlString);
+		result = queryResult.getResult();
+
+		var userObjects = [];
+		for (var ii = 1; ii <= result.RecordCount; ++ii) {
+			 objUser = new User(username = result["username"][ii],
+							firstName= result["FIRST_NAME"][ii],
+							lastName = result["LAST_NAME"][ii],
+							faaCode = result["FAA_CODE"][ii],
+							permissions = result["USER_PERMISSIONS"][ii],
+							enabled = result["ENABLED"][ii],
+							emailAddr = result["EMAIL_ADDR"][ii]);
+			 arrayAppend(userObjects, objUser);
+		}
+		return userObjects;
 	}
 
 	private base function setQueryHandlerDatasource(required base queryHandler)

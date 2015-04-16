@@ -12,6 +12,15 @@ component UserService extends="CoreUtils"
 		return this;
 	}
 
+
+	public array function getUsersByAirportFAACode(required string faaCode)
+	{
+		var searchParam = {
+			faaCode = arguments.faaCode
+		};
+		return variables.instance.userGW.filterUsers(searchParam);
+	} 
+
 	public boolean function saveUser(required user user)
 	{
 		return variables.instance.userDAO.saveUser(arguments.user);
