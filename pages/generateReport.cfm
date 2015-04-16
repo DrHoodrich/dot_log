@@ -5,7 +5,7 @@
 <cfinclude template="../includes/nav.cfm">
     <div id="content">
 	<cfscript>
-		writeOutput("<strong>Submitted Report for [DATE RANGE GOES HERE!]</strong>");
+		writeOutput("<strong>Submitted Report for #FORM.startDate# to #FORM.endDate#</strong>");
 	</cfscript>
 		
     	<cfinclude template="./generatePDF.cfm">

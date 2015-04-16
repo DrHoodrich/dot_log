@@ -8,10 +8,7 @@
     <cfoutput><strong>DOTLog Northern Region #dateformat(now(), "yyyy-mm-dd")# Report  <hr></strong></cfoutput>
     <cfscript>
 	    
-	   if ( structKeyExists(FORM, "reports") ) {
-	   	writeOutput(FORM.reports);
-	   } else if ( structKeyExists(FORM, "submitReportEmail_button")) {
-
+	 if ( structKeyExists(FORM, "submitReportEmail_button")) {
 	    user = application.userService.getUserByUsername("us");  // <= set by LDAP
     	airports = application.airportService.getChildAirports(user.getAirportFAACode());
     	categories = application.categoryService.getAllCategories();
