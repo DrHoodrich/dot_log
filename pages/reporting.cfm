@@ -37,16 +37,24 @@
 </cfscript>
 
 <br>
+
+
 <cfform name="weeklyReport" method="post" action="generateReport.cfm">
 <cfscript>
   writeOutput("<strong>Review Events to Report</strong>");
   writeOutput('<table width="783" height="180" border="1">');
 
   record = '';
-  if (len(lastReportedDate)) {
+  records = [];
+  if ( len(lastReportedDate) ) {
       records = application.recordService.getRecordsAfterDate(lastReportedDate);
   } else {
-      records = application.recordService.getRecordsByAirportFAACode(airports[ii].getFAACode()); //Required for uninitialized REPORTS table.
+      for (ii = 1; ii <= arrayLen(airports); ++ii) {
+        tmp = application.recordService.getRecordsByAirportFAACode(airports[ii].getFAACode());        
+        for (jj = 1; jj <= arrayLen(tmp); ++jj) {            
+          arrayAppend(records, tmp[jj]);
+        }
+      }
   }
 
   for (ii = 1; ii <= arrayLen(records); ++ii) {
@@ -59,12 +67,10 @@
     writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[ii].getEventTime()# <br>');
     writeOutput(' Reporter: #records[ii].getUsername()# <br>Airport: #records[ii].getAirportFAACode()# <br> Category: #records[ii].getCategory()# <br>');
     writeOutput('<td width="560" align="left" valign="top">#records[ii].getRecordText()#</td>');
-    writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
-    writeOutput('<input type="checkbox" name="event_#ii#_important" #checked#>');
-    writeOutput('<label for="event_#ii#_important">Important</label>');
-    writeOutput('<label for="entry_1_important"></label></form></td>');
+    writeOutput('<td width="92" align="right" valign="top">');
+    writeOutput('In Reports');
+    writeOutput('<form name="editRecord" method="post" action="edit_record_action.cfm"> <input type="hidden" name="recordID" value="#records[ii].getRecordID()#"> <input type="submit" name="editRecord" value="Edit Entry"> </form></td>');
   }
-   
   writeOutput('</table>');
 </cfscript>
 <cfinput type="submit" name="submitReportEmail_button" value="Email Report">
