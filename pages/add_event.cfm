@@ -61,15 +61,16 @@
 	writeOutput('<table width="783" height="180" border="1">');
 		for (ii = 1; ii <= arrayLen(airports); ++ii) {
 			records = application.recordService.getRecordsByAirportFAACode(airports[ii].getFAACode());
-
 			for (jj = 1; jj <= arrayLen(records); ++jj) {
 				writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
-				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportFAACode()# <br> Category: #records[jj].getCategory()# <br>');
+				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportFAACode()# <br>');
+				writeOutput('Category: #records[jj].getCategory()# <br>');
 				writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
 				writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
-				writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
-				writeOutput('<label for="event_#jj#_important">Important</label>');
-				writeOutput('<label for="entry_1_important"></label></form></td>');
+				writeOutput('<input type="checkbox" name="event_#jj#_important" id="event_#jj#_important">');
+				writeOutput('<label for="event_#jj#_important">Important</label>');				
+				writeOutput('<label for="entry_1_important"></label></form>');
+				writeOutput('<form name="editRecord" method="post" action="edit_record_action.cfm"> <input type="hidden" name="recordID" value="#records[jj].getRecordID()#"> <input type="submit" name="editRecord" value="Edit Entry"> </form></td>');
 	  		}
 		}
 	writeOutput('</table>');
