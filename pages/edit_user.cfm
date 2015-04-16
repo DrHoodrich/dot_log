@@ -5,15 +5,24 @@
 <cfinclude template="../includes/breadcrumb.cfm">
 <cfinclude template="../includes/nav.cfm">
     <div id="content">
-    
-<!-- BEGIN YOUR CONTENT HERE -->
-	<!-- TemplateBeginEditable name="main content" -->
+
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
-<cfform name="createUser" action="editUser_action.cfm" method="post">
-	Username:<cfinput type = "text" name = "username" message = "username" required = "no"></cfinput> <br>
-	FAA Code:<cfinput type = "text" name = "faaCode" message = "faaCode" required = "no"></cfinput> <br>
-	<cfinput type="submit" name="submitUser_button" id="addUser" value="Edit">
+<cfform name="editUser" action="editUser_action.cfm" method="post">
+<!---	Username:<cfinput type = "text" name = "username" message = "username" required = "no"></cfinput> <br> --->
+	
+	<cfoutput>Select user's airport:</cfoutput>
+	<cfselect name="airportCode">
+			<cfscript>
+				user = application.userService.getUserByUsername("us");  // <= set by LDAP
+				airports = application.airportService.getChildAirports(user.getAirportFAACode());
+				writeOutput('<option value="none"></option>');
+				for (ii = 1; ii <= arrayLen(airports); ++ii) {
+					writeOutput('<option value=#airports[ii].getFAACode()#>#airports[ii].getAirportName()#</option>');
+				}
+			</cfscript>
+	</cfselect>
+	<br>
+	<cfinput type="submit" name="selectAirport_button" value="Edit">
 </cfform>
-	<!-- TemplateEndEditable -->
-<!-- END YOUR CONTENT HERE -->
+
 <cfinclude template="../includes/footer.cfm">

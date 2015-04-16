@@ -10,29 +10,33 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
-<cfscript>
-	existingUser = "";
-	if ( structKeyExists(FORM, 'submitUser_button') ) {
-		if( !isNull(FORM.username) ) {
-			existingUser = application.userService.getUserByUsername(FORM.username);
-		} else if ( !isNull(FORM.faaCode) ){
-			existingUser = application.userService.getUsersByAirportFAACode(FORM.faaCode);
-		}
-	} else if ( structKeyExists(FORM, "editUser_button")) {
-		if (structKeyExists(FORM, 'enabled') ) {
-			FORM.enabled = 1;
-		} else {
-			FORM.enabled = 0;
-		}
-		existingUser = new dotlog.components.user(argumentCollection = FORM);
-		application.userService.saveUser(existingUser);
-		existingUser = application.userService.getUserByUsername(FORM.username);
-	}
-	structClear(FORM);
-</cfscript>
-
 <cfif structKeyExists(FORM, 'editUser_button') IS False >
-	<cfform name="editUser" method="post" action="editUser_action.cfm">
+	<cfform name="editUser" action="editUser_action.cfm" method="post">
+		<cfselect name="username">
+			<option value=""> --None-- </option>
+				<cfscript>
+				  	if ( structKeyExists(FORM, 'selectAirport_button') ) {
+						users = application.userService.getUsersByAirportFAACode(FORM.airportCode);
+						if ( arrayLen(users) ) {
+							for (ii = 1; ii <= arrayLen(users); ++ii) {
+								writeOutput('<option value=#users[ii].getUsername()#>#users[ii].getFullName()#</option>');
+							}
+						} else {
+							writeOutput("<h3>No users at this airport.</h3>");
+						}
+					} 
+				</cfscript>
+		</cfselect>
+		<br>
+		<cfinput type="submit" name="editUser_button" value="Edit User">
+	</cfform>
+</cfif>
+
+<cfif structKeyExists(FORM, 'editUser_button') IS True>
+	<cfscript>
+		existingUser = application.userService.getUserByUsername(FORM.username);
+	</cfscript>
+	<cfform name="editUser" method="post" action="saveUser.cfm">
 		<label for="Username">username: <cfoutput><strong>"#existingUser.getUsername()#"</strong></cfoutput></label>
 			<cfinput type="hidden" name="Username" value="#existingUser.getUsername()#"> <br>
 
@@ -53,7 +57,9 @@
 
 		<label for="enabled">Enabled:</label>
 			<cfinput type="checkbox" name="enabled" value="#existingUser.isEnabled()#" checked="#existingUser.isEnabled()#" id="enabled"> <br>
-		<cfinput type="submit" name="editUser_button" id="editUser_button" value="Edit">
+		<cfinput type="submit" name="saveUser_button" id="editUser_button" value="Edit">
 	</cfform>
 </cfif>
+
 <cfinclude template="../includes/footer.cfm">
+

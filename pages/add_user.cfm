@@ -36,11 +36,11 @@
 		</cfscript>
 	</cfselect><br>
 	
-	Account Type:<cfselect name = "permissions" id = "permissions">
+	Account Type:<cfselect name = "permissions">
 		<option value=1>user</option>
-		<option value=1337>admin</option>
+		<option value=2>admin</option>
 	</cfselect><br>
-	<cfinput type="submit" name="submitUser_button" id="addUser" value="Create User">
+	<cfinput type="submit" name="createUser_button" value="Create User">
 </cfform>
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
