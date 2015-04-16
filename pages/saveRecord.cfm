@@ -13,6 +13,10 @@
 <cfscript>
   record = application.recordService.getRecordByID(FORM.recordID);
   
+  if ( !structKeyExists(FORM,"inWeeklyReport") ) {
+    FORM.inWeeklyReport = 0;
+  }
+
   FORM.username = record.getUsername();
   FORM.recordTime = record.getRecordTime();
   FORM.FAACode = record.getAirportFAACode();
