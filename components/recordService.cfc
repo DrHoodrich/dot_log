@@ -33,4 +33,9 @@ component RecordService
 		searchParam.date = arguments.date;
 		return variables.instance.recordGW.search(searchParam);
 	}
+
+	public record function getRecordByID(numeric recordID)
+	{
+		return variables.instance.recordDAO.getRecordByID(arguments.recordID);
+	}
 }

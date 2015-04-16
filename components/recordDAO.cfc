@@ -24,6 +24,34 @@ component RecordDAO extends="CoreUtils"
 		} 
 	}
 
+	public record function getRecordByID(numeric recordID)
+	{
+		var queryHandler = new query();
+
+		sqlString = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title "
+				& "FROM DL_RECORDS "
+				& "WHERE record_id = :record_id";
+
+		queryHandler.setName("fetchRecordByID");
+		queryHandler.setDataSource(variables.instance.datasource.getDSName());
+		queryHandler.setUsername(variables.instance.datasource.getUsername());
+		queryHandler.setPassword(variables.instance.datasource.getPassword());
+		queryHandler.addParam(name = "record_id", value = arguments.recordID, cfsqltype = "cf_sql_number");
+
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		result = queryResult.getResult();
+		fetchedRecord = new Record(recordText = result["record_text"][1],
+									username = result["username"][1],
+									faaCode = result["faa_code"][1],
+									eventTime = result["event_time"][1],
+									recordTime = result["record_time"][1],
+									inWeeklyReport = result["in_weekly_report"][1],
+									categoryTitle = result["category_title"][1],
+									recordID = result["record_id"][1]);
+		return fetchedRecord;
+
+	}
+
 	public numeric function getRecordID(record record)
 	{
 		var queryHandler = getQueryHandler("updateRecord", arguments.record);
@@ -63,7 +91,7 @@ component RecordDAO extends="CoreUtils"
 		sqlString = "UPDATE DL_RECORDS SET "
 					& "record_text = :record_text, faa_code = :faa_code, event_time = :event_time, in_weekly_report = :in_weekly_report, category_title = :category_title "
 					& "WHERE record_id = :record_id";
-		queryResult = variables.instance.queryHandler.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}	
 
