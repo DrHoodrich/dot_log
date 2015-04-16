@@ -11,26 +11,11 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	existingAirport = "";
-	if ( structKeyExists(FORM, 'selectAirportToEdit_button') ) {
-		existingAirport = application.airportService.getAirportByFAACode(FORM.faaCode);
-		FORM.parentAirportFAACode = existingAirport.getParentAirportFAACode();
-		FORM.enabled = existingAirport.isEnabled();
-		FORM.airportName = existingAirport.getAirportName();
-	} else if ( structKeyExists(FORM, "editAirport_button")) {
-		if (structKeyExists(FORM, 'enabled') ) {
-			FORM.enabled = 1;
-		} else {
-			FORM.enabled = 0;
-		}
-		existingAirport = new dotlog.components.airport(argumentCollection = FORM);
-		successfulUpdate = application.airportService.saveAirport(existingAirport);
-	}
-	structClear(FORM);
+	existingAirport = application.airportService.getAirportByFAACode(FORM.faaCode);
 </cfscript>
 
-<cfif structKeyExists(FORM, 'editAirport_button') IS False>
-	<cfform name="editAirport" method="post" action="airport_edit_action.cfm">
+<cfif structKeyExists(FORM, 'selectAirportToEdit_button')>
+	<cfform name="editAirport" method="post" action="saveAirport.cfm">
 					
 		<label for="faaCode">FAA Code:</label>
 			<cfoutput>
@@ -47,7 +32,7 @@
 		<label for="enabled">Enabled:</label>
 			<cfinput type="checkbox" name="enabled" value="#existingAirport.isEnabled()#" checked="#existingAirport.isEnabled()#" id="enabled"> <br>
 			
-		<cfinput type="submit" name="editAirport_button" id="editAirport_button" value="Edit">
+		<cfinput type="submit" name="saveAirport_button" value="Edit">
 	</cfform>
 </cfif>
 <cfinclude template="../includes/footer.cfm">

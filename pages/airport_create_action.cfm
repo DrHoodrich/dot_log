@@ -16,18 +16,17 @@
 	if ( structKeyExists(FORM, 'createAirport_button') ) {
 		FORM.enabled = 1;
 		if ( len(FORM.parentFAACode) ) {
-
 			writeOutput("Assigned to a Hub");
-
 		} else {
-			
-			writeOutput("Is a new hub");
 			FORM.parentFAACode = user.getAirportFAACode();
-
 		}
 		newAirport = new dotlog.components.airport(argumentCollection = FORM);
-		createResult = application.airportService.saveAirport(newAirport);
-		writeOutput(createResult);
+
+		if ( application.airportService.saveAirport(newAirport) ) {
+			writeOutput("<h3>Saved airport " & newAirport.getAirportName() & "</h3>");
+		} else {
+			writeOutput("<h3>Failed to save airport " & newAirport.getAirportName() & "</h3>");
+		}	
 	}
 </cfscript>
 <cfinclude template="../includes/footer.cfm">
