@@ -30,16 +30,18 @@
         writeOutput('</td>');
     }
     writeOutput('</table>');
-/*
+
     testReport = new dotlog.components.report(user.getUsername(), user.getAirportFAACode(), now()-2, now()-1);
+
     reportDAO.saveReport(testReport);
-*/
 </cfscript>
 
 <br>
 
 
 <cfform name="weeklyReport" method="post" action="generateReport.cfm">
+  <cfinput type="hidden" name="startDate" value="#dateFormat(now()-2, 'yyyy-mm-dd')#"></cfinput>
+  <cfinput type="hidden" name="endDate" value="#dateFormat(now()-1, 'yyyy-mm-dd')#"></cfinput>
 <cfscript>
   writeOutput("<strong>Review Events to Report</strong>");
   writeOutput('<table width="783" height="180" border="1">');
@@ -74,7 +76,10 @@
   writeOutput('</table>');
 </cfscript>
 <cfinput type="submit" name="submitReportEmail_button" value="Email Report">
-<cfinput type="submit" name="generateReportPDF_button" value="Preview Report PDF"> 
   <br>
+</cfform>
+
+<cfform name="weeklyReport" method="post" action="stubbedGeneratePDF.cfm">
+  <cfinput type="submit" name="submitReportEmail_button" value="Preview Report PDF"> 
 </cfform>
 <cfinclude template="../includes/footer.cfm">
