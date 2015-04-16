@@ -22,6 +22,7 @@
 	<cfoutput>Reporter: <strong>"#record.getUsername()#"</strong></cfoutput><br>
   	<cfoutput>Airport: <strong>"#record.getAirportFAACode()#"</strong></cfoutput><br>
 
+    <cfoutput>Catecory: </cfoutput>
   	<cfselect name="categoryTitle"> 
   		<cfscript>
 			writeOutput('<option value="#record.getCategory()#">"#record.getCategory()#"</option>');
