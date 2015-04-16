@@ -21,7 +21,11 @@
 			}
 
 			newCategory = new dotlog.components.category(argumentCollection=FORM);
-			application.categoryService.saveCategory(newCategory);			
+			if ( application.categoryService.saveCategory(newCategory) ) {
+			    writeOutput("<h3>Saved Category</h3>");
+			} else {
+			    writeOutput("<h3>Failed to save category</h3>");
+			}
 		} 
 	}
 </cfscript>
