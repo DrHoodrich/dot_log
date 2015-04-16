@@ -107,35 +107,6 @@ component RecordGateway
 		return recordObjects;
 
 	}
-/*
-
-			if ( structKeyExists(searchFilter, "faaCode") ) {
-				queryService.addParam(name = "faa_code", value = arguments.searchFilter.faaCode, cfsqltype = "cf_sql_varchar");
-				sqlString = sqlString & " AND faa_code LIKE :faa_code";
-			}
-
-	public query function filterUsers(struct searchFilter=structNew())
-	{
-		if ( !structIsEmpty(searchFilter) ) {
-			if ( structKeyExists(searchFilter, "lastName") ) {
-				queryService.addParam(name = "last_name", value = "%"&arguments.searchFilter.lastName&"%", cfsqltype = "cf_sql_varchar");	
-				sqlString = sqlString & " AND last_name LIKE :last_name";
-			}
-			if ( structKeyExists(searchFilter, "faaCode") ) {
-				queryService.addParam(name = "faa_code", value = arguments.searchFilter.faaCode, cfsqltype = "cf_sql_varchar");
-				sqlString = sqlString & " AND faa_code LIKE :faa_code";
-			}
-		}		
-
-		
-
-		
-
-		
-		queryResult = queryService.execute(sql=sqlString);
-		return queryResult.getResult();
-	}
-	*/
 
 	public array function getRecordsByAirportFAACode(required string faaCode)
 	{
@@ -153,7 +124,7 @@ component RecordGateway
 		queryService.setPassword(DSpassword);
 
 		queryService.addParam(name = "faa_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
-		queryResult = queryService.execute(sql = "SELECT record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title 
+		queryResult = queryService.execute(sql = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title 
 			FROM DL_RECORDS WHERE faa_code = :faa_code 
 			ORDER BY event_time DESC");
 		result = queryResult.getResult();
@@ -165,7 +136,8 @@ component RecordGateway
 							eventTime = result["event_time"][ii],
 							recordTime = result["record_time"][ii],
 							inWeeklyReport = result["in_weekly_report"][ii],
-							categoryTitle = result["category_title"][ii]);
+							categoryTitle = result["category_title"][ii],
+							recordID = result["record_id"][ii]);
 			 arrayAppend(recordObjects, recordObject);
 		}
 		return recordObjects;
