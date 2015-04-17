@@ -1,8 +1,9 @@
 <cfset pageTitle = "DOTLog Reporting"> <!--- Variable that is used in the html included header --->
-<cfinclude template="../includes/header.cfm">
-<cfinclude template="../includes/banner.cfm">
-<cfinclude template="../includes/breadcrumb.cfm">
-<cfinclude template="../includes/nav.cfm">
+<cfinclude template="/dotlog/includes/header.cfm">
+<cfinclude template="/dotlog/includes/banner.cfm">
+    <a id="main_content"></a>
+<cfinclude template="/dotlog/includes/breadcrumb.cfm">
+<cfinclude template="/dotlog/includes/nav.cfm">
     <div id="content">
     
 <!-- BEGIN YOUR CONTENT HERE -->
@@ -82,4 +83,4 @@
 <cfform name="weeklyReport" method="post" action="stubbedGeneratePDF.cfm">
   <cfinput type="submit" name="submitReportEmail_button" value="Preview Report PDF"> 
 </cfform>
-<cfinclude template="../includes/footer.cfm">
+<cfinclude template="/dotlog/includes/footer.cfm">

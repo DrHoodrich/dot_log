@@ -1,9 +1,9 @@
 <cfset pageTitle = "Edit User"> <!--- Variable that is used in the html included header --->
-<cfinclude template="../includes/header.cfm">
-<cfinclude template="../includes/banner.cfm">
+<cfinclude template="/dotlog/includes/header.cfm">
+<cfinclude template="/dotlog/includes/banner.cfm">
 	<a id="main_content"></a>
-<cfinclude template="../includes/breadcrumb.cfm">
-<cfinclude template="../includes/nav.cfm">
+<cfinclude template="/dotlog/includes/breadcrumb.cfm">
+<cfinclude template="/dotlog/includes/nav.cfm">
     <div id="content">
 
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
@@ -25,4 +25,4 @@
 	<cfinput type="submit" name="selectAirport_button" value="Edit">
 </cfform>
 
-<cfinclude template="../includes/footer.cfm">
+<cfinclude template="/dotlog/includes/footer.cfm">

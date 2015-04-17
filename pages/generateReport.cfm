@@ -1,8 +1,8 @@
 <cfset pageTitle = "DOTLog Reporting"> <!--- Variable that is used in the html included header --->
-<cfinclude template="../includes/header.cfm">
-<cfinclude template="../includes/banner.cfm">
-<cfinclude template="../includes/breadcrumb.cfm">
-<cfinclude template="../includes/nav.cfm">
+<cfinclude template="/dotlog/includes/header.cfm">
+<cfinclude template="/dotlog/includes/banner.cfm">
+<cfinclude template="/dotlog/includes/breadcrumb.cfm">
+<cfinclude template="/dotlog/includes/nav.cfm">
     <div id="content">
 	<cfscript>
 		writeOutput("<strong>Submitted Report for #FORM.startDate# to #FORM.endDate#</strong>");
@@ -16,3 +16,4 @@
     NO BODY
 </cfmail>
 --->
+<cfinclude template="/dotlog/includes/footer.cfm">

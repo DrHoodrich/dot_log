@@ -1,9 +1,9 @@
 <cfset pageTitle = "Category Addition Review">
-<cfinclude template="../includes/header.cfm">
-<cfinclude template="../includes/banner.cfm">
+<cfinclude template="/dotlog/includes/header.cfm">
+<cfinclude template="/dotlog/includes/banner.cfm">
     <a id="main_content"></a>
-<cfinclude template="../includes/breadcrumb.cfm">
-<cfinclude template="../includes/nav.cfm">
+<cfinclude template="/dotlog/includes/breadcrumb.cfm">
+<cfinclude template="/dotlog/includes/nav.cfm">
     <div id="content">
 
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
@@ -22,4 +22,4 @@
   	}
   	writeOutput('</table>');
 </cfscript>
-<cfinclude template="../includes/footer.cfm">
+<cfinclude template="/dotlog/includes/footer.cfm">

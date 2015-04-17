@@ -1,9 +1,9 @@
 <cfset pageTitle = "Add Category"> <!--- Variable that is used in the html included header --->
-<cfinclude template="../includes/header.cfm">
-<cfinclude template="../includes/banner.cfm">
-  <a id="main_content"></a>
-<cfinclude template="../includes/breadcrumb.cfm">
-<cfinclude template="../includes/nav.cfm">
+<cfinclude template="/dotlog/includes/header.cfm">
+<cfinclude template="/dotlog/includes/banner.cfm">
+    <a id="main_content"></a>
+<cfinclude template="/dotlog/includes/breadcrumb.cfm">
+<cfinclude template="/dotlog/includes/nav.cfm">
     <div id="content">
     
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
@@ -15,4 +15,4 @@
   <cfinput type="submit" name="newCategory_button" id="addCategory" value="create"></cfinput>
 </cfform>
 
-<cfinclude template="../includes/footer.cfm">
+<cfinclude template="/dotlog/includes/footer.cfm">
