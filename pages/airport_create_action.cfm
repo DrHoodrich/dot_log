@@ -11,14 +11,12 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	user = application.userService.getUserByUsername("us");
-
-	if ( structKeyExists(FORM, 'createAirport_button') ) {
+		if ( structKeyExists(FORM, 'createAirport_button') ) {
 		FORM.enabled = 1;
 		if ( len(FORM.parentFAACode) ) {
 			writeOutput("Assigned to a Hub");
 		} else {
-			FORM.parentFAACode = user.getAirportFAACode();
+			FORM.parentFAACode = session.user.getAirportFAACode();
 		}
 		newAirport = new dotlog.components.airport(argumentCollection = FORM);
 

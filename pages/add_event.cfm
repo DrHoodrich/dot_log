@@ -11,8 +11,8 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 	<cfscript>
-		user = application.userService.getUserByUsername("us");  // <= set by LDAP
-		airports = application.airportService.getChildAirports(user.getAirportFAACode());
+		writeDump(session);
+		airports = application.airportService.getChildAirports(session.user.getAirportFAACode());
 		categories = application.categoryService.getAllCategories();
 	</cfscript>
 
@@ -20,7 +20,7 @@
 
 <!--- Need to change how user info is passed into the action page --->
 <cfscript>
-	writeOutput('<input type="hidden" name="userID" value="#user.getUsername()#">');
+	writeOutput('<input type="hidden" name="userID" value="#session.user.getUsername()#">');
 </cfscript>
        
 <label for="airportCode">Airport:</label>

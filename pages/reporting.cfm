@@ -10,16 +10,15 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-    user = application.userService.getUserByUsername("us");  // <= set by LDAP
-    airports = application.airportService.getChildAirports(user.getAirportFAACode());
+    airports = application.airportService.getChildAirports(session.user.getAirportFAACode());
     categories = application.categoryService.getAllCategories();
 
     datasource = new dotlog.components.datasource(DSName = "DOTlogDB", username = "", password = "");
     reportDAO = new dotlog.components.reportDAO(datasource);
     reportGW = new dotlog.components.reportGateway(datasource);
-    reports = reportGW.getHubReports(user.getAirportFAACode());    
+    reports = reportGW.getHubReports(session.user.getAirportFAACode());    
 
-    lastReport = reportDAO.getLastReport(user.getAirportFAACode());
+    lastReport = reportDAO.getLastReport(session.user.getAirportFAACode());
     lastReportedDate = lastReport.getEndDate();
 
     writeOutput("<strong>Submitted Reports</strong>");
@@ -32,7 +31,7 @@
     }
     writeOutput('</table>');
 
-    testReport = new dotlog.components.report(user.getUsername(), user.getAirportFAACode(), now()-2, now()-1);
+    testReport = new dotlog.components.report(session.user.getUsername(), session.user.getAirportFAACode(), now()-2, now()-1);
 
     reportDAO.saveReport(testReport);
 </cfscript>

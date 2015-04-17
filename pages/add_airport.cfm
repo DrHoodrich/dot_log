@@ -11,8 +11,7 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-  user = application.userService.getUserByUsername("us");
-  hubAirports = application.airportService.getChildAirports(user.getAirportFaaCode());
+  hubAirports = application.airportService.getChildAirports(session.user.getAirportFaaCode());
 </cfscript>
   
 <cfform name="createAirportForm" action="airport_create_action.cfm" method="post" >

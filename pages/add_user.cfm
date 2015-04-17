@@ -10,9 +10,7 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-	user = application.userService.getUserByUsername("us");
-
-	hubAirports = application.airportService.getChildAirports(user.getAirportFaaCode());
+	hubAirports = application.airportService.getChildAirports(session.user.getAirportFaaCode());
 
 	AirportNames = [];
   for (ii = 1; ii <= ArrayLen(hubAirports); ++ii) {

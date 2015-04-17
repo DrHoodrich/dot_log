@@ -13,8 +13,7 @@
 	<cfoutput>Select user's airport:</cfoutput>
 	<cfselect name="airportCode">
 			<cfscript>
-				user = application.userService.getUserByUsername("us");  // <= set by LDAP
-				airports = application.airportService.getChildAirports(user.getAirportFAACode());
+				airports = application.airportService.getChildAirports(session.user.getAirportFAACode());
 				writeOutput('<option value="none"></option>');
 				for (ii = 1; ii <= arrayLen(airports); ++ii) {
 					writeOutput('<option value=#airports[ii].getFAACode()#>#airports[ii].getAirportName()#</option>');

@@ -8,9 +8,7 @@
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
-	<cfscript>
-		user = application.userService.getUserByUsername("us");
-	</cfscript>
+
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
 <cfinclude template="/dotlog/includes/footer.cfm">

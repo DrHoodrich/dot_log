@@ -4,7 +4,9 @@ component
 	this.ApplicationTimeout = CreateTimeSpan( 0, 0, 0, 0 );
 	this.SessionManagement = true;
 	this.rootDir = getDirectoryFromPath( getCurrentTemplatePath() );
+	this.mappings = structNew();
 	this.mappings[ "/dotlog" ] = this.rootDir;
+	this.mappings[ "/includes" ] = (this.rootDir & "includes\");
 
 	function onApplicationStart()
 	{
@@ -18,6 +20,11 @@ component
 
 	function onRequestStart()
 	{
+		
+	}
 
-	}	
+	function onSessionStart()
+	{
+		session.user = application.userService.getUserByUsername(getAuthUser());
+	}
 }

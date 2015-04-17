@@ -29,8 +29,7 @@
 										  categoryTitle = FORM.categoryTitle);
 	application.recordService.saveRecord(record);	
 
-	user = application.userService.getUserByUsername("us");
-	airports = application.airportService.getChildAirports(user.getAirportFAACode());
+	airports = application.airportService.getChildAirports(session.user.getAirportFAACode());
 	categories = application.categoryService.getAllCategories();
 
 	writeOutput('<table width="783" height="180" border="1">');
