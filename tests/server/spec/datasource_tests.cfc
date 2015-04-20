@@ -5,7 +5,7 @@ component DatasourceTests extends = "mxunit.framework.TestCase"
         DSName = "testDSname";
         DSuser = "testDSusername";
         DSpasswd = "testDSpassword";
-		datasource = new dotlog.components.datasource(DSName, DSuser, DSpasswd);
+		datasource = new dotlog.model.beans.datasource(DSName, DSuser, DSpasswd);
 	}
 
 	public void function getDSName()

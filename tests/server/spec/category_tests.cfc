@@ -6,10 +6,10 @@ component userTest extends = "mxunit.framework.TestCase" {
 
 	public void function setUp()
 	{
-		testCategory = new dotlog.components.category(categoryTitle,
-                                                    description,
-                                                    enabled,
-                                                    inWeeklyReport);
+		testCategory = new dotlog.model.beans.category(categoryTitle,
+                                                        description,
+                                                        enabled,
+                                                        inWeeklyReport);
 	}
 
 	public void function getCategoryTitle()

@@ -1,28 +1,28 @@
 component userTest extends = "mxunit.framework.TestCase" {
-	FAACode = "AUK";
-    parentFAACode = "Northern";
+	AirportCode = "AUK";
+    parentAirportCode = "Northern";
     airportName = "Alakanuk";
     enabled = 1;
 
 	public void function setUp()
 	{
-		testAirport = new dotlog.components.airport(FAACode,
-                                                 parentFAACode,
+		testAirport = new dotlog.model.beans.airport(AirportCode,
+                                                 parentAirportCode,
                                                  airportName,
                                                  enabled);
 	}
 
-	public void function getFAACode()
+	public void function getAirportCode()
 	{
-		expected = FAACode;
-		actual = testAirport.getFAACode();
+		expected = AirportCode;
+		actual = testAirport.getAirportCode();
 		assertEquals(expected, actual);
 	}
 
-    public void function getParentAirportFAACode()
+    public void function getParentAirportCode()
     {
-        expected = ParentFAACode;
-        actual = testAirport.getParentAirportFAACode();
+        expected = ParentAirportCode;
+        actual = testAirport.getParentAirportCode();
         assertEquals(expected, actual);
     }
 

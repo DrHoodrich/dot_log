@@ -2,17 +2,17 @@ component userTest extends = "mxunit.framework.TestCase" {
 	username = "tester";
     firstName = "Bob";
     lastName = "Dylan";
-    faaCode = "AUK";
+    airportCode = "AUK";
     permissions = "1";
     enabled = "1";
     emailAddr = "test";
 
 	public void function setUp()
 	{
-		testUser = new dotlog.components.user(username,
+		testUser = new dotlog.model.beans.user(username,
                                               firstName,
                                               lastName,
-                                              faaCode,
+                                              airportCode,
                                               permissions,
                                               enabled,
                                               emailAddr);
@@ -32,10 +32,10 @@ component userTest extends = "mxunit.framework.TestCase" {
     	assertEquals(expected, actual);
     }
 
-    public void function getAirportFAACode()
+    public void function getAirportCode()
     {
-		expected = faaCode;
-		actual = testUser.getAirportFAACode();
+		expected = airportCode;
+		actual = testUser.getAirportCode();
 		assertEquals(expected, actual);
     }
 

@@ -1,7 +1,7 @@
 component userTest extends = "mxunit.framework.TestCase" {
 	recordText = "Some event";
     username = "tester";
-    faaCode = "AUK";
+    airportCode = "AUK";
     eventTime = CreateODBCDateTime( now() );
     recordTime = CreateODBCDateTime( now() );
     inWeeklyReport = 1;
@@ -9,13 +9,13 @@ component userTest extends = "mxunit.framework.TestCase" {
 
 	public void function setUp()
 	{
-		testRecord = new dotlog.components.record(recordText,
-                                                username,
-                                                faaCode,
-                                                eventTime,
-                                                recordTime,
-                                                inWeeklyReport,
-                                                categoryTitle);
+		testRecord = new dotlog.model.beans.record(recordText,
+                                                    username,
+                                                    airportCode,
+                                                    eventTime,
+                                                    recordTime,
+                                                    inWeeklyReport,
+                                                    categoryTitle);
 	}
 
 	public void function getRecordText()
@@ -32,10 +32,10 @@ component userTest extends = "mxunit.framework.TestCase" {
     	assertEquals(expected, actual);
     }
 
-    public void function getAirportFAACode()
+    public void function getAirportCode()
     {
-		expected = faaCode;
-		actual = testRecord.getAirportFAACode();
+		expected = airportCode;
+		actual = testRecord.getAirportCode();
 		assertEquals(expected, actual);
     }
 

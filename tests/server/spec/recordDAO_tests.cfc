@@ -6,7 +6,7 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
 
 	recordText = "Unit Test at " & now();
     username = "us";
-    faaCode = "AUK";
+    airportCode = "AUK";
     eventTime = CreateODBCDateTime( now() );
     recordTime = CreateODBCDateTime( now() );
     inWeeklyReport = 1;
@@ -14,10 +14,10 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
 
 	public void function setUp()
 	{
-        datasource = new dotlog.components.datasource(DSName, DSuser, DSpasswd);
-		testRecord = new dotlog.components.record(recordText,
+        datasource = new dotlog.model.beans.datasource(DSName, DSuser, DSpasswd);
+		testRecord = new dotlog.model.beans.record(recordText,
                                                 username,
-                                                faaCode,
+                                                airportCode,
                                                 eventTime,
                                                 recordTime,
                                                 inWeeklyReport,
@@ -26,7 +26,7 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
 
     public void function saveRecord()
     {
-        testRecordDAO = new dotlog.components.recordDAO(datasource);
+        testRecordDAO = new dotlog.model.dataAccess.recordDAO(datasource);
         assert(testRecordDAO.saveRecord(testRecord));
     }
 }
