@@ -15,11 +15,11 @@
 <link rel="shortcut icon" href="http://www.dot.alaska.gov/favicon.ico"> 
 <link rel="icon" type="image/ico" href="http://www.dot.alaska.gov/favicon.ico">
 
-<link href="../style_sheets/dot_main-intranet_style.css" rel="stylesheet" type="text/css" media="projection, screen">
-<link href="../style_sheets/menu-intra.css" rel="stylesheet" type="text/css" />
-<link href="../style_sheets/print_intra.css" rel="stylesheet" type="text/css" media="print">
+<link href="/dotlog/style_sheets/dot_main-intranet_style.css" rel="stylesheet" type="text/css" media="projection, screen">
+<link href="/dotlog/style_sheets/menu-intra.css" rel="stylesheet" type="text/css" />
+<link href="/dotlog/style_sheets/print_intra.css" rel="stylesheet" type="text/css" media="print">
 <!--[if IE 6]>
-	<link href="../style_sheets/ie6.css" rel="stylesheet" type="text/css" media="projection, screen">
+	<link href="/dotlog/style_sheets/ie6.css" rel="stylesheet" type="text/css" media="projection, screen">
 <![endif]-->
 <!-- This is the son of suckerfish dropdown javascript code for IE-->
 <script type="text/javascript"><!--//--><![CDATA[//><!--
