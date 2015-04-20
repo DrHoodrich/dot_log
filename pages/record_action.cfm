@@ -20,7 +20,7 @@
 		reporting = 1;
 	}
 
-	record = new dotlog.components.record(recordText = FORM.eventDescription,
+	record = new dotlog.model.record(recordText = FORM.eventDescription,
 										  username = FORM.userid,
 										  airportCode = FORM.airportCode,
 										  eventTime =  CREATEODBCDATETIME( now() ),

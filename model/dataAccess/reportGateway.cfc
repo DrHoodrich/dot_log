@@ -4,7 +4,7 @@ component ReportGateway
 		datasource = ''
 	};
 
-	public reportGateway function init(required dotlog.components.datasource datasource)
+	public reportGateway function init(required dotlog.model.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
 		return this;

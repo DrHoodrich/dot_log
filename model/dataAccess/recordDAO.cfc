@@ -5,14 +5,14 @@ component RecordDAO
 		queryHandler = ''
 	};
 
-	public RecordDAO function init(required dotlog.components.beans.datasource datasource)
+	public RecordDAO function init(required dotlog.model.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.components.queryHandler();
+		variables.instance.queryHandler = new dotlog.model.queryHandler();
 		return this;
 	} 
 
-	public boolean function saveRecord(required dotlog.components.beans.record record)
+	public boolean function saveRecord(required dotlog.model.beans.record record)
 	{
 		if ( record.getRecordID() ) {
 			if ( recordExists(record) ) {
@@ -52,7 +52,7 @@ component RecordDAO
 
 	}
 
-	public numeric function getRecordID(required dotlog.components.beans.record record)
+	public numeric function getRecordID(required dotlog.model.beans.record record)
 	{
 		var queryHandler = getQueryHandler("updateRecord", arguments.record);
 
@@ -74,7 +74,7 @@ component RecordDAO
 		}
 	}
 
-	private boolean function createRecord(required dotlog.components.beans.record record)
+	private boolean function createRecord(required dotlog.model.beans.record record)
 	{
 		var queryHandler = getQueryHandler("createRecord", arguments.record);
 
@@ -85,7 +85,7 @@ component RecordDAO
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
-	private boolean function updateRecord(required dotlog.components.beans.record record)
+	private boolean function updateRecord(required dotlog.model.beans.record record)
 	{
 		var queryHandler = getQueryHandler("updateRecord", arguments.record);
 		sqlString = "UPDATE DL_RECORDS SET "
@@ -95,7 +95,7 @@ component RecordDAO
 		return len(queryResult.getPrefix().recordCount);
 	}	
 
-	private boolean function recordExists(required dotlog.components.beans.record record)
+	private boolean function recordExists(required dotlog.model.beans.record record)
 	{		
 		var queryHandler = getQueryHandler("doesRecordExist", arguments.record);
 		sqlString = "SELECT record_id "
@@ -105,7 +105,7 @@ component RecordDAO
 		return queryResult.getResult().recordCount;
 	}
 
-	private base function getQueryHandler(required string queryName, required dotlog.components.beans.record record)
+	private base function getQueryHandler(required string queryName, required dotlog.model.beans.record record)
 	{
 		var queryService = new query();
 

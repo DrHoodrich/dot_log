@@ -14,8 +14,8 @@
 	searchStruct = structNew();
 
 	if ( structKeyExists(FORM, 'submitSearch_button') ) {
-		dataSource = new dotlog.components.datasource("DOTlogDB","","");
-		recordGW = new dotlog.components.recordGateway(dataSource);
+		dataSource = new dotlog.model.datasource("DOTlogDB","","");
+		recordGW = new dotlog.model.recordGateway(dataSource);
 	/*	if ( len(FORM.firstName) ) {
 			searchStruct.firstName = FORM.firstName;
 		}

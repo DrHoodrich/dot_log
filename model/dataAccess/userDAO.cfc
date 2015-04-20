@@ -5,10 +5,10 @@ component UserDAO
 		queryHandler = ''
 	};
 
-	public dotlog.components.dataAccess.userDAO function init(required dotlog.components.beans.datasource datasource)
+	public dotlog.model.dataAccess.userDAO function init(required dotlog.model.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.components.queryHandler();
+		variables.instance.queryHandler = new dotlog.model.queryHandler();
 		return this;
 	}
 
@@ -28,7 +28,7 @@ component UserDAO
 
 		var userObjects = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 objUser = new dotlog.components.beans.user(username = result["username"][ii],
+			 objUser = new dotlog.model.beans.user(username = result["username"][ii],
 														firstName= result["FIRST_NAME"][ii],
 														lastName = result["LAST_NAME"][ii],
 														airportCode = result["FAA_CODE"][ii],
@@ -56,7 +56,7 @@ component UserDAO
 
 		var objUser = '';
 		if (result.RecordCount) {
-			objUser = new dotlog.components.beans.user(username = result["username"][1],
+			objUser = new dotlog.model.beans.user(username = result["username"][1],
 														firstName= result["FIRST_NAME"][1],
 														lastName = result["LAST_NAME"][1],
 														airportCode = result["FAA_CODE"][1],
@@ -67,7 +67,7 @@ component UserDAO
 		return objUser;
 	}
 
-	public boolean function saveUser(required dotlog.components.beans.user user)
+	public boolean function saveUser(required dotlog.model.beans.user user)
 	{
 		if ( userExists(user) ) {
 			return updateUser(arguments.user);
@@ -76,7 +76,7 @@ component UserDAO
 		}
 	}
 
-	private boolean function updateUser(required dotlog.components.beans.user user)
+	private boolean function updateUser(required dotlog.model.beans.user user)
 	{
 		var queryHandler = getQueryHandler("updateUser", arguments.user);
 
@@ -88,7 +88,7 @@ component UserDAO
 		return len(queryResult.getPrefix().recordCount);
 	}
 
-	private boolean function createUser(required dotlog.components.beans.user user)
+	private boolean function createUser(required dotlog.model.beans.user user)
 	{
 		queryHandler = getQueryHandler("createUser", user);
 
@@ -99,7 +99,7 @@ component UserDAO
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
-	private boolean function userExists(required dotlog.components.beans.user user)
+	private boolean function userExists(required dotlog.model.beans.user user)
 	{
 		var queryHandler = getQueryHandler("SeeIfUserExists", arguments.user);
 
@@ -110,7 +110,7 @@ component UserDAO
 		return queryResult.getResult().recordCount;
 	}
 
-	private base function getQueryHandler(required string queryName, required dotlog.components.beans.user user)
+	private base function getQueryHandler(required string queryName, required dotlog.model.beans.user user)
 	{
 		var queryHandler = new query();
 

@@ -5,10 +5,10 @@ component CategoryDAO
 		queryHandler = ''
 	};
 
-	public CategoryDAO function init(required dotlog.components.beans.datasource datasource)
+	public CategoryDAO function init(required dotlog.model.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.components.queryHandler();
+		variables.instance.queryHandler = new dotlog.model.queryHandler();
 		return this;
 	}
 
@@ -33,7 +33,7 @@ component CategoryDAO
 							inWeeklyReport = result["in_weekly_report"][1]);
 	}
 
-	public boolean function saveCategory(required dotlog.components.beans.category category)
+	public boolean function saveCategory(required dotlog.model.beans.category category)
 	{
 		if ( categoryExists(arguments.category) ) {
 			return updateCategory(arguments.category);
@@ -42,7 +42,7 @@ component CategoryDAO
 		} 
 	}
 
-	private boolean function updateCategory(required dotlog.components.beans.category category)
+	private boolean function updateCategory(required dotlog.model.beans.category category)
 	{
 		var queryHandler = getQueryHandler("updateCategory", arguments.category);
 
@@ -53,7 +53,7 @@ component CategoryDAO
 		return len(queryResult.getPrefix().recordCount);
 	}
 
-	private boolean function createCategory(required dotlog.components.beans.category category)
+	private boolean function createCategory(required dotlog.model.beans.category category)
 	{
 		var queryHandler = getQueryHandler("createCategory", arguments.category);
 		sqlString = "INSERT INTO DL_CATEGORIES "
@@ -63,7 +63,7 @@ component CategoryDAO
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
-	private boolean function categoryExists(required dotlog.components.beans.category category)
+	private boolean function categoryExists(required dotlog.model.beans.category category)
 	{
 		var queryHandler = getQueryHandler("doesCategoryExist", arguments.category);
 		sqlString = "SELECT category_title "
@@ -73,7 +73,7 @@ component CategoryDAO
 		return queryResult.getResult().recordCount;
 	}
 
-	private base function getQueryHandler(required string queryName, required dotlog.components.beans.category category)
+	private base function getQueryHandler(required string queryName, required dotlog.model.beans.category category)
 	{
 		var queryHandler = new query();
 

@@ -10,12 +10,12 @@ component
 
 	function onApplicationStart()
 	{
-		var datasource = new dotlog.components.datasource(DSName = "DOTlogDB", username = "", password = "");
+		var datasource = new dotlog.model.beans.datasource(DSName = "DOTlogDB", username = "", password = "");
 		
-		Application.categoryService = new dotlog.components.categoryService(datasource);
-		Application.recordService = new dotlog.components.recordService(datasource);
-		Application.userService = new dotlog.components.userService(datasource);
-		Application.airportService = new dotlog.components.airportService(datasource);
+		Application.categoryService = new dotlog.model.dataAccess.categoryService(datasource);
+		Application.recordService = new dotlog.model.dataAccess.recordService(datasource);
+		Application.userService = new dotlog.model.dataAccess.userService(datasource);
+		Application.airportService = new dotlog.model.dataAccess.airportService(datasource);
 	}
 
 	function onRequestStart()
@@ -25,6 +25,12 @@ component
 
 	function onSessionStart()
 	{
-		session.user = application.userService.getUserByUsername(getAuthUser());
+		try {
+			session.user = application.userService.getUserByUsername(getAuthUser()); // <-- isn't working :(
+		} catch (any expt) {
+			//writeDump(session.user);
+			writeDump(expt);
+			onApplicationStart();
+		}
 	}
 }

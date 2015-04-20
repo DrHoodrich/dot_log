@@ -5,14 +5,14 @@ component RecordService
 		recordGW = ''
 	};
 
-	public RecordService function init(required dotlog.components.beans.datasource datasource)
+	public RecordService function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.recordDAO = new dotlog.components.dataAccess.recordDAO(arguments.datasource);
-		variables.instance.recordGW = new dotlog.components.dataAccess.recordGateway(arguments.datasource);
+		variables.instance.recordDAO = new dotlog.model.dataAccess.recordDAO(arguments.datasource);
+		variables.instance.recordGW = new dotlog.model.dataAccess.recordGateway(arguments.datasource);
 		return this;
 	}
 
-	public boolean function saveRecord(required dotlog.components.beans.record record)
+	public boolean function saveRecord(required dotlog.model.beans.record record)
 	{
 		return variables.instance.recordDAO.saveRecord(arguments.record);
 	}

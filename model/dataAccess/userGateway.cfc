@@ -5,10 +5,10 @@ component UserGateway
 		queryHandler = ''
 	};
 
-	public UserGateway function init(required dotlog.components.beans.datasource datasource)
+	public UserGateway function init(required dotlog.model.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.components.queryHandler();
+		variables.instance.queryHandler = new dotlog.model.queryHandler();
 		return this;
 	}
 
@@ -54,7 +54,7 @@ component UserGateway
 
 		var userObjects = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 objUser = new dotlog.components.beans.user(username = result["username"][ii],
+			 objUser = new dotlog.model.beans.user(username = result["username"][ii],
 														firstName= result["FIRST_NAME"][ii],
 														lastName = result["LAST_NAME"][ii],
 														airportCode = result["FAA_CODE"][ii],

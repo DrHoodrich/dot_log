@@ -13,7 +13,7 @@
 <cfscript>
 	if ( structKeyExists(FORM, 'createUser_button') ) {		
 		FORM.enabled = 1;
-		newUser = new dotlog.components.user(argumentCollection=FORM);
+		newUser = new dotlog.model.user(argumentCollection=FORM);
 		if ( application.userService.saveUser(newUser) ) {
 			writeOutput('<h3>New user ' & newUser.getUsername() & ' created Successfully</h3>');
 		} else {

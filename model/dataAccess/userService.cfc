@@ -5,10 +5,10 @@ component UserService
 		userGW = ''
 	};
 
-	public UserService function init(required dotlog.components.beans.datasource datasource)
+	public UserService function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.userDAO = new dotlog.components.dataAccess.userDAO(arguments.datasource);
-		variables.instance.userGW = new dotlog.components.dataAccess.userGateway(arguments.datasource);
+		variables.instance.userDAO = new dotlog.model.dataAccess.userDAO(arguments.datasource);
+		variables.instance.userGW = new dotlog.model.dataAccess.userGateway(arguments.datasource);
 		return this;
 	}
 
@@ -21,7 +21,7 @@ component UserService
 		return variables.instance.userGW.filterUsers(searchParam);
 	} 
 
-	public boolean function saveUser(required dotlog.components.beans.user user)
+	public boolean function saveUser(required dotlog.model.beans.user user)
 	{
 		return variables.instance.userDAO.saveUser(arguments.user);
 	} 

@@ -18,7 +18,7 @@
     FORM.inWeeklyReport = 0;
   }
   
-  category =  new dotlog.components.category(argumentCollection=FORM);
+  category =  new dotlog.model.category(argumentCollection=FORM);
   if ( application.categoryService.saveCategory(category) ) {
     writeOutput("<h3>Saved Category</h3>");
   } else {

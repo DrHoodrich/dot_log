@@ -14,7 +14,7 @@
 		} else {
 			FORM.enabled = 0;
 		}
-		existingAirport = new dotlog.components.airport(argumentCollection = FORM);
+		existingAirport = new dotlog.model.airport(argumentCollection = FORM);
 		
 		if ( application.airportService.saveAirport(existingAirport) ) {
 			writeOutput("<h3>Saved airport " & existingAirport.getAirportName() & "</h3>");

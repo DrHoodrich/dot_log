@@ -8,10 +8,10 @@
 
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-	databaseConnector = new dotlog.components.database();
+	databaseConnector = new dotlog.model.database();
 	databaseConnector.addCategory(Form.categoryTitle);
 
-	categories = new dotlog.components.category();
+	categories = new dotlog.model.category();
 	category_titles = categories.getCategoryTitles();
 	category_descriptions = categories.getCategoryDescriptions();
 
