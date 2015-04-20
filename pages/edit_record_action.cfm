@@ -20,7 +20,7 @@
 <cfform name="updateCategory" action="saveRecord.cfm" method="post">
 	<cfinput type="hidden" name="recordID" value="#record.getRecordID()#"></cfinput>
 	<cfoutput>Reporter: <strong>"#record.getUsername()#"</strong></cfoutput><br>
-  	<cfoutput>Airport: <strong>"#record.getAirportFAACode()#"</strong></cfoutput><br>
+  	<cfoutput>Airport: <strong>"#record.getAirportCode()#"</strong></cfoutput><br>
 
     <cfoutput>Catecory: </cfoutput>
   	<cfselect name="categoryTitle"> 

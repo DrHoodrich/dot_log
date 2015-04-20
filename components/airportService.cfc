@@ -17,13 +17,13 @@ component AirportService
 		return variables.instance.airportDAO.saveAirport(arguments.airport);
 	} 
 
-	public array function getChildAirports(required string faaCode)
+	public array function getChildAirports(required string airportCode)
 	{
-		return variables.instance.airportGW.getChildAirports(arguments.faaCode);	
+		return variables.instance.airportGW.getChildAirports(arguments.airportCode);	
 	}
 
-	public airport function getAirportByFAACode(required string faaCode)
+	public airport function getAirportByAirportCode(required string airportCode)
 	{
-		return variables.instance.airportDAO.getAirportByFAACode(arguments.faaCode);		
+		return variables.instance.airportDAO.getAirportByAirportCode(arguments.airportCode);		
 	}
 }

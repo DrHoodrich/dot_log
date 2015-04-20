@@ -42,7 +42,7 @@ component RecordDAO extends="CoreUtils"
 		result = queryResult.getResult();
 		fetchedRecord = new Record(recordText = result["record_text"][1],
 									username = result["username"][1],
-									faaCode = result["faa_code"][1],
+									airportCode = result["faa_code"][1],
 									eventTime = result["event_time"][1],
 									recordTime = result["record_time"][1],
 									inWeeklyReport = result["in_weekly_report"][1],
@@ -119,7 +119,7 @@ component RecordDAO extends="CoreUtils"
 		}
 		queryService.addParam(name = "record_text", value = arguments.record.getRecordText(), cfsqltype = "cf_sql_varchar");
 		queryService.addParam(name = "username", value = arguments.record.getUsername(), cfsqltype = "cf_sql_varchar");
-		queryService.addParam(name = "faa_code", value = arguments.record.getAirportFAACode(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "faa_code", value = arguments.record.getAirportCode(), cfsqltype = "cf_sql_varchar");
 		queryService.addParam(name = "event_time", value = arguments.record.getEventTime(), cfsqltype = "cf_sql_timestamp");
 		queryService.addParam(name = "record_time", value = arguments.record.getRecordTime(), cfsqltype = "cf_sql_timestamp");
 		queryService.addParam(name = "in_weekly_report", value = arguments.record.isInWeeklyReport(), cfsqltype = "cf_sql_number");

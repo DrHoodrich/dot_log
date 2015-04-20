@@ -10,7 +10,7 @@ component ReportGateway
 		return this;
 	}
 
-	public array function getHubReports(required string faaCode)
+	public array function getHubReports(required string airportCode)
 	{
 		DSname = variables.instance.datasource.getDSName();
 		DSusername = variables.instance.datasource.getUsername();
@@ -24,7 +24,7 @@ component ReportGateway
 		queryService.setUsername(DSusername);
 		queryService.setPassword(DSpassword);
 
-		queryService.addParam(name = "airport_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "airport_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
 
 		queryResult = queryService.execute(sql = "SELECT * FROM ( SELECT report_id, username, AIRPORT_CODE, begin_date, end_date
 			FROM DL_REPORTS WHERE airport_code = :airport_code ORDER BY end_date DESC ) WHERE ROWNUM <= 10");

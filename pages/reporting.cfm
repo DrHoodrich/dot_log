@@ -10,15 +10,15 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-    airports = application.airportService.getChildAirports(session.user.getAirportFAACode());
+    airports = application.airportService.getChildAirports(session.user.getAirportCode());
     categories = application.categoryService.getAllCategories();
 
     datasource = new dotlog.components.datasource(DSName = "DOTlogDB", username = "", password = "");
     reportDAO = new dotlog.components.reportDAO(datasource);
     reportGW = new dotlog.components.reportGateway(datasource);
-    reports = reportGW.getHubReports(session.user.getAirportFAACode());    
+    reports = reportGW.getHubReports(session.user.getAirportCode());    
 
-    lastReport = reportDAO.getLastReport(session.user.getAirportFAACode());
+    lastReport = reportDAO.getLastReport(session.user.getAirportCode());
     lastReportedDate = lastReport.getEndDate();
 
     writeOutput("<strong>Submitted Reports</strong>");
@@ -31,7 +31,7 @@
     }
     writeOutput('</table>');
 
-    testReport = new dotlog.components.report(session.user.getUsername(), session.user.getAirportFAACode(), now()-2, now()-1);
+    testReport = new dotlog.components.report(session.user.getUsername(), session.user.getAirportCode(), now()-2, now()-1);
 
     reportDAO.saveReport(testReport);
 </cfscript>
@@ -52,7 +52,7 @@
       records = application.recordService.getRecordsAfterDate(lastReportedDate);
   } else {
       for (ii = 1; ii <= arrayLen(airports); ++ii) {
-        tmp = application.recordService.getRecordsByAirportFAACode(airports[ii].getFAACode());        
+        tmp = application.recordService.getRecordsByAirportCode(airports[ii].getAirportCode());        
         for (jj = 1; jj <= arrayLen(tmp); ++jj) {            
           arrayAppend(records, tmp[jj]);
         }
@@ -67,7 +67,7 @@
       continue;
     }
     writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[ii].getEventTime()# <br>');
-    writeOutput(' Reporter: #records[ii].getUsername()# <br>Airport: #records[ii].getAirportFAACode()# <br> Category: #records[ii].getCategory()# <br>');
+    writeOutput(' Reporter: #records[ii].getUsername()# <br>Airport: #records[ii].getAirportCode()# <br> Category: #records[ii].getCategory()# <br>');
     writeOutput('<td width="560" align="left" valign="top">#records[ii].getRecordText()#</td>');
     writeOutput('<td width="92" align="right" valign="top">');
     writeOutput('In Reports');

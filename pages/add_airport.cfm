@@ -11,22 +11,22 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-  hubAirports = application.airportService.getChildAirports(session.user.getAirportFaaCode());
+  hubAirports = application.airportService.getChildAirports(session.user.getAirportCode());
 </cfscript>
   
 <cfform name="createAirportForm" action="airport_create_action.cfm" method="post" >
-	Airport Code:<cfinput type = "Text" name = "FAAcode" message = "" required = "yes"></cfinput> <br>
+	Airport Code:<cfinput type = "Text" name = "airportCode" message = "" required = "yes"></cfinput> <br>
   Airport Name:<cfinput type = "Text" name = "airportName" message = "" required = "yes"></cfinput> <br>
 
 
   <!---Need a better name :( --->
-  Region/Hub Airport:<cfselect name = "parentFAACode"> 
+  Region/Hub Airport:<cfselect name = "parentAirportCode"> 
 
 
     <option value=""> --New Hub-- </option>
     <cfscript>
       for (ii = 1; ii <= arrayLen(hubAirports); ++ii) {
-        writeOutput('<option value="#hubAirports[ii].getFaaCode()#">#hubAirports[ii].getFaaCode()#</option>');
+        writeOutput('<option value="#hubAirports[ii].getAirportCode()#">#hubAirports[ii].getAirportCode()#</option>');
       }  
     </cfscript>
   </cfselect><br>

@@ -37,8 +37,8 @@
 			searchStruct.categoryTitle = FORM.categoryTitle;
 		}
 
-		if ( len(FORM.faaCode) ) {
-			searchStruct.faaCode = FORM.faaCode;
+		if ( len(FORM.airportCode) ) {
+			searchStruct.airportCode = FORM.airportCode;
 		}
 
 		records = recordGW.search(searchStruct);
@@ -48,7 +48,7 @@
 			reportString = reportString 
 				& "<strong>Record Text:</strong>" & records[ii].getRecordText()
 				& " <strong>Username:</strong> " & records[ii].getUsername()  
-				&  " <strong>FAA Code:</strong> " & records[ii].getAirportFAACode() 
+				&  " <strong>FAA Code:</strong> " & records[ii].getAirportCode() 
 				&  " <strong>In Weekly Report:</strong> " & records[ii].isInWeeklyReport()
 				&  " <strong>Event Time:</strong> " & records[ii].getEventTime()
 				&  " <strong>Category:</strong> " & records[ii].getCategory()

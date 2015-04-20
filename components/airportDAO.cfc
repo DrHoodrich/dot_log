@@ -12,21 +12,21 @@ component AirportDAO
 		return this;
 	}
 
-	public airport function getAirportByFAACode(required string faaCode)
+	public airport function getAirportByAirportCode(required string airportCode)
 	{
 		var queryHandler = new query();
 
 		queryHandler = setQueryHandlerDatasource(queryHandler);
 		queryHandler.setName("fetchChildAirports");
-		queryHandler.addParam(name = "faa_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "faa_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
 
 		sqlString = "SELECT faa_code, parent_faa_code, airport_name, enabled "
 					& "FROM DL_AIRPORTS WHERE faa_code = :faa_code";
 
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString).getResult();
 		
-		return new Airport(FAACode = queryResult["faa_code"][1],
-							parentFAACode = queryResult["parent_faa_code"][1],
+		return new Airport(airportCode = queryResult["faa_code"][1],
+							parentAirportCode = queryResult["parent_faa_code"][1],
 							airportName = queryResult["airport_name"][1],
 							enabled = queryResult["enabled"][1]);
 	}
@@ -76,8 +76,8 @@ component AirportDAO
 		queryHandler = setQueryHandlerDatasource(queryHandler);
 		queryHandler.setName(arguments.queryName);
 
-		queryHandler.addParam(name = "faa_code", value = arguments.airport.getFAACode(), cfsqltype = "cf_sql_varchar");
-		queryHandler.addParam(name = "parent_faa_code", value = arguments.airport.getParentAirportFAACode(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "faa_code", value = arguments.airport.getAirportCode(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "parent_faa_code", value = arguments.airport.getParentAirportAirortCode(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "airport_name", value = arguments.airport.getAirportName(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = arguments.airport.isEnabled(), cfsqltype = "cf_sql_number");
 

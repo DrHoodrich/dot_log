@@ -13,13 +13,11 @@
 <cfscript>
 	if ( structKeyExists(FORM, 'newCategory_button') ) {
 		records = [];
-		writeDump(FORM);
 		if ( !isNull(FORM.username) ) {
 			records = application.recordService.getRecordsByUsername(FORM.username);
-		} else if ( !isNull(FORM.faaCode) ) {
-			records = application.recordService.getRecordsByAirportFAACode(FORM.faaCode);
+		} else if ( !isNull(FORM.airportCode) ) {
+			records = application.recordService.getRecordsByAirportCode(FORM.airportCode);
 		}
-		writeDump(records);
 	}
 </cfscript>
 	<!-- TemplateEndEditable -->

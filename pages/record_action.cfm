@@ -22,23 +22,23 @@
 
 	record = new dotlog.components.record(recordText = FORM.eventDescription,
 										  username = FORM.userid,
-										  faaCode = FORM.airportCode,
+										  airportCode = FORM.airportCode,
 										  eventTime =  CREATEODBCDATETIME( now() ),
 										  recordTime =  CREATEODBCDATETIME( now() ),
 										  inWeeklyReport = reporting,
 										  categoryTitle = FORM.categoryTitle);
 	application.recordService.saveRecord(record);	
 
-	airports = application.airportService.getChildAirports(session.user.getAirportFAACode());
+	airports = application.airportService.getChildAirports(session.user.getAirportCode());
 	categories = application.categoryService.getAllCategories();
 
 	writeOutput('<table width="783" height="180" border="1">');
 		for (ii = 1; ii <= arrayLen(airports); ++ii) {
-			records = application.recordService.getRecordsByAirportFAACode(airports[ii].getFAACode());
+			records = application.recordService.getRecordsByAirportCode(airports[ii].getAirportCode());
 
 			for (jj = 1; jj <= arrayLen(records); ++jj) {
 				writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
-				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportFAACode()# <br> Category: #records[jj].getCategory()# <br>');
+				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportCode()# <br> Category: #records[jj].getCategory()# <br>');
 				writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
 				writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
 				writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');

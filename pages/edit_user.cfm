@@ -13,10 +13,10 @@
 	<cfoutput>Select user's airport:</cfoutput>
 	<cfselect name="airportCode">
 			<cfscript>
-				airports = application.airportService.getChildAirports(session.user.getAirportFAACode());
+				airports = application.airportService.getChildAirports(session.user.getAirportCode());
 				writeOutput('<option value="none"></option>');
 				for (ii = 1; ii <= arrayLen(airports); ++ii) {
-					writeOutput('<option value=#airports[ii].getFAACode()#>#airports[ii].getAirportName()#</option>');
+					writeOutput('<option value=#airports[ii].getAirportCode()#>#airports[ii].getAirportName()#</option>');
 				}
 			</cfscript>
 	</cfselect>

@@ -13,10 +13,10 @@
 <cfscript>
 		if ( structKeyExists(FORM, 'createAirport_button') ) {
 		FORM.enabled = 1;
-		if ( len(FORM.parentFAACode) ) {
+		if ( len(FORM.parentAirportCode) ) {
 			writeOutput("Assigned to a Hub");
 		} else {
-			FORM.parentFAACode = session.user.getAirportFAACode();
+			FORM.parentAirportCode = session.user.getAirportCode();
 		}
 		newAirport = new dotlog.components.airport(argumentCollection = FORM);
 

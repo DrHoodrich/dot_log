@@ -12,12 +12,12 @@ component UserDAO
 		return this;
 	}
 
-	public array function getUsersByAirportFAACode(required string faaCode)
+	public array function getUsersByAirportCode(required string airportCode)
 	{
 		var queryHandler = new query();
 		queryHandler = setQueryHandlerDatasource(queryHandler);
 		queryHandler.setName("fetchUsers");	
-		queryHandler.addParam(name = "faa_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "faa_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
 
 		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, email_addr "
 					& "FROM DL_USERS "
@@ -31,7 +31,7 @@ component UserDAO
 			 objUser = new User(username = result["username"][ii],
 							firstName= result["FIRST_NAME"][ii],
 							lastName = result["LAST_NAME"][ii],
-							faaCode = result["FAA_CODE"][ii],
+							airportCode = result["FAA_CODE"][ii],
 							permissions = result["USER_PERMISSIONS"][ii],
 							enabled = result["ENABLED"][ii],
 							emailAddr = result["EMAIL_ADDR"][ii]);
@@ -59,12 +59,11 @@ component UserDAO
 			objUser = new User(username = result["username"][1],
 							firstName= result["FIRST_NAME"][1],
 							lastName = result["LAST_NAME"][1],
-							faaCode = result["FAA_CODE"][1],
+							airportCode = result["FAA_CODE"][1],
 							permissions = result["USER_PERMISSIONS"][1],
 							enabled = result["ENABLED"][1],
 							emailAddr = result["EMAIL_ADDR"][1]);
 		}
-
 		return objUser;
 	}
 
@@ -82,7 +81,7 @@ component UserDAO
 		var queryHandler = getQueryHandler("updateUser", arguments.user);
 
 		sqlString = "UPDATE DL_USERS SET "
-					& "USERNAME = :username, FIRST_NAME = :firstName, LAST_NAME = :lastName, FAA_CODE = :airportFAACode, USER_PERMISSIONS = :permissions,  ENABLED = :enabled "
+					& "USERNAME = :username, FIRST_NAME = :firstName, LAST_NAME = :lastName, FAA_CODE = :airportCode, USER_PERMISSIONS = :permissions,  ENABLED = :enabled "
 					& "WHERE USERNAME = :username";
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 
@@ -95,7 +94,7 @@ component UserDAO
 
 		sqlString = "INSERT INTO DL_USERS "
 					& "(USERNAME, FIRST_NAME, LAST_NAME, FAA_CODE, USER_PERMISSIONS, EMAIL_ADDR, ENABLED) "
-					& "VALUES (:username, :firstName, :lastName, :airportFAACode, :permissions, :emailAddr, :enabled)";
+					& "VALUES (:username, :firstName, :lastName, :airportCode, :permissions, :emailAddr, :enabled)";
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
@@ -121,7 +120,7 @@ component UserDAO
 		queryHandler.addParam(name = "username", value = arguments.user.getUsername(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "firstName", value = arguments.user.getFirstName(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "lastName", value = arguments.user.getLastName(), cfsqltype = "cf_sql_varchar");
-		queryHandler.addParam(name = "airportFAACode", value = arguments.user.getAirportFAACode(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "airportCode", value = arguments.user.getAirportCode(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "permissions", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_number");
 		queryHandler.addParam(name = "emailAddr", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = user.isEnabled(), cfsqltype = "cf_sql_number");

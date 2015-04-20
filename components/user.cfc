@@ -15,7 +15,7 @@ component User extends="coreUtils"
         firstName = '',
         lastName = '',
         permissions = '',
-        airportFAACode = '',
+        airportCode = '',
         enabled = '',
         emailAddr = '' 
     };
@@ -24,7 +24,7 @@ component User extends="coreUtils"
         public User function init(required string username,
                                   required string firstName,
                                   required string lastName,
-                                  required string faaCode,
+                                  required string airportCode,
                                   required numeric permissions,
                                   required numeric enabled,
                                   required string emailAddr)
@@ -33,7 +33,7 @@ component User extends="coreUtils"
                 variables.instance.firstName = arguments.firstName;
                 variables.instance.lastName = arguments.lastName;
                 variables.instance.permissions = arguments.permissions;
-                variables.instance.airportFAACode = arguments.faaCode;
+                variables.instance.airportCode = arguments.airportCode;
                 variables.instance.enabled = arguments.enabled;
                 variables.instance.emailAddr = arguments.emailAddr;
 
@@ -55,9 +55,9 @@ component User extends="coreUtils"
                 return variables.instance.firstName & " " & variables.instance.lastName;
         }
 
-        public string function getAirportFAACode()
+        public string function getAirportCode()
         {
-                return variables.instance.airportFAACode;
+                return variables.instance.airportCode;
         }
 
         public string function getUsername()

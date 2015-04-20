@@ -1,32 +1,32 @@
 component Airport
 {
 	variables.instance = {
-		FAAcode = '', 
-		parentFAACode = '',
+		airportCode = '', 
+		parentAirportCode = '',
 		airportName = '',
 		enabled = ''
 	};
 
-	public Airport function init(required string FAAcode,
-								required string parentFAACode,
+	public Airport function init(required string airportCode,
+								required string parentAirportCode,
 								required string airportName,
 								required numeric enabled)
 	{
-		variables.instance.FAACode = arguments.FAACode;
-		variables.instance.parentFAACode = arguments.parentFAACode;
+		variables.instance.airportCode = arguments.airportCode;
+		variables.instance.parentAirportCode = arguments.parentAirportCode;
 		variables.instance.airportName = arguments.airportName;
 		variables.instance.enabled = arguments.enabled;
 		return this;
 	}
 
-	public string function getFAACode()
+	public string function getAirportCode()
 	{
-		return variables.instance.FAAcode;
+		return variables.instance.airportCode;
 	}
 
-	public string function getParentAirportFAACode()
+	public string function getParentAirportCode()
 	{
-		return variables.instance.parentFAACode;
+		return variables.instance.parentAirportCode;
 	}
 
 	public string function getAirportName()

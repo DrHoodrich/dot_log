@@ -9,7 +9,7 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfform name="search" action="new_category_action.cfm" method="post">
   Category Title:<cfinput type="text" name = "categoryTitle" message="username" required="yes"></cfinput> <br>
-  Category Description:<cfinput type="text" name="description" message="faaCode" required="no"></cfinput> <br>
+  Category Description:<cfinput type="text" name="description" message="airportCode" required="no"></cfinput> <br>
   In Weekly Report:<cfinput type="checkbox" name="inWeeklyReport" required="no"></cfinput> <br>
   <cfinput type="hidden" name="enabled" value="1"/>
   <cfinput type="submit" name="newCategory_button" id="addCategory" value="create"></cfinput>

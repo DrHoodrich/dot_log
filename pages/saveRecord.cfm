@@ -19,7 +19,7 @@
 
   FORM.username = record.getUsername();
   FORM.recordTime = record.getRecordTime();
-  FORM.FAACode = record.getAirportFAACode();
+  FORM.airportCode = record.getAirportCode();
   
   updatedRecord = new dotlog.components.record(argumentCollection=FORM);
   

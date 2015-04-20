@@ -22,9 +22,9 @@ component RecordService
 		return variables.instance.recordGW.getRecordsByUsername(arguments.username);
 	}
 
-	public array function getRecordsByAirportFAACode(required string faaCode)
+	public array function getRecordsByAirportCode(required string airportCode)
 	{
-		return variables.instance.recordGW.getRecordsByAirportFAACode(arguments.faaCode);
+		return variables.instance.recordGW.getRecordsByAirportCode(arguments.airportCode);
 	}
 
 	public array function getRecordsAfterDate(required string date)

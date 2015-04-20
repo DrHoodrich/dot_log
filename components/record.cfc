@@ -4,7 +4,7 @@ component Record extends="CoreUtils"
             recordID = '',
             recordText = '',
             username = '',
-            faaCode = '',
+            airportCode = '',
             eventTime = '',
             recordTime = '',
             inWeeklyReport = '',
@@ -14,7 +14,7 @@ component Record extends="CoreUtils"
 
         public Record function init(required string recordText,
                                     required string username,
-                                    required string faaCode,
+                                    required string airportCode,
                                     required string eventTime,
                                     required string recordTime,
                                     required numeric inWeeklyReport,
@@ -24,7 +24,7 @@ component Record extends="CoreUtils"
                 variables.instance.recordID = recordID;
                 variables.instance.recordText = arguments.recordText;
                 variables.instance.username = arguments.username;
-                variables.instance.faaCode = arguments.faaCode;
+                variables.instance.airportCode = arguments.airportCode;
                 variables.instance.eventTime = arguments.eventTime;
                 variables.instance.recordTime = arguments.recordTime;
                 variables.instance.inWeeklyReport = arguments.inWeeklyReport;
@@ -47,9 +47,9 @@ component Record extends="CoreUtils"
                 return variables.instance.username;
         }
 
-        public string function getAirportFAACode() 
+        public string function getAirportCode() 
         {
-                return variables.instance.faaCode;
+                return variables.instance.airportCode;
         }
 
         public string function getEventTime()

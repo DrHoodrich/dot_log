@@ -38,7 +38,7 @@ component RecordGateway
 			 recordObject = new Record(recordID = result["record_id"],
 			 				recordText = result["record_text"][ii],
 							username = result["username"][ii],
-							faaCode = result["faa_code"][ii],
+							airportCode = result["faa_code"][ii],
 							eventTime = result["event_time"][ii],
 							recordTime = result["record_time"][ii],
 							inWeeklyReport = result["in_weekly_report"][ii],
@@ -79,8 +79,8 @@ component RecordGateway
 				queryService.addParam(name = "category_title", value = "%"&arguments.searchFilter.categoryTitle&"%", cfsqltype = "cf_sql_varchar");	
 				sqlString = sqlString & " AND LOWER(category_title) LIKE LOWER(:category_title)";
 			}
-			if ( structKeyExists(searchFilter, "faaCode") ) {
-				queryService.addParam(name = "faa_code", value = "%"&arguments.searchFilter.faaCode&"%", cfsqltype = "cf_sql_varchar");	
+			if ( structKeyExists(searchFilter, "airportCode") ) {
+				queryService.addParam(name = "faa_code", value = "%"&arguments.searchFilter.airportCode&"%", cfsqltype = "cf_sql_varchar");	
 				sqlString = sqlString & " AND LOWER(faa_code) LIKE LOWER(:faa_code)";
 			}
 			if ( structKeyExists(searchFilter, "date") ) {
@@ -96,7 +96,7 @@ component RecordGateway
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
 			 recordObject = new Record(recordText = result["record_text"][ii],
 							username = result["username"][ii],
-							faaCode = result["faa_code"][ii],
+							airportCode = result["faa_code"][ii],
 							eventTime = result["event_time"][ii],
 							recordTime = result["record_time"][ii],
 							inWeeklyReport = result["in_weekly_report"][ii],
@@ -108,7 +108,7 @@ component RecordGateway
 
 	}
 
-	public array function getRecordsByAirportFAACode(required string faaCode)
+	public array function getRecordsByAirportCode(required string airportCode)
 	{
 		var recordObjects = [];
 
@@ -118,12 +118,12 @@ component RecordGateway
 
 		var queryService = new query();
 
-		queryService.setName("fetchRecordsByFAACode");
+		queryService.setName("fetchRecordsByAirportCode");
 		queryService.setDataSource(variables.instance.datasource.getDSName());
 		queryService.setUsername(DSusername);
 		queryService.setPassword(DSpassword);
 
-		queryService.addParam(name = "faa_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "faa_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
 		queryResult = queryService.execute(sql = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title 
 			FROM DL_RECORDS WHERE faa_code = :faa_code 
 			ORDER BY event_time DESC");
@@ -132,7 +132,7 @@ component RecordGateway
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
 			 recordObject = new Record(recordText = result["record_text"][ii],
 							username = result["username"][ii],
-							faaCode = result["faa_code"][ii],
+							airportCode = result["faa_code"][ii],
 							eventTime = result["event_time"][ii],
 							recordTime = result["record_time"][ii],
 							inWeeklyReport = result["in_weekly_report"][ii],

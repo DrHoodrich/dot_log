@@ -10,7 +10,7 @@ component AirportGateway
 		return this;
 	}
 
-	public array function getChildAirports(required string faaCode)
+	public array function getChildAirports(required string airportCode)
 	{
 		var childAirports = [];
 
@@ -25,14 +25,14 @@ component AirportGateway
 		queryService.setUsername(DSusername);
 		queryService.setPassword(DSpassword);
 
-		queryService.addParam(name = "parent_faa_code", value = arguments.faaCode, cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "parent_faa_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
 		queryResult = queryService.execute(sql = "SELECT faa_code, parent_faa_code, airport_name, enabled 
 			FROM DL_AIRPORTS WHERE parent_faa_code = :parent_faa_code");
 		result = queryResult.getResult();
 
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 childAirport = new Airport(FAACode = result["faa_code"][ii],
-										parentFAACode = result["parent_faa_code"][ii],
+			 childAirport = new Airport(airportCode = result["faa_code"][ii],
+										parentairportCode = result["parent_faa_code"][ii],
 										airportName = result["airport_name"][ii],
 										enabled = result["enabled"][ii]);
 							

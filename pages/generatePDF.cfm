@@ -10,12 +10,12 @@
 	    
 	 if ( structKeyExists(FORM, "submitReportEmail_button")) {
 	    user = application.userService.getUserByUsername("us");  // <= set by LDAP
-    	airports = application.airportService.getChildAirports(user.getAirportFAACode());
+    	airports = application.airportService.getChildAirports(user.getAirportCode());
     	categories = application.categoryService.getAllCategories();
   
 		  writeOutput('<table width="783" height="180" border="1">');
 		    for (ii = 1; ii <= arrayLen(airports); ++ii) {
-		      records = application.recordService.getRecordsByAirportFAACode(airports[ii].getFAACode());
+		      records = application.recordService.getRecordsByAirportCode(airports[ii].getAirportCode());
 
 		      for (jj = 1; jj <= arrayLen(records); ++jj) {
 		        checked = '';
@@ -25,7 +25,7 @@
 		          continue;
 		        }
 		        writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
-		        writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportFAACode()# <br> Category: #records[jj].getCategory()# <br>');
+		        writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportCode()# <br> Category: #records[jj].getCategory()# <br>');
 		        writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
 		      }
 		    }

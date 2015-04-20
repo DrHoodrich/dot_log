@@ -10,12 +10,12 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-	hubAirports = application.airportService.getChildAirports(session.user.getAirportFaaCode());
+	hubAirports = application.airportService.getChildAirports(session.user.getAirportCode());
 
 	AirportNames = [];
-  for (ii = 1; ii <= ArrayLen(hubAirports); ++ii) {
-  	arrayAppend(airportNames, hubAirports[ii].getFaaCode() & " - " & hubAirports[ii].getAirportName());
-  }
+	for (ii = 1; ii <= ArrayLen(hubAirports); ++ii) {
+		arrayAppend(airportNames, hubAirports[ii].getAirportCode() & " - " & hubAirports[ii].getAirportName());
+	}
 
 </cfscript>
 	
@@ -25,11 +25,11 @@
 	Last Name:<cfinput type = "text" name = "lastName" message = "Last Name" required = "yes"></cfinput> <br>
 	Email:<cfinput type = "text" name = "emailAddr" message = "Email" required = "yes"></cfinput> <br>
 	
-	Location:<cfselect name = "faaCode">
+	Location:<cfselect name = "airportCode">
 		<option value=""> --None-- </option>
 			<cfscript>
 			  for (ii = 1; ii <= arrayLen(hubAirports); ++ii) {
-			    writeOutput('<option value="#hubAirports[ii].getFaaCode()#">#hubAirports[ii].getFaaCode()#  --  #hubAirports[ii].getAirportName()# </option>');
+			    writeOutput('<option value="#hubAirports[ii].getAirportCode()#">#hubAirports[ii].getAirportCode()#  --  #hubAirports[ii].getAirportName()# </option>');
 			  }  
 		</cfscript>
 	</cfselect><br>

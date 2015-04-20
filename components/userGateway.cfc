@@ -12,9 +12,9 @@ component UserGateway
 		return this;
 	}
 
-	public query function getUsersByAirportFAACode(required string faaCode)
+	public query function getUsersByAirportCode(required string airportCode)
 	{
-		var queryFilter = { faaCode = arguments.faaCode };
+		var queryFilter = { airportCode = arguments.airportCode };
 		return filterUsers(queryFilter);
 	} 
 
@@ -44,8 +44,8 @@ component UserGateway
 				queryService.addParam(name = "last_name", value = "%"&arguments.searchFilter.lastName&"%", cfsqltype = "cf_sql_varchar");	
 				sqlString = sqlString & " AND last_name LIKE :last_name";
 			}
-			if ( structKeyExists(searchFilter, "faaCode") ) {
-				queryService.addParam(name = "faa_code", value = arguments.searchFilter.faaCode, cfsqltype = "cf_sql_varchar");
+			if ( structKeyExists(searchFilter, "airportCode") ) {
+				queryService.addParam(name = "faa_code", value = arguments.searchFilter.airportCode, cfsqltype = "cf_sql_varchar");
 				sqlString = sqlString & " AND faa_code LIKE :faa_code";
 			}
 		}
@@ -57,7 +57,7 @@ component UserGateway
 			 objUser = new User(username = result["username"][ii],
 							firstName= result["FIRST_NAME"][ii],
 							lastName = result["LAST_NAME"][ii],
-							faaCode = result["FAA_CODE"][ii],
+							airportCode = result["FAA_CODE"][ii],
 							permissions = result["USER_PERMISSIONS"][ii],
 							enabled = result["ENABLED"][ii],
 							emailAddr = result["EMAIL_ADDR"][ii]);

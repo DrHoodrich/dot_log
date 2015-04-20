@@ -11,23 +11,23 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	existingAirport = application.airportService.getAirportByFAACode(FORM.faaCode);
+	existingAirport = application.airportService.getAirportByAirportCode(FORM.airportCode);
 </cfscript>
 
 <cfif structKeyExists(FORM, 'selectAirportToEdit_button')>
 	<cfform name="editAirport" method="post" action="saveAirport.cfm">
 					
-		<label for="faaCode">FAA Code:</label>
+		<label for="airportCode">FAA Code:</label>
 			<cfoutput>
-				<strong>#existingAirport.getFAACode()#</strong>
+				<strong>#existingAirport.getAirportCode()#</strong>
 			</cfoutput> <br>
-			<cfinput type="hidden" name="FAACode" value="#existingAirport.getFAACode()#"/>
+			<cfinput type="hidden" name="airportCode" value="#existingAirport.getAirportCode()#"/>
 
 		<label for="airportName">Airport Name:</label>
 			<cfinput type="text" name="airportName" value="#existingAirport.getAirportName()#"> <br>
 
-		<label for="parentFAACode">Parent FAA Code:</label>
-			<cfinput type="text" name="parentFAACode" value="#existingAirport.getParentAirportFAACode()#"> <br>
+		<label for="parentAirportCode">Parent FAA Code:</label>
+			<cfinput type="text" name="parentAirportCode" value="#existingAirport.getParentAirportCode()#"> <br>
 
 		<label for="enabled">Enabled:</label>
 			<cfinput type="checkbox" name="enabled" value="#existingAirport.isEnabled()#" checked="#existingAirport.isEnabled()#" id="enabled"> <br>

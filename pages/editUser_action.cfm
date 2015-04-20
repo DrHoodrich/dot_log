@@ -16,7 +16,7 @@
 			<option value=""> --None-- </option>
 				<cfscript>
 				  	if ( structKeyExists(FORM, 'selectAirport_button') ) {
-						users = application.userService.getUsersByAirportFAACode(FORM.airportCode);
+						users = application.userService.getUsersByAirportCode(FORM.airportCode);
 						if ( arrayLen(users) ) {
 							for (ii = 1; ii <= arrayLen(users); ++ii) {
 								writeOutput('<option value=#users[ii].getUsername()#>#users[ii].getFullName()#</option>');
@@ -40,8 +40,8 @@
 		<label for="Username">username: <cfoutput><strong>"#existingUser.getUsername()#"</strong></cfoutput></label>
 			<cfinput type="hidden" name="Username" value="#existingUser.getUsername()#"> <br>
 
-		<label for="faaCode">airport:</label>
-			<cfinput type="text" name="faaCode" value="#existingUser.getAirportFAACode()#"> <br>
+		<label for="airportCode">airport:</label>
+			<cfinput type="text" name="airportCode" value="#existingUser.getAirportCode()#"> <br>
 
 		<label for="FirstName">first name:</label>
 			<cfinput type="text" name="FirstName" value="#existingUser.getFirstName()#"> <br>

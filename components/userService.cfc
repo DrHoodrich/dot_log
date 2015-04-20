@@ -13,10 +13,10 @@ component UserService extends="CoreUtils"
 	}
 
 
-	public array function getUsersByAirportFAACode(required string faaCode)
+	public array function getUsersByAirportCode(required string airportCode)
 	{
 		var searchParam = {
-			faaCode = arguments.faaCode
+			airportCode = arguments.airportCode
 		};
 		return variables.instance.userGW.filterUsers(searchParam);
 	} 

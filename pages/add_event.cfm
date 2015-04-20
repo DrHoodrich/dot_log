@@ -11,8 +11,7 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 	<cfscript>
-		writeDump(session);
-		airports = application.airportService.getChildAirports(session.user.getAirportFAACode());
+		airports = application.airportService.getChildAirports(session.user.getAirportCode());
 		categories = application.categoryService.getAllCategories();
 	</cfscript>
 
@@ -28,7 +27,7 @@
 			<cfscript>
 				writeOutput('<option value="none"></option>');
 				for (ii = 1; ii <= arrayLen(airports); ++ii) {
-					writeOutput('<option value=#airports[ii].getFAACode()#>#airports[ii].getAirportName()#</option>');
+					writeOutput('<option value=#airports[ii].getAirportCode()#>#airports[ii].getAirportName()#</option>');
 				}
 			</cfscript>
 	</cfselect>
@@ -60,10 +59,10 @@
 <cfscript>
 	writeOutput('<table width="783" height="180" border="1">');
 		for (ii = 1; ii <= arrayLen(airports); ++ii) {
-			records = application.recordService.getRecordsByAirportFAACode(airports[ii].getFAACode());
+			records = application.recordService.getRecordsByAirportCode(airports[ii].getAirportCode());
 			for (jj = 1; jj <= arrayLen(records); ++jj) {
 				writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
-				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportFAACode()# <br>');
+				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportCode()# <br>');
 				writeOutput('Category: #records[jj].getCategory()# <br>');
 				writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
 				writeOutput('<td width="92" align="right" valign="top">');
