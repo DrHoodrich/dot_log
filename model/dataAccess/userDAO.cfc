@@ -53,7 +53,6 @@ component UserDAO
 					& "WHERE username = :username";
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		result = queryResult.getResult();
-		writeDump(result);
 		var objUser = '';
 		if (result.RecordCount) {
 			objUser = new dotlog.model.beans.user(username = result["username"][1],
@@ -64,7 +63,6 @@ component UserDAO
 														enabled = result["ENABLED"][1],
 														emailAddr = result["EMAIL_ADDR"][1]);
 		}
-		writeDump(objUser);
 		return objUser;
 	}
 
