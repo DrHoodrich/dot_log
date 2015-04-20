@@ -13,9 +13,9 @@
     airports = application.airportService.getChildAirports(session.user.getAirportCode());
     categories = application.categoryService.getAllCategories();
 
-    datasource = new dotlog.model.datasource(DSName = "DOTlogDB", username = "", password = "");
-    reportDAO = new dotlog.model.reportDAO(datasource);
-    reportGW = new dotlog.model.reportGateway(datasource);
+    datasource = new dotlog.model.beans.datasource(DSName = "DOTlogDB", username = "", password = "");
+    reportDAO = new dotlog.model.dataAccess.reportDAO(datasource);
+    reportGW = new dotlog.model.dataAccess.reportGateway(datasource);
     reports = reportGW.getHubReports(session.user.getAirportCode());    
 
     lastReport = reportDAO.getLastReport(session.user.getAirportCode());
@@ -31,7 +31,7 @@
     }
     writeOutput('</table>');
 
-    testReport = new dotlog.model.report(session.user.getUsername(), session.user.getAirportCode(), now()-2, now()-1);
+    testReport = new dotlog.model.beans.report(session.user.getUsername(), session.user.getAirportCode(), now()-2, now()-1);
 
     reportDAO.saveReport(testReport);
 </cfscript>

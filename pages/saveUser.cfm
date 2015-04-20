@@ -12,7 +12,7 @@
 
 <cfscript>
   if ( structKeyExists(FORM,"saveUser_button") ) {
-    user =  new dotlog.model.user(argumentCollection=FORM);
+    user =  new dotlog.model.beans.user(argumentCollection=FORM);
     if ( application.userService.saveUser(user) ) {
       writeOutput("<h3>Saved User: " & user.getUsername()& "</h3>");
     } else {

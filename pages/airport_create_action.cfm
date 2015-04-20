@@ -18,7 +18,7 @@
 		} else {
 			FORM.parentAirportCode = session.user.getAirportCode();
 		}
-		newAirport = new dotlog.model.airport(argumentCollection = FORM);
+		newAirport = new dotlog.model.beans.airport(argumentCollection = FORM);
 
 		if ( application.airportService.saveAirport(newAirport) ) {
 			writeOutput("<h3>Saved airport " & newAirport.getAirportName() & "</h3>");

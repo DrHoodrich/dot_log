@@ -21,7 +21,7 @@
   FORM.recordTime = record.getRecordTime();
   FORM.airportCode = record.getAirportCode();
   
-  updatedRecord = new dotlog.model.record(argumentCollection=FORM);
+  updatedRecord = new dotlog.model.beans.record(argumentCollection=FORM);
   
   if ( application.recordService.saveRecord(updatedRecord) ) {
     writeoutput("<strong>Record Updated</strong>");
