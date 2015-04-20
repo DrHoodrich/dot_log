@@ -1,4 +1,3 @@
-<cfscript>
 component Application 
 {
 	this.name = hash( getCurrentTemplatePath() );
@@ -11,4 +10,3 @@ component Application
 	this.mappings[ "/model" ] = (this.appDirectory & "model/");
 	this.mappings[ "/spec" ] = (this.directory & "spec/");
 }
-</cfscript>
