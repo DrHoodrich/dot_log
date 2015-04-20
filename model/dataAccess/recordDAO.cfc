@@ -24,7 +24,7 @@ component RecordDAO
 		} 
 	}
 
-	public record function getRecordByID(required numeric recordID)
+	public dotlog.model.beans.record function getRecordByID(required numeric recordID)
 	{
 		var queryHandler = new query();
 
@@ -40,14 +40,14 @@ component RecordDAO
 
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		result = queryResult.getResult();
-		fetchedRecord = new Record(recordText = result["record_text"][1],
-									username = result["username"][1],
-									airportCode = result["faa_code"][1],
-									eventTime = result["event_time"][1],
-									recordTime = result["record_time"][1],
-									inWeeklyReport = result["in_weekly_report"][1],
-									categoryTitle = result["category_title"][1],
-									recordID = result["record_id"][1]);
+		fetchedRecord = new dotlog.model.beans.record(recordText = result["record_text"][1],
+													username = result["username"][1],
+													airportCode = result["faa_code"][1],
+													eventTime = result["event_time"][1],
+													recordTime = result["record_time"][1],
+													inWeeklyReport = result["in_weekly_report"][1],
+													categoryTitle = result["category_title"][1],
+													recordID = result["record_id"][1]);
 		return fetchedRecord;
 
 	}

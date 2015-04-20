@@ -12,14 +12,14 @@ component CategoryDAO
 		return this;
 	}
 
-	public category function getCategoryByTitle(required string categoryTitle)
+	public dotlog.model.beans.category function getCategoryByTitle(required string categoryTitle)
 	{
 		var queryHandler = new query();
 
 		queryHandler.setDataSource(variables.instance.datasource.getDSName());
 		queryHandler.setUsername(variables.instance.datasource.getUsername());
 		queryHandler.setPassword(variables.instance.datasource.getPassword());
-		queryHandler.setName("fetchCategory");
+		queryHandler.setName("fetchCategoryByTitle");
 		queryHandler.addParam(name = "category_title", value = arguments.categoryTitle, cfsqltype = "cf_sql_varchar");
 				
 		sqlString = "SELECT category_title, description, enabled, in_weekly_report "
@@ -27,10 +27,10 @@ component CategoryDAO
 
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		result = queryResult.getResult();
-		return new Category(categoryTitle = result["category_title"][1],
-							description = result["description"][1],
-							enabled = result["enabled"][1],
-							inWeeklyReport = result["in_weekly_report"][1]);
+		return new dotlog.model.beans.category(categoryTitle = result["category_title"][1],
+												description = result["description"][1],
+												enabled = result["enabled"][1],
+												inWeeklyReport = result["in_weekly_report"][1]);
 	}
 
 	public boolean function saveCategory(required dotlog.model.beans.category category)

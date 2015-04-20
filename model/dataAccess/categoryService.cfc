@@ -22,7 +22,7 @@ component CategoryService
 		return variables.instance.categoryGW.getAllCategories();
 	}
 
-	public category function getCategoryByTitle(required string categoryTitle)
+	public dotlog.model.beans.category function getCategoryByTitle(required string categoryTitle)
 	{
 		return variables.instance.categoryDAO.getCategoryByTitle(arguments.categoryTitle);
 	}

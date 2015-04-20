@@ -35,14 +35,14 @@ component RecordGateway
 
 		if (result.RecordCount) {
 			for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 recordObject = new Record(recordID = result["record_id"],
-			 				recordText = result["record_text"][ii],
-							username = result["username"][ii],
-							airportCode = result["faa_code"][ii],
-							eventTime = result["event_time"][ii],
-							recordTime = result["record_time"][ii],
-							inWeeklyReport = result["in_weekly_report"][ii],
-							categoryTitle = result["category_title"][ii]);
+			 recordObject = new dotlog.model.beans.record(recordID = result["record_id"],
+											 				recordText = result["record_text"][ii],
+															username = result["username"][ii],
+															airportCode = result["faa_code"][ii],
+															eventTime = result["event_time"][ii],
+															recordTime = result["record_time"][ii],
+															inWeeklyReport = result["in_weekly_report"][ii],
+															categoryTitle = result["category_title"][ii]);
 			 arrayAppend(recordObjects, recordObject);
 			}
 		}
@@ -94,7 +94,7 @@ component RecordGateway
 
 		recordObjects = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 recordObject = new Record(recordText = result["record_text"][ii],
+			 recordObject = new dotlog.model.beans.record(recordText = result["record_text"][ii],
 							username = result["username"][ii],
 							airportCode = result["faa_code"][ii],
 							eventTime = result["event_time"][ii],
@@ -130,14 +130,14 @@ component RecordGateway
 		result = queryResult.getResult();
 
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 recordObject = new Record(recordText = result["record_text"][ii],
-							username = result["username"][ii],
-							airportCode = result["faa_code"][ii],
-							eventTime = result["event_time"][ii],
-							recordTime = result["record_time"][ii],
-							inWeeklyReport = result["in_weekly_report"][ii],
-							categoryTitle = result["category_title"][ii],
-							recordID = result["record_id"][ii]);
+			 recordObject = new dotlog.model.beans.record(recordText = result["record_text"][ii],
+															username = result["username"][ii],
+															airportCode = result["faa_code"][ii],
+															eventTime = result["event_time"][ii],
+															recordTime = result["record_time"][ii],
+															inWeeklyReport = result["in_weekly_report"][ii],
+															categoryTitle = result["category_title"][ii],
+															recordID = result["record_id"][ii]);
 			 arrayAppend(recordObjects, recordObject);
 		}
 		return recordObjects;

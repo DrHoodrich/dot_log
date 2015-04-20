@@ -31,10 +31,10 @@ component AirportGateway
 		result = queryResult.getResult();
 
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 childAirport = new Airport(airportCode = result["faa_code"][ii],
-										parentairportCode = result["parent_faa_code"][ii],
-										airportName = result["airport_name"][ii],
-										enabled = result["enabled"][ii]);
+			 childAirport = new dotlog.model.beans.airport(airportCode = result["faa_code"][ii],
+															parentairportCode = result["parent_faa_code"][ii],
+															airportName = result["airport_name"][ii],
+															enabled = result["enabled"][ii]);
 							
 			 arrayAppend(childAirports, childAirport);
 		}

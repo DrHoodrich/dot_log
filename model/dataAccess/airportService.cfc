@@ -22,7 +22,7 @@ component AirportService
 		return variables.instance.airportGW.getChildAirports(arguments.airportCode);	
 	}
 
-	public airport function getAirportByAirportCode(required string airportCode)
+	public dotlog.model.beans.airport function getAirportByAirportCode(required string airportCode)
 	{
 		return variables.instance.airportDAO.getAirportByAirportCode(arguments.airportCode);		
 	}

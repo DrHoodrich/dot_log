@@ -5,14 +5,14 @@ component ReportDAO
 		queryHandler = ''
 	};
 
-	public ReportDAO function init(required dotlog.model.datasource datasource)
+	public ReportDAO function init(required dotlog.model.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
 		variables.instance.queryHandler = new dotlog.model.queryHandler();
 		return this;
 	}
 
-	public report function getLastReport(required string airportCode)
+	public dotlog.model.beans.report function getLastReport(required string airportCode)
 	{
 		var queryHandler = new query();
 
@@ -20,18 +20,18 @@ component ReportDAO
 		queryHandler.setUsername(variables.instance.datasource.getUsername());
 		queryHandler.setPassword(variables.instance.datasource.getPassword());
 
-		queryHandler.setName("fetchCategory");
+		queryHandler.setName("fetchReportByAirportCode");
 
 		sqlString = "SELECT * FROM ( SELECT * FROM DL_REPORTS ORDER BY report_id DESC ) WHERE ROWNUM <= 1";
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		
 		result = queryResult.getResult();
 		
-		lastReport = new Report(username = result["username"][1],
-								airportCode = result["airport_code"][1],
-								beginDate = result["begin_date"][1],
-								endDate = result["end_date"][1],
-								recordID = result["report_id"][1]);
+		lastReport = new dotlog.model.beans.report(username = result["username"][1],
+													airportCode = result["airport_code"][1],
+													beginDate = result["begin_date"][1],
+													endDate = result["end_date"][1],
+													recordID = result["report_id"][1]);
 		return lastReport;
 
 	}

@@ -12,7 +12,7 @@ component AirportDAO
 		return this;
 	}
 
-	public airport function getAirportByAirportCode(required string airportCode)
+	public dotlog.model.beans.airport function getAirportByAirportCode(required string airportCode)
 	{
 		var queryHandler = new query();
 
@@ -25,10 +25,10 @@ component AirportDAO
 
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString).getResult();
 		
-		return new Airport(airportCode = queryResult["faa_code"][1],
-							parentAirportCode = queryResult["parent_faa_code"][1],
-							airportName = queryResult["airport_name"][1],
-							enabled = queryResult["enabled"][1]);
+		return new dotlog.model.beans.airport(airportCode = queryResult["faa_code"][1],
+											parentAirportCode = queryResult["parent_faa_code"][1],
+											airportName = queryResult["airport_name"][1],
+											enabled = queryResult["enabled"][1]);
 	}
 
 	public boolean function saveAirport(required dotlog.model.beans.airport airport)
@@ -77,7 +77,7 @@ component AirportDAO
 		queryHandler.setName(arguments.queryName);
 
 		queryHandler.addParam(name = "faa_code", value = arguments.airport.getAirportCode(), cfsqltype = "cf_sql_varchar");
-		queryHandler.addParam(name = "parent_faa_code", value = arguments.airport.getParentAirportAirortCode(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "parent_faa_code", value = arguments.airport.getParentAirportCode(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "airport_name", value = arguments.airport.getAirportName(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = arguments.airport.isEnabled(), cfsqltype = "cf_sql_number");
 

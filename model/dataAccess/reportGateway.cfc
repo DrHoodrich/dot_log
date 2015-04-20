@@ -4,7 +4,7 @@ component ReportGateway
 		datasource = ''
 	};
 
-	public reportGateway function init(required dotlog.model.datasource datasource)
+	public reportGateway function init(required dotlog.model.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
 		return this;
@@ -33,13 +33,11 @@ component ReportGateway
 		
 		var reports = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 report = new Report(username = result["username"][ii],
-								airportCode = result["airport_code"][ii],
-								beginDate = result["begin_date"][ii],
-								endDate = result["end_date"][ii],
-								reportID = result["report_id"][ii]
-								);
-							
+			 report = new dotlog.model.beans.report(username = result["username"][ii],
+													airportCode = result["airport_code"][ii],
+													beginDate = result["begin_date"][ii],
+													endDate = result["end_date"][ii],
+													reportID = result["report_id"][ii]);
 			 arrayAppend(reports, report);
 		}
 		return reports;

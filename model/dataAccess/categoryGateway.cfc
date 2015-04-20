@@ -31,10 +31,10 @@ component CategoryGateway
 		result = queryResult.getResult();
 
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 categoryObject = new Category(categoryTitle = result["category_title"][ii],
-											description = result["description"][ii],
-											enabled = result["enabled"][ii],
-											inWeeklyReport = result["in_weekly_report"][ii]);
+			 categoryObject = new dotlog.model.beans.category(categoryTitle = result["category_title"][ii],
+																description = result["description"][ii],
+																enabled = result["enabled"][ii],
+																inWeeklyReport = result["in_weekly_report"][ii]);
 			 arrayAppend(categoryObjects, categoryObject);
 		}
 		return categoryObjects;
@@ -60,10 +60,10 @@ component CategoryGateway
 		result = queryResult.getResult();
 
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 categoryObject = new Category(categoryTitle = result["category_title"][ii],
-											description = result["description"][ii],
-											enabled = result["enabled"][ii],
-											inWeeklyReport = result["in_weekly_report"][ii]);
+			 categoryObject = new dotlog.model.beans.category(categoryTitle = result["category_title"][ii],
+																description = result["description"][ii],
+																enabled = result["enabled"][ii],
+																inWeeklyReport = result["in_weekly_report"][ii]);
 			 arrayAppend(categoryObjects, categoryObject);
 		}
 		return categoryObjects;
