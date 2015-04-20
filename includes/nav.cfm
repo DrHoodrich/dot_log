@@ -8,7 +8,7 @@
         <li class = "dir">Users</a>
         	<ul>
 				<li><a href="/dotlog/pages/add_user.cfm">Add User</a></li>
-				<li><a href="/doglog/pages/edit_user.cfm">Edit Users</a></li>
+				<li><a href="/dotlog/pages/edit_user.cfm">Edit Users</a></li>
 			</ul>
 		</li>
 		<li class = "dir">Categories</a>
