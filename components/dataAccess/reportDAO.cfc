@@ -8,7 +8,7 @@ component ReportDAO
 	public ReportDAO function init(required dotlog.components.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new queryHandler();
+		variables.instance.queryHandler = new dotlog.components.queryHandler();
 		return this;
 	}
 
@@ -36,7 +36,7 @@ component ReportDAO
 
 	}
 
-	public boolean function saveReport(required report report)
+	public boolean function saveReport(required dotlog.components.beans.report report)
 	{
 //		if ( reportExists(arguments.report) ) {
 //			return updateReport(arguments.report);
@@ -45,7 +45,7 @@ component ReportDAO
 //		} 
 	}
 
-	private boolean function updateReport(required report report)
+	private boolean function updateReport(required dotlog.components.beans.report report)
 	{
 		var queryHandler = getQueryHandler("updateReport", arguments.report);
 
@@ -56,7 +56,7 @@ component ReportDAO
 		return len(queryResult.getPrefix().recordCount);
 	}
 
-	private boolean function createReport(required report report)
+	private boolean function createReport(required dotlog.components.beans.report report)
 	{
 		var queryHandler = getQueryHandler("createReport", arguments.report);
 		sqlString = "INSERT INTO DL_REPORTS "
@@ -78,7 +78,7 @@ component ReportDAO
 		return queryResult.getResult().recordCount;
 	}
 */
-	private base function getQueryHandler(required string queryName, required report report)
+	private base function getQueryHandler(required string queryName, required dotlog.components.beans.report report)
 	{
 		var queryHandler = new query();
 

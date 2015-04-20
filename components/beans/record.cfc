@@ -1,4 +1,4 @@
-component Record extends="CoreUtils"
+component Record
 {
         variables.instance = {
             recordID = '',

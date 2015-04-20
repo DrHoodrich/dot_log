@@ -1,14 +1,14 @@
-component UserService extends="CoreUtils"
+component UserService
 {
 	variables.instance = {
 		userDAO = '',
 		userGW = ''
 	};
 
-	public UserService function init(required dotlog.components.datasource datasource)
+	public UserService function init(required dotlog.components.beans.datasource datasource)
 	{
-		variables.instance.userDAO = new dotlog.components.userDAO(arguments.datasource);
-		variables.instance.userGW = new dotlog.components.userGateway(arguments.datasource);
+		variables.instance.userDAO = new dotlog.components.dataAccess.userDAO(arguments.datasource);
+		variables.instance.userGW = new dotlog.components.dataAccess.userGateway(arguments.datasource);
 		return this;
 	}
 
@@ -21,7 +21,7 @@ component UserService extends="CoreUtils"
 		return variables.instance.userGW.filterUsers(searchParam);
 	} 
 
-	public boolean function saveUser(required user user)
+	public boolean function saveUser(required dotlog.components.beans.user user)
 	{
 		return variables.instance.userDAO.saveUser(arguments.user);
 	} 

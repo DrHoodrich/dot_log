@@ -5,14 +5,14 @@ component AirportService
 		airportGW = ''
 	};
 
-	public AirportService function init(required datasource datasource)
+	public AirportService function init(required dotlog.components.beans.datasource datasource)
 	{
-		variables.instance.airportDAO = new dotlog.components.airportDAO(arguments.datasource);
-		variables.instance.airportGW = new dotlog.components.airportGateway(arguments.datasource);
+		variables.instance.airportDAO = new dotlog.components.dataAccess.airportDAO(arguments.datasource);
+		variables.instance.airportGW = new dotlog.components.dataAccess.airportGateway(arguments.datasource);
 		return this;
 	}
 
-	public boolean function saveAirport(required airport airport)
+	public boolean function saveAirport(required dotlog.components.beans.airport airport)
 	{
 		return variables.instance.airportDAO.saveAirport(arguments.airport);
 	} 

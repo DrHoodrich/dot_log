@@ -5,14 +5,14 @@ component RecordService
 		recordGW = ''
 	};
 
-	public RecordService function init(required dotlog.components.datasource datasource)
+	public RecordService function init(required dotlog.components.beans.datasource datasource)
 	{
-		variables.instance.recordDAO = new dotlog.components.recordDAO(arguments.datasource);
-		variables.instance.recordGW = new dotlog.components.recordGateway(arguments.datasource);
+		variables.instance.recordDAO = new dotlog.components.dataAccess.recordDAO(arguments.datasource);
+		variables.instance.recordGW = new dotlog.components.dataAccess.recordGateway(arguments.datasource);
 		return this;
 	}
 
-	public boolean function saveRecord(record record)
+	public boolean function saveRecord(required dotlog.components.beans.record record)
 	{
 		return variables.instance.recordDAO.saveRecord(arguments.record);
 	}
@@ -34,7 +34,7 @@ component RecordService
 		return variables.instance.recordGW.search(searchParam);
 	}
 
-	public record function getRecordByID(numeric recordID)
+	public record function getRecordByID(required numeric recordID)
 	{
 		return variables.instance.recordDAO.getRecordByID(arguments.recordID);
 	}

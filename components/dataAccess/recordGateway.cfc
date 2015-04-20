@@ -6,10 +6,10 @@ component RecordGateway
 
 	};
 
-	public RecordGateway function init(required dotlog.components.datasource datasource)
+	public RecordGateway function init(required dotlog.components.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new queryHandler();
+		variables.instance.queryHandler = new dotlog.components.queryHandler();
 		return this;
 	}
 

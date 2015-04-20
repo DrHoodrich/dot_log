@@ -5,10 +5,10 @@ component UserGateway
 		queryHandler = ''
 	};
 
-	public UserGateway function init(required dotlog.components.datasource datasource)
+	public UserGateway function init(required dotlog.components.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new queryHandler();
+		variables.instance.queryHandler = new dotlog.components.queryHandler();
 		return this;
 	}
 
@@ -54,13 +54,13 @@ component UserGateway
 
 		var userObjects = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 objUser = new User(username = result["username"][ii],
-							firstName= result["FIRST_NAME"][ii],
-							lastName = result["LAST_NAME"][ii],
-							airportCode = result["FAA_CODE"][ii],
-							permissions = result["USER_PERMISSIONS"][ii],
-							enabled = result["ENABLED"][ii],
-							emailAddr = result["EMAIL_ADDR"][ii]);
+			 objUser = new dotlog.components.beans.user(username = result["username"][ii],
+														firstName= result["FIRST_NAME"][ii],
+														lastName = result["LAST_NAME"][ii],
+														airportCode = result["FAA_CODE"][ii],
+														permissions = result["USER_PERMISSIONS"][ii],
+														enabled = result["ENABLED"][ii],
+														emailAddr = result["EMAIL_ADDR"][ii]);
 			 arrayAppend(userObjects, objUser);
 		}
 		return userObjects;

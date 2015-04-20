@@ -5,10 +5,10 @@ component AirportDAO
 		queryHandler = ''
 	};
 
-	public airportDAO function init(required dotlog.components.datasource datasource)
+	public airportDAO function init(required dotlog.components.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new queryHandler();
+		variables.instance.queryHandler = new dotlog.components.queryHandler();
 		return this;
 	}
 
@@ -31,7 +31,7 @@ component AirportDAO
 							enabled = queryResult["enabled"][1]);
 	}
 
-	public boolean function saveAirport(required airport airport)
+	public boolean function saveAirport(required dotlog.components.beans.airport airport)
 	{
 		if ( airportExists(arguments.airport) ) {
 			return updateAirport(arguments.airport);
@@ -40,7 +40,7 @@ component AirportDAO
 		}
 	}
 
-	private boolean function airportExists(required airport airport)
+	private boolean function airportExists(required dotlog.components.beans.airport airport)
 	{
 		var queryHandler = getQueryHandler("doesAirportExist", arguments.airport);
 		sqlString = "SELECT faa_code FROM DL_AIRPORTS "
@@ -49,7 +49,7 @@ component AirportDAO
 		return queryResult.getResult().recordCount;
 	}
 
-	private boolean function createAirport(required airport airport)
+	private boolean function createAirport(required dotlog.components.beans.airport airport)
 	{
 		var queryHandler = getQueryHandler("createAirport", arguments.airport);
 		sqlString = "INSERT INTO DL_AIRPORTS " 
@@ -59,7 +59,7 @@ component AirportDAO
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
-	private boolean function updateAirport(required airport airport)
+	private boolean function updateAirport(required dotlog.components.beans.airport airport)
 	{
 		var queryHandler = getQueryHandler("updateAirport", arguments.airport);
 		sqlString = "UPDATE DL_AIRPORTS SET "
@@ -69,7 +69,7 @@ component AirportDAO
 		return len(queryResult.getPrefix().recordCount);
 	}
 
-	private base function getQueryHandler(required string queryName, required airport airport)
+	private base function getQueryHandler(required string queryName, required dotlog.components.beans.airport airport)
 	{
 		var queryHandler = new query();
 

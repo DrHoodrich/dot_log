@@ -4,7 +4,7 @@ component AirportGateway
 		datasource = ''
 	};
 
-	public airportGateway function init(required dotlog.components.datasource datasource)
+	public airportGateway function init(required dotlog.components.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
 		return this;

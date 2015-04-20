@@ -5,10 +5,10 @@ component CategoryService
 		categoryGW = ''
 	};
 	
-	public CategoryService function init(required dotlog.components.datasource datasource)
+	public CategoryService function init(required dotlog.components.beans.datasource datasource)
 	{
-		variables.instance.categoryDAO = new dotlog.components.categoryDAO(arguments.datasource);
-		variables.instance.categoryGW = new dotlog.components.categoryGateway(arguments.datasource);
+		variables.instance.categoryDAO = new dotlog.components.dataAccess.categoryDAO(arguments.datasource);
+		variables.instance.categoryGW = new dotlog.components.dataAccess.categoryGateway(arguments.datasource);
 		return this;
 	}
 
@@ -27,7 +27,7 @@ component CategoryService
 		return variables.instance.categoryDAO.getCategoryByTitle(arguments.categoryTitle);
 	}
 
-	public boolean function saveCategory(required category category)
+	public boolean function saveCategory(required dotlog.components.beans.category category)
 	{
 		return variables.instance.categoryDAO.saveCategory(arguments.category);
 	}
