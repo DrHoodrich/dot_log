@@ -14,7 +14,7 @@
   hubAirports = application.airportService.getChildAirports(session.user.getAirportCode());
 </cfscript>
   
-<cfform name="createAirportForm" action="airport_create_action.cfm" method="post" >
+<cfform name="createAirportForm" action="add_airport_action.cfm" method="post" >
 	Airport Code:<cfinput type = "Text" name = "airportCode" message = "" required = "yes"></cfinput> <br>
   Airport Name:<cfinput type = "Text" name = "airportName" message = "" required = "yes"></cfinput> <br>
 

@@ -20,7 +20,7 @@
   }
 </cfscript>
 
-<cfform name="editAirportForm" action="airport_edit_action.cfm" method="post">
+<cfform name="editAirportForm" action="edit_airport_action.cfm" method="post">
 	<cfselect name="airportCode">
 		<option value=""> --None-- </option>
 			<cfscript>

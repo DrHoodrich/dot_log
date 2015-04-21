@@ -7,7 +7,7 @@
     <div id="content">
 
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
-<cfform name="editUser" action="editUser_action.cfm" method="post">
+<cfform name="editUser" action="edit_user_action.cfm" method="post">
 <!---	Username:<cfinput type = "text" name = "username" message = "username" required = "no"></cfinput> <br> --->
 	
 	<cfoutput>Select user's airport:</cfoutput>

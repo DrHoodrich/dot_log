@@ -11,7 +11,7 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfif structKeyExists(FORM, 'editUser_button') IS False >
-	<cfform name="editUser" action="editUser_action.cfm" method="post">
+	<cfform name="editUser" action="edit_user_action.cfm" method="post">
 		<cfselect name="username">
 			<option value=""> --None-- </option>
 				<cfscript>

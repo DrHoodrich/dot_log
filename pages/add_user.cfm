@@ -19,7 +19,7 @@
 
 </cfscript>
 	
-<cfform name="createUser" action="addNewUser_action.cfm" method="post">
+<cfform name="createUser" action="add_user_action.cfm" method="post">
 	Username:<cfinput type = "text" name = "username" message = "username" required = "yes"></cfinput> <br>
 	First Name:<cfinput type = "text" name = "firstName" message = "First Name" required = "yes"></cfinput> <br>
 	Last Name:<cfinput type = "text" name = "lastName" message = "Last Name" required = "yes"></cfinput> <br>
