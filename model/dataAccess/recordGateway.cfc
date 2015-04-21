@@ -64,32 +64,47 @@ component RecordGateway
 		queryService.setUsername(DSusername);
 		queryService.setPassword(DSpassword);
 
-		sqlString = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title FROM DL_RECORDS WHERE 1 = 1 ";
+		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title FROM DL_RECORDS WHERE 1 = 1 ";
+		sqlStringUsers = "SELECT username FROM DL_USERS WHERE 1 = 1 ";
 
 		if ( !structIsEmpty(searchFilter) ) {
 			if ( structKeyExists(searchFilter, "username") ) {
 				queryService.addParam(name = "username", value = "%"&arguments.searchFilter.username&"%", cfsqltype = "cf_sql_varchar");	
-				sqlString = sqlString & " AND username LIKE :username";
+				sqlStringRecords &= " AND username LIKE :username";
+			} /*
+			if ( structKeyExists(searchFilter, "firstName") ) {
+				queryService.addParam(name = "firstName", value = "%"&arguments.searchFilter.firstName&"%", cfsqltype = "cf_sql_varchar");	
+				sqlStringUsers &= " AND first_name LIKE :firstName";
 			}
+			if ( structKeyExists(searchFilter, "lastName") ) {
+				queryService.addParam(name = "lastName", value = "%"&arguments.searchFilter.lastName&"%", cfsqltype = "cf_sql_varchar");	
+				sqlStringUsers &= " AND last_name LIKE :lastName";
+			}*/
 			if ( structKeyExists(searchFilter, "keyword") ) {
 				queryService.addParam(name = "keyword", value = "%"&arguments.searchFilter.keyword&"%", cfsqltype = "cf_sql_varchar");	
-				sqlString = sqlString & " AND LOWER(record_text) LIKE LOWER(:keyword)";
+				sqlStringRecords &= " AND LOWER(record_text) LIKE LOWER(:keyword)";
 			}
 			if ( structKeyExists(searchFilter, "categoryTitle") ) {
 				queryService.addParam(name = "category_title", value = "%"&arguments.searchFilter.categoryTitle&"%", cfsqltype = "cf_sql_varchar");	
-				sqlString = sqlString & " AND LOWER(category_title) LIKE LOWER(:category_title)";
+				sqlStringRecords &= " AND LOWER(category_title) LIKE LOWER(:category_title)";
 			}
 			if ( structKeyExists(searchFilter, "airportCode") ) {
 				queryService.addParam(name = "faa_code", value = "%"&arguments.searchFilter.airportCode&"%", cfsqltype = "cf_sql_varchar");	
-				sqlString = sqlString & " AND LOWER(faa_code) LIKE LOWER(:faa_code)";
+				sqlStringRecords &= " AND LOWER(faa_code) LIKE LOWER(:faa_code)";
 			}
 			if ( structKeyExists(searchFilter, "date") ) {
 				queryService.addParam(name = "date", value = arguments.searchFilter.date, cfsqltype = "cf_sql_timestamp");	
-				sqlString = sqlString & " AND record_time >= :date";
+				sqlStringRecords &= " AND record_time >= :date";
+			}
+			if ( structKeyExists(searchFilter,"startDate") && structKeyExists(searchFilter,"endDate") ) {
+				queryService.addParam(name = "startDate", value = arguments.searchFilter.startDate, cfsqltype = "cf_sql_timestamp");
+				queryService.addParam(name = "endDate", value = arguments.searchFilter.endDate, cfsqltype = "cf_sql_timestamp");
+				sqlStringRecords &= " AND record_time >= :startDate";
+				sqlStringRecords &= " AND record_time <= :endDate";
 			}
 		}
-		
-		queryResult = queryService.execute(sql=sqlString);
+
+		queryResult = queryService.execute(sql=sqlStringRecords);
 		result = queryResult.getResult();
 
 		recordObjects = [];
