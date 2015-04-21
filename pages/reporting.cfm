@@ -43,9 +43,8 @@
   <cfinput type="hidden" name="startDate" value="#dateFormat(now()-2, 'yyyy-mm-dd')#"></cfinput>
   <cfinput type="hidden" name="endDate" value="#dateFormat(now()-1, 'yyyy-mm-dd')#"></cfinput>
 <cfscript>
-  writeOutput("<strong>Review Events to Report</strong>");
-  writeOutput('<table width="783" height="180" border="1">');
-
+  
+  
   record = '';
   records = [];
   if ( len(lastReportedDate) ) {
@@ -58,23 +57,15 @@
         }
       }
   }
-
-  for (ii = 1; ii <= arrayLen(records); ++ii) {
-    checked = '';
-    if (records[ii].isInWeeklyReport()) { 
-      checked = 'checked="True"';
-    } else {
-      continue;
-    }
-    writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[ii].getEventTime()# <br>');
-    writeOutput(' Reporter: #records[ii].getUsername()# <br>Airport: #records[ii].getAirportCode()# <br> Category: #records[ii].getCategory()# <br>');
-    writeOutput('<td width="560" align="left" valign="top">#records[ii].getRecordText()#</td>');
-    writeOutput('<td width="92" align="right" valign="top">');
-    writeOutput('In Reports');
-    writeOutput('<form name="editRecord" method="post" action="edit_record_action.cfm"> <input type="hidden" name="recordID" value="#records[ii].getRecordID()#"> <input type="submit" name="editRecord" value="Edit Entry"> </form></td>');
-  }
-  writeOutput('</table>');
 </cfscript>
+<cfinclude template="/dotlog/view/print_reports.cfm">
+
+
+<cfscript>
+	writeOutput("<strong>Review Events to Report</strong>");
+	printRecords(records);
+</cfscript>
+
 <cfinput type="submit" name="submitReportEmail_button" value="Email Report">
   <br>
 </cfform>
