@@ -1,39 +1,49 @@
 component Category
 {
-        property name="categoryTitle" type="string" default="" hint=""; 
-        property name="description" type="string" default="" hint="";
-        property name="enabled" type="numeric" default="" hint="";
-        property name="inWeeklyReport" type="numeric" default="" hint="";
+	variables.instance = {
+		categoryTitle = '',
+		categoryDescription = '',
+		enabled = '',
+		inWeeklyReport = '',
+		categoryID = ''
+	};
 
-        public Category function init(required string categoryTitle,
-                                        required string description,
-                                        required numeric enabled,
-                                        required numeric inWeeklyReport)
-        {
-               variables.categoryTitle = arguments.categoryTitle;
-               variables.description = arguments.description;
-               variables.enabled = arguments.enabled;
-               variables.inWeeklyReport = arguments.inWeeklyReport;
-               return this;
-        }
+	public Category function init(required string categoryTitle,
+									required string description,
+									required numeric enabled,
+									required numeric inWeeklyReport,
+									numeric categoryID = -1)
+	{
+		variables.instance.categoryTitle = arguments.categoryTitle;
+		variables.instance.categoryDescription = arguments.description;
+		variables.instance.enabled = arguments.enabled;
+		variables.instance.inWeeklyReport = arguments.inWeeklyReport;
+		variables.instance.categoryID = arguments.categoryID;
+		return this;
+	}
 
-        public string function getCategoryTitle() 
-        {
-                return variables.categoryTitle;
-        }
+	public numeric function getCategoryID() 
+	{
+		return variables.instance.categoryID;
+	}
 
-        public string function getDescription()
-        {
-                return variables.description;
-        }
+	public string function getCategoryTitle() 
+	{
+		return variables.instance.categoryTitle;
+	}
 
-        public boolean function isEnabled() 
-        {
-                return variables.enabled;
-        }
+	public string function getDescription()
+	{
+		return variables.instance.categoryDescription;
+	}
 
-        public boolean function isInWeeklyReport()
-        {
-                return inWeeklyReport;
-        }
+	public boolean function isEnabled() 
+	{
+		return variables.instance.enabled;
+	}
+
+	public boolean function isInWeeklyReport()
+	{
+		return variables.instance.inWeeklyReport;
+	}
 }

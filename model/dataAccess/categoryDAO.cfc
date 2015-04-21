@@ -22,15 +22,17 @@ component CategoryDAO
 		queryHandler.setName("fetchCategoryByTitle");
 		queryHandler.addParam(name = "category_title", value = arguments.categoryTitle, cfsqltype = "cf_sql_varchar");
 				
-		sqlString = "SELECT category_title, description, enabled, in_weekly_report "
+		sqlString = "SELECT category_id, category_title, description, enabled, in_weekly_report "
 					& "FROM DL_CATEGORIES WHERE category_title = :category_title";
 
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		result = queryResult.getResult();
+
 		return new dotlog.model.beans.category(categoryTitle = result["category_title"][1],
 												description = result["description"][1],
 												enabled = result["enabled"][1],
-												inWeeklyReport = result["in_weekly_report"][1]);
+												inWeeklyReport = result["in_weekly_report"][1],
+												categoryID = result["category_id"][1]);
 	}
 
 	public boolean function saveCategory(required dotlog.model.beans.category category)
@@ -47,8 +49,8 @@ component CategoryDAO
 		var queryHandler = getQueryHandler("updateCategory", arguments.category);
 
 		sqlString = "UPDATE DL_CATEGORIES SET "
-					& "DESCRIPTION = :description, ENABLED = :enabled, IN_WEEKLY_REPORT = :in_weekly_report "
-					& "WHERE CATEGORY_TITLE = :category_title";
+					& "DESCRIPTION = :description, ENABLED = :enabled, IN_WEEKLY_REPORT = :in_weekly_report, CATEGORY_TITLE = :category_title "
+					& "WHERE CATEGORY_ID = :category_id";
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}
@@ -82,6 +84,9 @@ component CategoryDAO
 		queryHandler.setUsername(variables.instance.datasource.getUsername());
 		queryHandler.setPassword(variables.instance.datasource.getPassword());
 
+		if ( category.getCategoryID() ) {
+			queryHandler.addParam(name = "category_ID", value = arguments.category.getCategoryID(), cfsqltype = "cf_sql_number");	
+		}
 		queryHandler.addParam(name = "in_weekly_report", value = arguments.category.isInWeeklyReport(), cfsqltype = "cf_sql_number");
 		queryHandler.addParam(name = "enabled", value = arguments.category.isEnabled(), cfsqltype = "cf_sql_number");
 		queryHandler.addParam(name = "category_title", value = arguments.category.getCategoryTitle(), cfsqltype = "cf_sql_varchar");
