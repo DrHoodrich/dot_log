@@ -14,16 +14,14 @@
 	searchStruct = structNew();
 
 	if ( structKeyExists(FORM, 'submitSearch_button') ) {
-		dataSource = new dotlog.model.beans.datasource("DOTlogDB","","");
-		recordGW = new dotlog.model.dataAccess.recordGateway(dataSource);
-	/*	if ( len(FORM.firstName) ) {
+
+		if ( len(FORM.firstName) ) {
 			searchStruct.firstName = FORM.firstName;
 		}
 
 		if ( len(FORM.lastName) ) {
 			searchStruct.lastName = FORM.lastName;
 		}
-	*/
 
 		if ( len(FORM.username) ) {
 			searchStruct.username = FORM.username;
@@ -37,32 +35,20 @@
 			searchStruct.categoryTitle = FORM.categoryTitle;
 		}
 
-		if ( len(FORM.airportCode) ) {
-			searchStruct.airportCode = FORM.airportCode;
+		if ( len(FORM.startDate) ) {
+			searchStruct.startDate = FORM.startDate;
 		}
 
-		records = recordGW.search(searchStruct);
-		
-		reportString = '';
-		for (ii = 1; ii <= ArrayLen(records); ++ii) {
-			reportString = reportString 
-				& "<strong>Record Text:</strong>" & records[ii].getRecordText()
-				& " <strong>Username:</strong> " & records[ii].getUsername()  
-				&  " <strong>FAA Code:</strong> " & records[ii].getAirportCode() 
-				&  " <strong>In Weekly Report:</strong> " & records[ii].isInWeeklyReport()
-				&  " <strong>Event Time:</strong> " & records[ii].getEventTime()
-				&  " <strong>Category:</strong> " & records[ii].getCategory()
-				& "<br>";
+		if ( len(FORM.endDate) ) {
+			searchStruct.endDate = FORM.endDate;
 		}
-		writeOutput(reportString);
+
+		records = application.recordService.search(searchStruct);
 	}
 </cfscript>
 
 <cfform name="gerenateReport" action="generatePDF.cfm" method="post">
-	<cfinput type="hidden" name="reports" value="#reportString#">
-		
-	</cfinput>
-  <cfinput type="submit" name="generatePDF_button" value="Make PDF"> <br>
+  <cfinput type="submit" name="generatePDF_button" value="View as PDF"/> <br>
 </cfform>
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
