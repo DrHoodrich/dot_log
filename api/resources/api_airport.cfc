@@ -1,29 +1,28 @@
 component extends = "taffy.core.resource" taffy_uri="/api/airports"
+
 {
-	DSName = "DOTlogDB";
-	DSuser = " ";
-	DSpasswd = " ";
-	datasource = new dotlog.components.datasource(DSName, DSuser, DSpasswd);
-
-	airportDAO = new dotlog.components.airportDAO(datasource);
-
-	 user = application.userService.getUserByUsername("us");
 
 	function get()
 	{	
-		airportStr = structNew();
-		airportStr.faa_code = "FAI";
+		airports = [];
+		airportChildren = [];
+		airport = session.user.getAirportCode();
 
-		airportStr2 = structNew();
-		airportStr2.faa_code = "Northern";
+		airportStruct = structNew();
+		airportStruct.faa_code = session.user.getAirportCode();
+		arrayAppend(airports, airportStruct);
+		
+		airportChildren = application.airportService.getChildAirports(airport);
 
-
-		testArray = [];
-		arrayAppend(testArray, airportStr);
-		arrayAppend(testArray, airportStr2);
+		for (i = 1 ; i <= ArrayLen(airportChildren); i++)
+		{
+			airportStruct = structNew();
+			airportStruct.faa_code = airportChildren[i].getAirportCode();
+			arrayAppend(airports,airportStruct);
+		}
 		
 		containingStr = structNew();
-		containingStr.airports = testArray;
+		containingStr.airports = airports;
 
 		return representationOf(containingStr).withStatus(200);
 	}
