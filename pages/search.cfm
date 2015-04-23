@@ -18,58 +18,65 @@
 		<tr>
 			<td>Keyword</td>
 			<td><cfinput type = "text" name = "keyword" message = "" required = "no"/></td>
+			
 		</tr>
 		<tr>
-			<td>LDAP Username</td>
+			<td>LDAP User</td>
 			<td><cfinput type = "text" name = "username" message = "" required = "no"/></td>
+			
 		</tr>
+		<!---
 		<tr>
 			<td>First Name</td>
 			<td><cfinput type = "text" name = "firstName" message = "" required = "no"/></td>
-			<td><= To implement</td>
+			
 		</tr>
 		<tr>
 			<td>Last Name</td>
 			<td><cfinput type = "text" name = "lastName" message = "" required = "no"/></td>
-			<td><= To implement</td>
+			
 		</tr>
+		--->
 		<tr>
 			<td>Airport</td>
 			<td>
-				<cfselect name="airportCode" required="true">
+				<cfselect name="airportCode" id="airportCode">
 					<cfscript>
-						writeOutput('<option value="none"></option>');
+						writeOutput('<option value=""></option>');
+						writeOutput('<option value=#session.user.getAirportCode()#>#session.user.getAirportCode()#</option>');
 						for (ii = 1; ii <= arrayLen(airports); ++ii) {
 							writeOutput('<option value=#airports[ii].getAirportCode()#>#airports[ii].getAirportCode()&' - '&airports[ii].getAirportName()#</option>');
 						}
 					</cfscript>
 				</cfselect>
 			</td>
+			
 		</tr>
 		<tr>
 			<td>Category</td>
 			<td>
 				<cfselect name="categoryTitle" id="categoryTitle">
 					<cfscript>
-						writeOutput('<option value="none"></option>');
+						writeOutput('<option value=""></option>');
 						for (ii = 1; ii <= arrayLen(categories); ++ii) {
 							writeOutput('<option value=#categories[ii].getCategoryTitle()#>#categories[ii].getCategoryTitle()#</option>');
 						}
 					</cfscript>
 				</cfselect>
 			</td>
+			
 		</tr>
 		<tr>
 			<td>Start Date</td>
-			<td><cfinput type = "datefield" name = "startDate" message = ""/></td>
+			<td><cfinput type="datefield" name="startDate" message=""/></td>
 		</tr>
 		<tr>
 			<td>End Date</td>
-			<td><cfinput type = "datefield" name = "endDate" message = ""/></td>
+			<td><cfinput type="datefield" name="endDate" message=""/></td>
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td><cfinput type="submit" name="submitSearch_button" id="searchRecords" value="search"></td>
+			<td><cfinput type="submit" name="submitSearch_button" id="searchRecords" value="Search"></td>
 		</tr>
 	</table>
 </cfform>

@@ -15,13 +15,14 @@
 
 	if ( structKeyExists(FORM, 'submitSearch_button') ) {
 
+		/*
 		if ( len(FORM.firstName) ) {
 			searchStruct.firstName = FORM.firstName;
 		}
 
 		if ( len(FORM.lastName) ) {
 			searchStruct.lastName = FORM.lastName;
-		}
+		}*/
 
 		if ( len(FORM.username) ) {
 			searchStruct.username = FORM.username;
@@ -43,8 +44,24 @@
 			searchStruct.endDate = FORM.endDate;
 		}
 
+		if ( len(FORM.airportCode) ) {
+			searchStruct.airportCode = FORM.airportCode;
+		}
+
+		if ( structKeyExists(FORM, 'included') ) {
+			if ( len(FORM.included) ) {
+				searchStruct.included = FORM.included;
+			}
+		}
 		records = application.recordService.search(searchStruct);
 	}
+</cfscript>
+
+<cfinclude template="/dotlog/view/print_reports.cfm">
+<cfscript>
+	writeOutput("<strong>Review Events to Report</strong>");
+
+	printRecords(records);
 </cfscript>
 
 <cfform name="gerenateReport" action="generatePDF.cfm" method="post">
