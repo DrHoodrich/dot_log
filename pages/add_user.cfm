@@ -10,35 +10,65 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-	hubAirports = application.airportService.getChildAirports(session.user.getAirportCode());
-
-	AirportNames = [];
-	for (ii = 1; ii <= ArrayLen(hubAirports); ++ii) {
-		arrayAppend(airportNames, hubAirports[ii].getAirportCode() & " - " & hubAirports[ii].getAirportName());
+	statewide = application.airportService.getAirportByAirportCode("Statewide");
+	regionAirports = application.airportService.getChildAirports("Statewide");
+	hubAirports = [];
+	for (ii = 1; ii <= arrayLen(regionAirports); ++ii) {
+		arrayAppend(hubAirports, application.airportService.getChildAirports(regionAirports[ii].getAirportCode()));
 	}
-
 </cfscript>
-	
-<cfform name="createUser" action="add_user_action.cfm" method="post">
-	Username:<cfinput type = "text" name = "username" message = "username" required = "yes"></cfinput> <br>
-	First Name:<cfinput type = "text" name = "firstName" message = "First Name" required = "yes"></cfinput> <br>
-	Last Name:<cfinput type = "text" name = "lastName" message = "Last Name" required = "yes"></cfinput> <br>
-	Email:<cfinput type = "text" name = "emailAddr" message = "Email" required = "yes"></cfinput> <br>
-	
-	Location:<cfselect name = "airportCode">
-		<option value=""> --None-- </option>
-			<cfscript>
-			  for (ii = 1; ii <= arrayLen(hubAirports); ++ii) {
-			    writeOutput('<option value="#hubAirports[ii].getAirportCode()#">#hubAirports[ii].getAirportCode()#  --  #hubAirports[ii].getAirportName()# </option>');
-			  }  
-		</cfscript>
-	</cfselect><br>
-	
-	Account Type:<cfselect name = "permissions">
-		<option value=1>user</option>
-		<option value=2>admin</option>
-	</cfselect><br>
-	<cfinput type="submit" name="createUser_button" value="Create User">
+
+<cfform name="createUser" action="saveUser.cfm" method="post">
+<table>
+	<tr>
+		<td>LDAP User</td>
+		<td><cfinput type = "text" name = "username" message = "username" required = "yes"/></td>
+	</tr>
+	<tr>
+		<td>First Name</td>
+		<td><cfinput type = "text" name = "firstName" message = "First Name" required = "yes"/></td>
+	</tr>		
+	<tr>
+		<td>Last Name</td>
+		<td><cfinput type = "text" name = "lastName" message = "Last Name" required = "yes"/></td>
+	</tr>
+	<tr>
+		<td>Email</td>
+		<td><cfinput type = "text" name = "emailAddr" message = "Email" validate="email" required = "yes"/></td>
+	</tr>
+	<tr>
+		<td>Assign to</td>
+		<td>
+				<cfselect name = "parentAirportCode">
+					<option value=""> --Select Region/Hub-- </option>
+					<cfscript>
+						writeOutput('<option style="font-weight:bold;" value="Statewide"><strong>AK Statewide</strong></option>');
+						for (ii = 1; ii <= arrayLen(regionAirports); ++ii) {
+							writeOutput('<option></option>');
+				    		writeOutput('<option value="#regionAirports[ii].getAirportCode()#">--#regionAirports[ii].getAirportName()#--</option>');
+				    		tmpArray = hubAirports[ii];
+				    		for (md = 1; md <= arrayLen(tmpArray); ++md) {
+				    			writeOutput('<option value="#hubAirports[ii][md].getAirportCode()#">#hubAirports[ii][md].getAirportCode()#  --  #hubAirports[ii][md].getAirportName()# </option>');
+				  			}
+				  		}   
+					</cfscript>
+				</cfselect>
+			</td>
+	</tr>
+	<tr>
+		<td>Account Type</td>
+		<td>
+			<cfselect name = "permissions">
+				<option value=0>User</option>
+				<option value=1>Admin</option>
+			</cfselect>
+		</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><cfinput type="submit" name="createUser_button" value="Add User"></td>
+	</tr>
+</table>
 </cfform>
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
