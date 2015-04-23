@@ -1,4 +1,4 @@
-<cfset pageTitle = "DOTLog Record Creation">
+<cfset pageTitle = "Event Added">
 <cfinclude template="/dotlog/includes/header.cfm">
 <cfinclude template="/dotlog/includes/banner.cfm">
     <a id="main_content"></a>
@@ -20,10 +20,10 @@
 		reporting = 1;
 	}
 
-	record = new dotlog.model.record(recordText = FORM.eventDescription,
+	record = new dotlog.model.beans.record(recordText = FORM.eventDescription,
 										  username = FORM.userid,
 										  airportCode = FORM.airportCode,
-										  eventTime =  CREATEODBCDATETIME( now() ),
+										  eventTime =  CREATEODBCDATETIME( FORM.eventDate & FORM.eventTime ),
 										  recordTime =  CREATEODBCDATETIME( now() ),
 										  inWeeklyReport = reporting,
 										  categoryTitle = FORM.categoryTitle);
@@ -31,21 +31,9 @@
 
 	airports = application.airportService.getChildAirports(session.user.getAirportCode());
 	categories = application.categoryService.getAllCategories();
-
-	writeOutput('<table width="783" height="180" border="1">');
-		for (ii = 1; ii <= arrayLen(airports); ++ii) {
-			records = application.recordService.getRecordsByAirportCode(airports[ii].getAirportCode());
-
-			for (jj = 1; jj <= arrayLen(records); ++jj) {
-				writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
-				writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportCode()# <br> Category: #records[jj].getCategory()# <br>');
-				writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
-				writeOutput('<td width="92" align="right" valign="top"><form name="form1" method="post" action="">');
-				writeOutput('<input type="checkbox" name="event_1_important" id="event_1_important">');
-				writeOutput('<label for="event_#jj#_important">Important</label>');
-				writeOutput('<label for="entry_1_important"></label></form></td>');
-	  		}
-		}
-	writeOutput('</table>');
+</cfscript>
+<cfinclude template="/dotlog/view/print_reports.cfm">
+<cfscript>
+	printAirportRecords(airports);
 </cfscript>
 <cfinclude template="/dotlog/includes/footer.cfm">
