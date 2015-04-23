@@ -12,7 +12,12 @@
 
 <cfscript>
 	existingAirport = application.airportService.getAirportByAirportCode(FORM.airportCode);
-	hubAirports = application.airportService.getChildAirports(session.user.getAirportCode());
+	statewide = application.airportService.getAirportByAirportCode("Statewide");
+	regionAirports = application.airportService.getChildAirports("Statewide");
+	hubAirports = [];
+	for (ii = 1; ii <= arrayLen(regionAirports); ++ii) {
+		arrayAppend(hubAirports, application.airportService.getChildAirports(regionAirports[ii].getAirportCode()));
+	}
 </cfscript>
 
 <cfif structKeyExists(FORM, 'selectAirportToEdit_button')>
@@ -28,17 +33,24 @@
 				<td><cfinput type="text" name="airportName" value="#existingAirport.getAirportName()#"/></td>
 			</tr>		
 			<tr>
-				<td>Parent FAA Code</td>
+				<td><strong>Region</strong>/Hub</td>
 				<td>
-					<cfselect name = "parentAirportCode"> 
-						<cfoutput><option value="#existingAirport.getParentAirportCode()#">#existingAirport.getParentAirportCode()#</option></cfoutput>
-						<cfscript>
-							for (ii = 1; ii <= arrayLen(hubAirports); ++ii) {
-								writeOutput('<option value="#hubAirports[ii].getAirportCode()#">#hubAirports[ii].getAirportCode()#</option>');
-							}
-						</cfscript>
-					</cfselect>
-				</td>
+				<cfselect name = "parentAirportCode">
+					<cfscript>
+					writeOutput('<option value="#existingAirport.getParentAirportCode()#">#existingAirport.getParentAirportCode()#</option>');
+					
+						writeOutput('<option style="font-weight:bold;" value="Statewide"><strong>AK Statewide</strong></option>');
+						for (ii = 1; ii <= arrayLen(regionAirports); ++ii) {
+							writeOutput('<option></option>');
+				    		writeOutput('<option value="#regionAirports[ii].getAirportCode()#">--#regionAirports[ii].getAirportName()#--</option>');
+				    		tmpArray = hubAirports[ii];
+				    		for (md = 1; md <= arrayLen(tmpArray); ++md) {
+				    			writeOutput('<option value="#hubAirports[ii][md].getAirportCode()#">#hubAirports[ii][md].getAirportCode()#  --  #hubAirports[ii][md].getAirportName()# </option>');
+				  			}
+				  		}   
+					</cfscript>
+				</cfselect>
+			</td>
 			</tr>
 			<tr>
 				<td>Active</td>
