@@ -11,7 +11,24 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	airports = application.airportService.getChildAirports(session.user.getAirportCode());
+	childAirports = application.airportService.getChildAirports(session.user.getAirportCode());
+
+	airports = [];
+
+	for (ii = 1; ii <= arrayLen(childAirports); ++ii) {
+		temp = application.airportService.getChildAirports(childAirports[ii].getAirportCode());
+		arrayPrepend(temp, childAirports[ii]);
+		arrayAppend(airports, temp);
+		for (jj = 2; jj <= arrayLen(temp); ++jj) {
+			temp2 = application.airportService.getChildAirports(temp[jj].getAirportCode());
+			arrayAppend(airports, temp2);
+			for (kk = 1; kk <= arrayLen(temp2); ++kk) {
+				temp3 = application.airportService.getChildAirports(temp2[kk].getAirportCode());
+				arrayAppend(airports, temp3);
+			}
+		}
+	}
+
 	categories = application.categoryService.getAllCategories();
 </cfscript>
 
@@ -28,15 +45,18 @@
 		</tr>
 		<tr>
 			<td>Event Time</td>
-			<td><cfinput type="text" name="eventDate" required="true" message="Required time format hh:mm" validate="time" value="#dateformat(now(), 'hh:mm')#"/></td>
+			<td><cfinput type="text" name="eventTime" required="true" message="Required time format hh:mm" validate="time" value="#timeformat(now(), 'hh:mm tt')#"/></td>
 		</tr>
 		<tr>
 			<td>Airport</td>
-			<td><cfselect name="airportCode" required="true">
+			<td>
+				<cfselect name="airportCode" required="true">
+					<cfoutput><option value="#session.user.getAirportCode()#">#session.user.getAirportCode()#</option></cfoutput>
 					<cfscript>
-						writeOutput('<option value="none"></option>');
 						for (ii = 1; ii <= arrayLen(airports); ++ii) {
-							writeOutput('<option value=#airports[ii].getAirportCode()#>#airports[ii].getAirportCode()&' - '&airports[ii].getAirportName()#</option>');
+							for (jj = 1; jj <= arrayLen(airports[ii]); ++jj) {
+								writeOutput('<option value=#airports[ii][jj].getAirportCode()#>#airports[ii][jj].getAirportCode()&' - '&airports[ii][jj].getAirportName()#</option>');
+							}
 						}
 					</cfscript>
 				</cfselect>
@@ -46,8 +66,8 @@
 			<td>Category</td>
 			<td>
 				<cfselect name="categoryTitle" id="categoryTitle">
+					<cfoutput><option value="">--select category--</option></cfoutput>
 					<cfscript>
-						writeOutput('<option value="none"></option>');
 						for (ii = 1; ii <= arrayLen(categories); ++ii) {
 							writeOutput('<option value=#categories[ii].getCategoryTitle()#>#categories[ii].getCategoryTitle()#</option>');
 						}
@@ -74,7 +94,9 @@
 <!--- Gets the latest records and displays under form entry --->		
 <cfinclude template="/dotlog/view/print_reports.cfm">
 <cfscript>
-	printAirportRecords(airports);
+	for (ii = 1; ii <= arrayLen(airports); ++ii) {
+		printAirportRecords(airports[ii]);
+	}
 </cfscript>
 	<!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
