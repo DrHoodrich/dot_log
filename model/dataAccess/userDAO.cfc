@@ -121,7 +121,7 @@ component UserDAO
 		queryHandler.addParam(name = "lastName", value = arguments.user.getLastName(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "airportCode", value = arguments.user.getAirportCode(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "permissions", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_number");
-		queryHandler.addParam(name = "emailAddr", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "emailAddr", value = arguments.user.getEmailAddr(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = user.isEnabled(), cfsqltype = "cf_sql_number");
 
 		return queryHandler;

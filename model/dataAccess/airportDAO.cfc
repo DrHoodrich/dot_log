@@ -63,7 +63,7 @@ component AirportDAO
 	{
 		var queryHandler = getQueryHandler("updateAirport", arguments.airport);
 		sqlString = "UPDATE DL_AIRPORTS SET "
-					& "parent_faa_code = parent_faa_code, airport_name = :airport_name, enabled = :enabled "
+					& "parent_faa_code = :parent_faa_code, airport_name = :airport_name, enabled = :enabled "
 					& "WHERE faa_code = :faa_code";
 		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);

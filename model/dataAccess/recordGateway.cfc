@@ -96,11 +96,16 @@ component RecordGateway
 				queryService.addParam(name = "date", value = arguments.searchFilter.date, cfsqltype = "cf_sql_timestamp");	
 				sqlStringRecords &= " AND record_time >= :date";
 			}
+			if ( structKeyExists(searchFilter, "included") ) {
+				queryService.addParam(name = "included", value = arguments.searchFilter.included, cfsqltype = "cf_sql_number");	
+				sqlStringRecords &= " AND in_weekly_report = :included";
+			}
+
 			if ( structKeyExists(searchFilter,"startDate") && structKeyExists(searchFilter,"endDate") ) {
 				queryService.addParam(name = "startDate", value = arguments.searchFilter.startDate, cfsqltype = "cf_sql_timestamp");
-				queryService.addParam(name = "endDate", value = arguments.searchFilter.endDate, cfsqltype = "cf_sql_timestamp");
-				sqlStringRecords &= " AND record_time >= :startDate";
-				sqlStringRecords &= " AND record_time <= :endDate";
+				queryService.addParam(name = "endDate", value = dateAdd("d", 1, arguments.searchFilter.endDate), cfsqltype = "cf_sql_timestamp");
+				sqlStringRecords &= " AND event_time >= :startDate";
+				sqlStringRecords &= " AND event_time <= :endDate";
 			}
 		}
 
