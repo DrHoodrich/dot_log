@@ -1,16 +1,26 @@
 component extends = "taffy.core.resource" taffy_uri="/api/events"
 {
-	DSName = "DOTlogDB";
-	DSuser = " ";
-	DSpasswd = " ";
-	datasource = new dotlog.components.datasource(DSName, DSuser, DSpasswd);
-	categoryDAO = new dotlog.components.categoryDAO(datasource);
 
 	function put(required array EVENTS)
 	{	
-		if (!arrayIsEmpty(events)) {
-			FileWrite("c:/test.txt", events[1].FAA_CODE & " " & events[1].category_title & " " & events[1].in_weekly_report & " " & events[1].event_time & " " & events[1].event_text);
-		}
-		return representationOf(getMetadata(events)).withStatus(200);
+		if ( !arrayIsEmpty(events) ) {
+			for (ii = 1; ii <= arrayLen(events); ++ii) {
+				reported = 0;
+				if (events[ii].in_weekly_report) {
+					reported = 1;
+				}
+				record = new dotlog.model.beans.record(recordText = events[ii].event_text,
+				                                    username = session.user.getUsername(),
+				                                    airportCode = events[ii].FAA_CODE,
+				                                    eventTime =  CREATEODBCDATETIME( events[ii].event_time ),
+				                                    recordTime = CREATEODBCDATETIME( now() ),
+				                                    inWeeklyReport = reported,
+				                                    categoryTitle = events[ii].category_title);
+
+				application.recordService.saveRecord(record);
+			}
+		} 
+
+		return representationOf('').withStatus(200);
 	}
 }

@@ -11,4 +11,5 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfoutput><h2>Welcome to the Index page, nothing to see here...</h2></cfoutput>
 
+
 <cfinclude template="/dotlog/includes/footer.cfm">

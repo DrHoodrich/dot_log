@@ -1,30 +1,43 @@
 component extends = "taffy.core.resource" taffy_uri="/api/airports"
 {
-	DSName = "DOTlogDB";
-	DSuser = " ";
-	DSpasswd = " ";
-	datasource = new dotlog.components.datasource(DSName, DSuser, DSpasswd);
 
-	airportDAO = new dotlog.components.airportDAO(datasource);
-
-	 user = application.userService.getUserByUsername("us");
-
+	//TODO unstub and pull live from database.
 	function get()
 	{	
-		airportStr = structNew();
-		airportStr.faa_code = "FAI";
-
-		airportStr2 = structNew();
-		airportStr2.faa_code = "Northern";
-
-
-		testArray = [];
-		arrayAppend(testArray, airportStr);
-		arrayAppend(testArray, airportStr2);
+		containingStruct = {};
+		REGIONS = [];
+		REGION_STRUCT = {};
+		REGION_STRUCT.REGION_NAME = "Northern";
 		
-		containingStr = structNew();
-		containingStr.airports = testArray;
+		districts = [];
+		districtStruct = structNew();
+		districtStruct.district_name = "Western";
+		districtStruct.hubs = [];
 
-		return representationOf(containingStr).withStatus(200);
+
+		hubData = structNew();
+		hubData.hub_name = "OTZ";
+		hubData.Airports = [];
+
+		airportStruct1 = structNew();
+		airportStruct1.FAA_CODE = "OTZ";
+		airportStruct2 = structNew();
+		airportStruct2.FAA_CODE = "AFM";
+		arrayAppend(hubData.airports, airportStruct1);
+		arrayAppend(hubData.airports, airportStruct1);
+
+
+		arrayAppend(districtStruct.hubs, hubData);
+		arrayAppend( districts, districtStruct);
+		
+		REGION_STRUCT.districts = districts;
+		arrayAppend(REGIONS, REGION_STRUCT);
+		
+
+		containingStruct = structNew();
+		containingStruct.REGIONS = REGION_STRUCT;
+		
+
+		return representationOf(containingStruct).withStatus(200);
 	}
 }

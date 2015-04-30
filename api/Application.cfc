@@ -7,15 +7,16 @@ component extends = "taffy.core.api"
 	this.mappings[ "/dotlog" ] = expandPath("../");
 	this.mappings[ "/resources" ] = expandPath('./resources');
 	this.mappings[ "/taffy" ] = expandPath("./taffy");
+	this.domain = "DOTLOGDATABASEW\";
 
 	function onApplicationStart()
 	{
-		var datasource = new dotlog.components.datasource(DSName = "DOTlogDB", username = "", password = "");
-		Application.airportDAO = new dotlog.components.airportDAO(datasource);
-		Application.categoryDAO = new dotlog.components.categoryDAO(datasource);
+		var datasource = new dotlog.model.beans.datasource(DSName = "DOTlogDB", username = "", password = "");
+		Application.airportService = new dotlog.model.dataAccess.airportService(datasource);
+		Application.categoryService = new dotlog.model.dataAccess.categoryService(datasource);
 
-		Application.recordService = new dotlog.components.recordService(datasource);
-		Application.userService = new dotlog.components.userService(datasource);
+		Application.recordService = new dotlog.model.dataAccess.recordService(datasource);
+		Application.userService = new dotlog.model.dataAccess.userService(datasource);
 
 		return super.onApplicationStart();
 	}
@@ -25,5 +26,13 @@ component extends = "taffy.core.api"
 		return super.onRequestStart();
 	}
 
-	
+	function onSessionStart()
+	{
+		try {
+			session.user = application.userService.getUserByUsername(removeChars(getAuthUser(), 1, len(this.domain)));
+		} catch(any expt) {
+			writeDump('UH OH');
+		}
+
+	}
 }
