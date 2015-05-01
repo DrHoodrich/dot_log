@@ -19,7 +19,7 @@
 
   FORM.username = record.getUsername();
   FORM.recordTime = record.getRecordTime();
-  FORM.airportCode = record.getAirportCode();
+  FORM.eventTime = FORM.eventDate & " " & FORM.eventTime;
   
   updatedRecord = new dotlog.model.beans.record(argumentCollection=FORM);
   

@@ -34,8 +34,13 @@ component RecordService
 		return variables.instance.recordGW.search(searchParam);
 	}
 
-	public record function getRecordByID(required numeric recordID)
+	public dotlog.model.beans.record function getRecordByID(required numeric recordID)
 	{
 		return variables.instance.recordDAO.getRecordByID(arguments.recordID);
+	}
+
+	public array function search(required struct searchParam)
+	{
+		return variables.instance.recordGW.search(searchParam);
 	}
 }

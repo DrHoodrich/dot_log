@@ -1,4 +1,4 @@
-<cfset pageTitle = "Edit Category"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "User Added"> <!--- Variable that is used in the html included header --->
 <cfinclude template="/dotlog/includes/header.cfm">
 <cfinclude template="/dotlog/includes/banner.cfm">
   <a id="main_content"></a>
@@ -8,17 +8,25 @@
     
 <!-- BEGIN YOUR CONTENT HERE -->
   <!-- TemplateBeginEditable name="main content" -->
-<cfoutput><h2>#pageTitle#</h2></cfoutput>
-
 <cfscript>
-  if ( structKeyExists(FORM,"saveUser_button") ) {
-    user =  new dotlog.model.beans.user(argumentCollection=FORM);
-    if ( application.userService.saveUser(user) ) {
-      writeOutput("<h3>Saved User: " & user.getUsername()& "</h3>");
-    } else {
-      writeOutput("<h3>Failed to save user</h3>");
-    }
-  }
+	if ( structKeyExists(FORM, 'createUser_button') ) {
+		FORM.enabled = 1;
+		newUser = new dotlog.model.beans.user(argumentCollection=FORM);
+		if ( application.userService.saveUser(newUser) ) {
+			writeOutput('<h2>New user "' & newUser.getUsername() & '" Added</h2>');
+		} else {
+			writeOutput('Error creating user ' & newUser.getUsername());
+		}
+	}
+
+	if ( structKeyExists(FORM,"updateUser_button") ) {
+		user =  new dotlog.model.beans.user(argumentCollection=FORM);
+		if ( application.userService.saveUser(user) ) {
+			writeOutput("<h2>Updated User: " & user.getUsername()& "</h2>");
+		} else {
+			writeOutput("<h2>Failed to update user</h2>");
+		}
+	}
 </cfscript>
 
   <!-- TemplateEndEditable -->

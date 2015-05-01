@@ -5,34 +5,17 @@
     <title>A PDF!</title>
 </head>
 <body>
-    <cfoutput><strong>DOTLog Northern Region #dateformat(now(), "yyyy-mm-dd")# Report  <hr></strong></cfoutput>
-    <cfscript>
-	    
-	 if ( structKeyExists(FORM, "submitReportEmail_button")) {
-	    user = application.userService.getUserByUsername("us");  // <= set by LDAP
-    	airports = application.airportService.getChildAirports(user.getAirportCode());
-    	categories = application.categoryService.getAllCategories();
-  
-		  writeOutput('<table width="783" height="180" border="1">');
-		    for (ii = 1; ii <= arrayLen(airports); ++ii) {
-		      records = application.recordService.getRecordsByAirportCode(airports[ii].getAirportCode());
-
-		      for (jj = 1; jj <= arrayLen(records); ++jj) {
-		        checked = '';
-		        if (records[jj].isInWeeklyReport()) {
-		          checked = 'checked="True"';
-		        } else {
-		          continue;
-		        }
-		        writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
-		        writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportCode()# <br> Category: #records[jj].getCategory()# <br>');
-		        writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
-		      }
-		    }
-		  writeOutput('</table>');
-	   } 
-
-    </cfscript>
+    
+    <cfoutput><strong>DOTLog #dateformat(now(), "yyyy-mm-dd")# Report<hr></strong></cfoutput>
+    
+    <cfinclude template="/dotlog/view/print_reports.cfm">
+    <cfscript>    
+		if ( structKeyExists(FORM, "submitReportEmail_button")) {
+			airports = application.airportService.getChildAirports(session.user.getAirportCode());
+			categories = application.categoryService.getAllCategories();
+			printAirportRecords(airports);
+		} 
+	</cfscript>
 </body>
 </html>
 </cfdocument>

@@ -1,27 +1,22 @@
 component extends = "taffy.core.resource" taffy_uri="/api/categories"
 {
-	DSName = "DOTlogDB";
-	DSuser = " ";
-	DSpasswd = " ";
-	datasource = new dotlog.components.datasource(DSName, DSuser, DSpasswd);
-	categoryDAO = new dotlog.components.categoryDAO(datasource);
-
 	function get()
 	{	
-		//enabledCategories = categoryDAO.getEnabledCategories();
 
-		categoryStructs = [];
+		airportChildren = [];		
+		categories = [];
 
-		
-		categoryStruct.category_title = "Fire";
-		arrayAppend(categoryStructs, categoryStruct);
+		enabledCategories = application.categoryService.getEnabledCategories();
 
-		categoryStruct1.category_title = "Lighting";
-		arrayAppend(categoryStructs, categoryStruct1);
-		
+		for ( i =1; i <= ArrayLen(enabledCategories); i ++)
+		{
+			categoryStruct = structNew();
+			categoryStruct.category_title = enabledCategories[i].getCategoryTitle();
+			arrayAppend(categories,categoryStruct);
+		}
 				
 		containingStructure = structNew();
-		containingStructure.categories = categoryStructs;
+		containingStructure.categories = categories;
 
 		return representationOf(containingStructure).withStatus(200);
 	}

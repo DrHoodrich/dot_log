@@ -22,8 +22,8 @@
             writeOutput('<option value=#allCategories[ii].getCategoryTitle()#>#allCategories[ii].getCategoryTitle()#</option>');
           }
     </cfscript>
-  </cfselect>
-  <cfinput type="submit" name="selectCategory_button" id="searchRecords" value="edit"></cfinput>
+  </cfselect><br>
+  <cfinput type="submit" name="selectCategory_button" id="searchRecords" value="Edit"></cfinput>
 </cfform>
   <!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->

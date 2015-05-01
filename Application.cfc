@@ -7,6 +7,7 @@ component
 	this.mappings = structNew();
 	this.mappings[ "/dotlog" ] = this.rootDir;
 	this.mappings[ "/includes" ] = (this.rootDir & "includes\");
+	this.domain = "DOTLOGDATABASEW\";
 
 	function onApplicationStart()
 	{
@@ -16,6 +17,7 @@ component
 		Application.recordService = new dotlog.model.dataAccess.recordService(datasource);
 		Application.userService = new dotlog.model.dataAccess.userService(datasource);
 		Application.airportService = new dotlog.model.dataAccess.airportService(datasource);
+		Application.reportService = new dotlog.model.dataAccess.reportService(datasource);
 	}
 
 	function onRequestStart()
@@ -26,9 +28,8 @@ component
 	function onSessionStart()
 	{
 		try {
-			session.user = application.userService.getUserByUsername(getAuthUser()); // <-- isn't working :(
+			session.user = application.userService.getUserByUsername(removeChars(getAuthUser(), 1, len(this.domain)));
 		} catch (any expt) {
-			//writeDump(session.user);
 			writeDump(expt);
 			onApplicationStart();
 		}
