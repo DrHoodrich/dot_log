@@ -27,7 +27,7 @@
 										  recordTime =  CREATEODBCDATETIME( now() ),
 										  inWeeklyReport = reporting,
 										  categoryTitle = FORM.categoryTitle);
-	application.recordService.saveRecord(record);	
+	application.recordService.save(record);	
 
 	airports = application.airportService.getChildAirports(session.user.getAirportCode());
 	categories = application.categoryService.getAllCategories();

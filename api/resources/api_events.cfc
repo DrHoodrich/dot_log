@@ -16,7 +16,7 @@ component extends = "taffy.core.resource" taffy_uri="/api/events"
 				                                    inWeeklyReport = reported,
 				                                     categoryTitle = events[ii].category_title);
 
-				application.recordService.saveRecord(record);
+				application.recordService.save(record);
 			}
 		} 
 
