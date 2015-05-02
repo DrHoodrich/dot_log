@@ -31,6 +31,7 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 
 	public void function userDAOCreateUesr()
 	{
+		fail("Need to implement.");
 		userDAO = new dotlog.model.dataAccess.userDAO(datasource);
 		transaction action="begin"
 		{
@@ -49,7 +50,8 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 
 	public void function tryCreateExistingUser()
 	{
-		username = "us";
+		fail("Need to implement.");
+		username = "Administrator";
 	    firstName = "Bob";
 	    lastName = "Dylan";
 	    airportCode = "AUK";
@@ -63,7 +65,8 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 	                                              permissions,
 	                                              enabled,
 	                                              emailAddr);
-	    userDAO = new dotlog.model.dataAccess.userDAO(datasource);
-	    assertFalse(userDAO.saveUser(testUser));
+
+	    userDAO = new dotlog.model.dataAccess.userDAOTestAdapter(datasource);
+	    userDAO.createNewUser(testUser);
 	}
 }
