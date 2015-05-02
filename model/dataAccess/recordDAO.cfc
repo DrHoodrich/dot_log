@@ -10,7 +10,7 @@ component RecordDAO
 		return this;
 	} 
 
-	public boolean function saveRecord(required dotlog.model.beans.record record)
+	public boolean function save(required dotlog.model.beans.record record)
 	{
 		if ( record.getRecordID() ) {
 			if ( recordExists(record) ) {
@@ -22,31 +22,10 @@ component RecordDAO
 		} 
 	}
 
-	public dotlog.model.beans.record function getRecordByID(required numeric recordID)
+	//Could just call the recordGW search function...
+	public dotlog.model.beans.record function search(required struct searchFilter)
 	{
-		var queryHandler = new query();
-
-		sqlString = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title "
-				& "FROM DL_RECORDS "
-				& "WHERE record_id = :record_id";
-
-		queryHandler.setName("fetchRecordByID");
-		queryHandler.setDataSource(variables.instance.datasource.getDSName());
-		queryHandler.setUsername(variables.instance.datasource.getUsername());
-		queryHandler.setPassword(variables.instance.datasource.getPassword());
-		queryHandler.addParam(name = "record_id", value = arguments.recordID, cfsqltype = "cf_sql_number");
-
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
-		result = queryResult.getResult();
-		fetchedRecord = new dotlog.model.beans.record(recordText = result["record_text"][1],
-													username = result["username"][1],
-													airportCode = result["faa_code"][1],
-													eventTime = result["event_time"][1],
-													recordTime = result["record_time"][1],
-													inWeeklyReport = result["in_weekly_report"][1],
-													categoryTitle = result["category_title"][1],
-													recordID = result["record_id"][1]);
-		return fetchedRecord;
+		var userObjects = [];
 
 		DSname = variables.datasource.getDSName();
 		DSusername = variables.datasource.getUsername();
@@ -54,24 +33,47 @@ component RecordDAO
 
 		var queryService = new query();
 
-		// Need to make sure that this is uniquely IDing
-		sqlString = "SELECT record_id "
-				& "FROM DL_RECORDS "
-				& "WHERE username = :username "
-				& "AND record_text = :record_text "
-				& "AND record_time = :record_time";
+		queryService.setName("fetchRecord");
+		queryService.setDataSource(variables.datasource.getDSName());
+		queryService.setUsername(DSusername);
+		queryService.setPassword(DSpassword);
 
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
-		
-		result = queryResult.getResult();
+		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title FROM DL_RECORDS WHERE 1 = 1 ";
 
-		if (result.recordCount) {
-			return result["record_id"][1];
-		} else {
-			return -1;
+		if ( !structIsEmpty(searchFilter) ) {
+			if ( structKeyExists(searchFilter, "id") ) {
+				queryService.addParam(name = "id", value = arguments.searchFilter.id, cfsqltype = "cf_sql_number");	
+				sqlStringRecords &= " AND record_id = :id";
+			}
 		}
+
+		var queryResult = queryService.execute(sql=sqlStringRecords);
+		var result = queryResult.getResult();
+
+		var recordObject = '';
+		if (result.RecordCount) {
+			 recordObject = new dotlog.model.beans.record(recordText = result["record_text"][1],
+							username = result["username"][1],
+							airportCode = result["faa_code"][1],
+							eventTime = result["event_time"][1],
+							recordTime = result["record_time"][1],
+							inWeeklyReport = result["in_weekly_report"][1],
+							categoryTitle = result["category_title"][1],
+							recordID = result["record_id"][1]);
+		}
+		return recordObject;
 	}
 
+	private boolean function recordExists(required dotlog.model.beans.record record)
+	{		
+		var queryHandler = getQueryHandler("doesRecordExist", arguments.record);
+		sqlString = "SELECT record_id "
+					& "FROM DL_RECORDS "
+					& "WHERE record_id = :record_id";
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);		
+		return queryResult.getResult().recordCount;
+	}
+	
 	private boolean function createRecord(required dotlog.model.beans.record record)
 	{
 		var queryHandler = getQueryHandler("createRecord", arguments.record);
@@ -91,16 +93,6 @@ component RecordDAO
 					& "WHERE record_id = :record_id";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
-	}	
-
-	private boolean function recordExists(required dotlog.model.beans.record record)
-	{		
-		var queryHandler = getQueryHandler("doesRecordExist", arguments.record);
-		sqlString = "SELECT record_id "
-					& "FROM DL_RECORDS "
-					& "WHERE record_id = :record_id";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);		
-		return queryResult.getResult().recordCount;
 	}
 
 	private base function getQueryHandler(required string queryName, required dotlog.model.beans.record record)
