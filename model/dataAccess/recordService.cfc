@@ -12,31 +12,27 @@ component RecordService
 		return this;
 	}
 
-	public boolean function saveRecord(required dotlog.model.beans.record record)
+	public boolean function save(required dotlog.model.beans.record record)
 	{
-		return variables.instance.recordDAO.saveRecord(arguments.record);
-	}
-
-	public array function getRecordsByUsername(required string username)
-	{
-		return variables.instance.recordGW.getRecordsByUsername(arguments.username);
+		return variables.instance.recordDAO.save(arguments.record);
 	}
 
 	public array function getRecordsByAirportCode(required string airportCode)
 	{
-		return variables.instance.recordGW.getRecordsByAirportCode(arguments.airportCode);
+        var searchStruct = { airportCode = arguments.airportCode };
+		return variables.instance.recordGW.search(searchStruct);
 	}
 
 	public array function getRecordsAfterDate(required string date)
 	{
-		searchParam = {};
-		searchParam.date = arguments.date;
+		searchParam = { date = arguments.date };
 		return variables.instance.recordGW.search(searchParam);
 	}
 
 	public dotlog.model.beans.record function getRecordByID(required numeric recordID)
 	{
-		return variables.instance.recordDAO.getRecordByID(arguments.recordID);
+		var searchStruct = { id = arguments.recordID };
+		return variables.instance.recordDAO.search(searchStruct);
 	}
 
 	public array function search(required struct searchParam)
