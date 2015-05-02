@@ -1,4 +1,4 @@
-component RecordDAO
+component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 {
 	variables.datasource = '';
 	variables.queryHandler = '';

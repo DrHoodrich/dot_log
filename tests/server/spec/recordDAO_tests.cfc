@@ -15,6 +15,7 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
 	public void function setUp()
 	{
         datasource = new dotlog.model.beans.datasource(DSName, DSuser, DSpasswd);
+        recordDAO = new dotlog.model.dataAccess.recordDAO(datasource);
 		testRecord = new dotlog.model.beans.record(recordText,
                                                 username,
                                                 airportCode,
@@ -26,14 +27,14 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
 
     public void function createNewRecord()
     {
-        testRecordDAO = new dotlog.model.dataAccess.recordDAOTestAdapter(datasource);
-        assertTrue(testRecordDAO.createNewRecord(testRecord), "Return true on seccessful insert.");
+        testRecordDAO = new dotlog.tests.server.DAOTestAdapter(recordDAO);
+        assertTrue(testRecordDAO.save(testRecord), "Return true on seccessful insert.");
     }
 
     public void function greaterThan4000CharEntry()
     {
         while (len(recordText) < 4000) {
-            recordText &= "aa";
+            recordText &= "aaaaaaaaaaaaaaaaaaa";
         }
 
         testRecord = new dotlog.model.beans.record(recordText,
@@ -43,10 +44,10 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
                                                 recordTime,
                                                 inWeeklyReport,
                                                 categoryTitle);
-        testRecordDAO = new dotlog.model.dataAccess.recordDAOTestAdapter(datasource);
+        testRecordDAO = new dotlog.tests.server.DAOTestAdapter(recordDAO);
 
         try {
-            testRecordDAO.createNewRecord(testRecord);
+            testRecordDAO.save(testRecord);
         } catch (database expt) {
             if (find('can bind a LONG value only for insert into a LONG column', expt.RootCause.message)) {
                 //Give message for summery is too long.
