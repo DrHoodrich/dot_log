@@ -21,13 +21,15 @@
     lastReport = reportDAO.getLastReport(session.user.getAirportCode());
     lastReportedDate = lastReport.getEndDate();
 
-    writeOutput("<strong>Last Submitted Report</strong>");
-    writeOutput('<table width="300" height="180" border="1">');
-        writeOutput('<tr> <td width="117" height="50" align="left" valign="top"> 
-          Reported dates #dateformat(reports[1].getBeginDate(), "yyyy-mm-dd")# - #dateformat(reports[1].getEndDate(), "yyyy-mm-dd")#<br>');
-        writeOutput(' Submitted by User: #reports[1].getUsername()# <br>Airport: #reports[1].getAirportCode()# <br>');
-        writeOutput('</td>');
-    writeOutput('</table>');
+    if (arrayLen(reports)) {
+      writeOutput("<strong>Last Submitted Report</strong>");
+      writeOutput('<table width="300" height="180" border="1">');
+          writeOutput('<tr> <td width="117" height="50" align="left" valign="top"> 
+            Reported dates #dateformat(reports[1].getBeginDate(), "yyyy-mm-dd")# - #dateformat(reports[1].getEndDate(), "yyyy-mm-dd")#<br>');
+          writeOutput(' Submitted by User: #reports[1].getUsername()# <br>Airport: #reports[1].getAirportCode()# <br>');
+          writeOutput('</td>');
+      writeOutput('</table>');
+    }
 
 
 </cfscript>
