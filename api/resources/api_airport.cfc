@@ -24,10 +24,22 @@ component extends = "taffy.core.resource" taffy_uri="/api/airports"
 		airportStruct2 = structNew();
 		airportStruct2.FAA_CODE = "AFM";
 		arrayAppend(hubData.airports, airportStruct1);
-		arrayAppend(hubData.airports, airportStruct1);
+		arrayAppend(hubData.airports, airportStruct2);
+
+		hubData2 = structNew();
+		hubData2.hub_name = "RND";
+		hubData2.Airports = [];
+
+		airportStruct3 = structNew();
+		airportStruct3.FAA_CODE = "RND";
+		airportStruct4 = structNew();
+		airportStruct4.FAA_CODE = "FAI";
+		arrayAppend(hubData2.airports, airportStruct3);
+		arrayAppend(hubData2.airports, airportStruct4);
 
 
 		arrayAppend(districtStruct.hubs, hubData);
+		arrayAppend(districtStruct.hubs, hubData2);
 		arrayAppend( districts, districtStruct);
 		
 		REGION_STRUCT.districts = districts;
