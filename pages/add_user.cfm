@@ -39,7 +39,7 @@
 	<tr>
 		<td>Assign to</td>
 		<td>
-				<cfselect name = "parentAirportCode">
+				<cfselect name = "airportCode">
 					<option value=""> --Select Region/Hub-- </option>
 					<cfscript>
 						writeOutput('<option style="font-weight:bold;" value="Statewide"><strong>AK Statewide</strong></option>');
