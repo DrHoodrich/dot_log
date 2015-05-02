@@ -1,14 +1,12 @@
-component RecordDAO 
+component RecordDAO
 {
-	variables.instance = {
-		datasource = '',
-		queryHandler = ''
-	};
+	variables.datasource = '';
+	variables.queryHandler = '';
 
 	public RecordDAO function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.model.queryHandler();
+		variables.datasource = arguments.datasource;
+		variables.queryHandler = new dotlog.model.queryHandler();
 		return this;
 	} 
 
@@ -50,11 +48,11 @@ component RecordDAO
 													recordID = result["record_id"][1]);
 		return fetchedRecord;
 
-	}
+		DSname = variables.datasource.getDSName();
+		DSusername = variables.datasource.getUsername();
+		DSpassword = variables.datasource.getPassword();
 
-	public numeric function getRecordID(required dotlog.model.beans.record record)
-	{
-		var queryHandler = getQueryHandler("updateRecord", arguments.record);
+		var queryService = new query();
 
 		// Need to make sure that this is uniquely IDing
 		sqlString = "SELECT record_id "
@@ -81,7 +79,7 @@ component RecordDAO
 		sqlString = "INSERT INTO DL_RECORDS "
 					& "(record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title) "
 					& "VALUES (:record_text, :username, :faa_code, :event_time, :record_time, :in_weekly_report, :category_title)";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
@@ -91,7 +89,7 @@ component RecordDAO
 		sqlString = "UPDATE DL_RECORDS SET "
 					& "record_text = :record_text, faa_code = :faa_code, event_time = :event_time, in_weekly_report = :in_weekly_report, category_title = :category_title "
 					& "WHERE record_id = :record_id";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}	
 
@@ -110,9 +108,9 @@ component RecordDAO
 		var queryService = new query();
 
 		queryService.setName(arguments.queryName);
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(variables.instance.datasource.getUsername());
-		queryService.setPassword(variables.instance.datasource.getPassword());
+		queryService.setDataSource(variables.datasource.getDSName());
+		queryService.setUsername(variables.datasource.getUsername());
+		queryService.setPassword(variables.datasource.getPassword());
 
 		if ( record.getRecordID() ) {
 			queryService.addParam(name = "record_id", value = arguments.record.getRecordID(), cfsqltype = "cf_sql_number");
