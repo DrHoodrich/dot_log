@@ -15,9 +15,7 @@ component UserService
 
 	public array function getUsersByAirportCode(required string airportCode)
 	{
-		var searchParam = {
-			airportCode = arguments.airportCode
-		};
+		var searchParam = { airportCode = arguments.airportCode };
 		return variables.instance.userGW.filterUsers(searchParam);
 	} 
 
@@ -28,7 +26,8 @@ component UserService
 
 	public dotlog.model.beans.user function getUserByUsername(required string username)
 	{
-		return variables.instance.userDAO.getUserByUsername(arguments.username);
+		var searchParam = { username = arguments.username };
+		return variables.instance.userDAO.search(searchParam);
 	}
 
 	public query function getAllUsers()

@@ -1,30 +1,33 @@
 component UserDAO extends = "dotlog.model.dataAccess.DAO"
 {
-	variables.instance = {
-		datasource = '',
-		queryHandler = ''
-	};
+	variables.queryHandler = '';
 
 	public dotlog.model.dataAccess.userDAO function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.model.queryHandler(datasource);
+		variables.queryHandler = new dotlog.model.queryHandler(datasource);
 		return this;
 	}
 
-	public dotlog.model.beans.user function getUserByUsername(required string username)
+	public dotlog.model.beans.user function search(required struct searchFilter)
 	{
 		var queryHandler = new query();
 
 		queryHandler.setName("fetchUserByUsername");
-		queryHandler = setQueryHandlerDatasource(queryHandler);
-		queryHandler.addParam(name = "username", value = arguments.username, cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "username", value = searchFilter.username, cfsqltype = "cf_sql_varchar");
 
 		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, email_addr "
 					& "FROM DL_USERS "
-					& "WHERE username = :username";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
-		result = queryResult.getResult();
+					& "WHERE 1 = 1 ";
+
+		if ( !structIsEmpty(searchFilter) ) {
+			if ( structKeyExists(searchFilter, "username") ) {
+				queryHandler.addParam(name = "username", value = arguments.searchFilter.username, cfsqltype = "cf_sql_varchar");
+				sqlString &= " AND username = :username";
+			}
+		}
+
+		var queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
+		var result = queryResult.getResult();
 		var objUser = '';
 		if (result.RecordCount) {
 			objUser = new dotlog.model.beans.user(username = result["username"][1],
@@ -54,19 +57,19 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		sqlString = "UPDATE DL_USERS SET "
 					& "USERNAME = :username, FIRST_NAME = :firstName, LAST_NAME = :lastName, FAA_CODE = :airportCode, USER_PERMISSIONS = :permissions,  ENABLED = :enabled "
 					& "WHERE USERNAME = :username";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 
 		return len(queryResult.getPrefix().recordCount);
 	}
 
 	private boolean function createUser(required dotlog.model.beans.user user)
 	{
-		queryHandler = getQueryHandler("createUser", user);
+		var queryHandler = getQueryHandler("createUser", arguments.user);
 
 		sqlString = "INSERT INTO DL_USERS "
 					& "(USERNAME, FIRST_NAME, LAST_NAME, FAA_CODE, USER_PERMISSIONS, EMAIL_ADDR, ENABLED) "
 					& "VALUES (:username, :firstName, :lastName, :airportCode, :permissions, :emailAddr, :enabled)";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
@@ -77,7 +80,7 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		sqlString = "SELECT username "
 					& "FROM DL_USERS "
 					& "WHERE username = :username"; 
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return queryResult.getResult().recordCount;
 	}
 
@@ -86,7 +89,6 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		var queryHandler = new query();
 
 		queryHandler.setName(arguments.queryName);
-		queryHandler = setQueryHandlerDatasource(queryHandler);
 
 		queryHandler.addParam(name = "username", value = arguments.user.getUsername(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "firstName", value = arguments.user.getFirstName(), cfsqltype = "cf_sql_varchar");
@@ -97,14 +99,5 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		queryHandler.addParam(name = "enabled", value = user.isEnabled(), cfsqltype = "cf_sql_number");
 
 		return queryHandler;
-	}
-
-	private base function setQueryHandlerDatasource(required base queryHandler)
-	{
-		var returnedQueryHandler = arguments.queryHandler;
-		returnedQueryHandler.setDataSource(variables.instance.datasource.getDSName());
-		returnedQueryHandler.setUsername(variables.instance.datasource.getUsername());
-		returnedQueryHandler.setPassword(variables.instance.datasource.getPassword());
-		return returnedQueryHandler;
 	}
 }
