@@ -23,7 +23,7 @@ component UserService
 
 	public boolean function saveUser(required dotlog.model.beans.user user)
 	{
-		return variables.instance.userDAO.saveUser(arguments.user);
+		return variables.instance.userDAO.save(arguments.user);
 	} 
 
 	public dotlog.model.beans.user function getUserByUsername(required string username)
