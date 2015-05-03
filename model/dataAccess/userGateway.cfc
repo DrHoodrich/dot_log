@@ -7,8 +7,7 @@ component UserGateway
 
 	public UserGateway function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.model.queryHandler();
+		variables.instance.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
@@ -33,7 +32,7 @@ component UserGateway
 	{
 		var queryService = new query();
 		queryService.setName("fetchUsers");
-		queryService = setQueryHandlerDatasource(queryService);
+		
 
 		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, email_addr "
 					& "FROM DL_USERS "
@@ -64,14 +63,5 @@ component UserGateway
 			 arrayAppend(userObjects, objUser);
 		}
 		return userObjects;
-	}
-
-	private base function setQueryHandlerDatasource(required base queryHandler)
-	{
-		var returnedQueryHandler = arguments.queryHandler;
-		returnedQueryHandler.setDataSource(variables.instance.datasource.getDSName());
-		returnedQueryHandler.setUsername(variables.instance.datasource.getUsername());
-		returnedQueryHandler.setPassword(variables.instance.datasource.getPassword());
-		return returnedQueryHandler;
 	}
 }
