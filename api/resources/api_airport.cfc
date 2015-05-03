@@ -6,7 +6,7 @@ component extends = "taffy.core.resource" taffy_uri="/api/airports"
 	{	
 		containingStruct = {};
 		REGIONS = [];
-		REGION_STRUCT = {};
+		REGION_STRUCT = structNew();
 		REGION_STRUCT.REGION_NAME = "Northern";
 		
 		districts = [];
@@ -47,7 +47,7 @@ component extends = "taffy.core.resource" taffy_uri="/api/airports"
 		
 
 		containingStruct = structNew();
-		containingStruct.REGIONS = REGION_STRUCT;
+		containingStruct.REGIONS = REGIONS;
 		
 
 		return representationOf(containingStruct).withStatus(200);
