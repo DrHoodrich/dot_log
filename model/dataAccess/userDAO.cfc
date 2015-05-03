@@ -12,34 +12,6 @@ component UserDAO
 		return this;
 	}
 
-	public array function getUsersByAirportCode(required string airportCode)
-	{
-		var queryHandler = new query();
-		queryHandler = setQueryHandlerDatasource(queryHandler);
-		queryHandler.setName("fetchUsers");	
-		queryHandler.addParam(name = "faa_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
-
-		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, email_addr "
-					& "FROM DL_USERS "
-					& "WHERE faa_code = :faa_code";
-
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
-		result = queryResult.getResult();
-
-		var userObjects = [];
-		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 objUser = new dotlog.model.beans.user(username = result["username"][ii],
-														firstName= result["FIRST_NAME"][ii],
-														lastName = result["LAST_NAME"][ii],
-														airportCode = result["FAA_CODE"][ii],
-														permissions = result["USER_PERMISSIONS"][ii],
-														enabled = result["ENABLED"][ii],
-														emailAddr = result["EMAIL_ADDR"][ii]);
-			 arrayAppend(userObjects, objUser);
-		}
-		return userObjects;
-	} 
-
 	public dotlog.model.beans.user function getUserByUsername(required string username)
 	{
 		var queryHandler = new query();
