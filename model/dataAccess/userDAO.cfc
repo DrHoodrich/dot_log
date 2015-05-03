@@ -1,4 +1,4 @@
-component UserDAO
+component UserDAO extends = "dotlog.model.dataAccess.DAO"
 {
 	variables.instance = {
 		datasource = '',
@@ -8,7 +8,7 @@ component UserDAO
 	public dotlog.model.dataAccess.userDAO function init(required dotlog.model.beans.datasource datasource)
 	{
 		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.model.queryHandler();
+		variables.instance.queryHandler = new dotlog.model.queryHandler(datasource);
 		return this;
 	}
 
@@ -38,7 +38,7 @@ component UserDAO
 		return objUser;
 	}
 
-	public boolean function saveUser(required dotlog.model.beans.user user)
+	public boolean function save(required dotlog.model.beans.user user)
 	{
 		if ( userExists(user) ) {
 			return updateUser(arguments.user);
