@@ -8,16 +8,7 @@ component QueryHandler
 	public result function executeQuery(required base queryHandler, required string sqlString)
 	{
 		queryResult = '';
-		transaction action="begin" {
-			try {
-				queryResult = arguments.queryHandler.execute(sql = arguments.sqlString);
-			} catch (database exception) {
-				writeDump(exception);
-				transactionRollBack();
-				// TODO - how to handle this exception
-			}
-			transactionCommit();
-		}
+		queryResult = arguments.queryHandler.execute(sql = arguments.sqlString);
 		return queryResult;
 	}
 }
