@@ -1,14 +1,12 @@
 component AirportDAO
 {
-	variables.instance = {
-		datasource = '',
+	variables.instance = {	
 		queryHandler = ''
 	};
 
 	public airportDAO function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.model.queryHandler();
+		variables.instance.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
@@ -16,7 +14,7 @@ component AirportDAO
 	{
 		var queryHandler = new query();
 
-		queryHandler = setQueryHandlerDatasource(queryHandler);
+		//queryHandler = setQueryHandlerDatasource(queryHandler);
 		queryHandler.setName("fetchChildAirports");
 		queryHandler.addParam(name = "faa_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
 
@@ -73,7 +71,7 @@ component AirportDAO
 	{
 		var queryHandler = new query();
 
-		queryHandler = setQueryHandlerDatasource(queryHandler);
+		//queryHandler = setQueryHandlerDatasource(queryHandler);
 		queryHandler.setName(arguments.queryName);
 
 		queryHandler.addParam(name = "faa_code", value = arguments.airport.getAirportCode(), cfsqltype = "cf_sql_varchar");

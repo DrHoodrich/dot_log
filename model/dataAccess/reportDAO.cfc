@@ -7,18 +7,13 @@ component ReportDAO
 
 	public ReportDAO function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.model.queryHandler();
+		variables.instance.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
 	public dotlog.model.beans.report function getLastReport(required string airportCode)
 	{
 		var queryHandler = new query();
-
-		queryHandler.setDataSource(variables.instance.datasource.getDSName());
-		queryHandler.setUsername(variables.instance.datasource.getUsername());
-		queryHandler.setPassword(variables.instance.datasource.getPassword());
 
 		queryHandler.setName("fetchReportByAirportCode");
 
@@ -83,9 +78,6 @@ component ReportDAO
 		var queryHandler = new query();
 
 		queryHandler.setName(arguments.queryName);
-		queryHandler.setDataSource(variables.instance.datasource.getDSName());
-		queryHandler.setUsername(variables.instance.datasource.getUsername());
-		queryHandler.setPassword(variables.instance.datasource.getPassword());
 
 		//queryHandler.addParam(name = "report_id", value = arguments.report.isInWeeklyReport(), cfsqltype = "cf_sql_number");
 		queryHandler.addParam(name = "username", value = arguments.report.getUsername(), cfsqltype = "cf_sql_varchar");

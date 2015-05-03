@@ -1,14 +1,13 @@
 component CategoryDAO
 {
 	variables.instance = {
-		datasource = '',
 		queryHandler = ''
 	};
 
 	public CategoryDAO function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.datasource = arguments.datasource;
-		variables.instance.queryHandler = new dotlog.model.queryHandler();
+		
+		variables.instance.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
@@ -16,9 +15,6 @@ component CategoryDAO
 	{
 		var queryHandler = new query();
 
-		queryHandler.setDataSource(variables.instance.datasource.getDSName());
-		queryHandler.setUsername(variables.instance.datasource.getUsername());
-		queryHandler.setPassword(variables.instance.datasource.getPassword());
 		queryHandler.setName("fetchCategoryByTitle");
 		queryHandler.addParam(name = "category_title", value = arguments.categoryTitle, cfsqltype = "cf_sql_varchar");
 				
@@ -80,9 +76,6 @@ component CategoryDAO
 		var queryHandler = new query();
 
 		queryHandler.setName(arguments.queryName);
-		queryHandler.setDataSource(variables.instance.datasource.getDSName());
-		queryHandler.setUsername(variables.instance.datasource.getUsername());
-		queryHandler.setPassword(variables.instance.datasource.getPassword());
 
 		if ( category.getCategoryID() ) {
 			queryHandler.addParam(name = "category_ID", value = arguments.category.getCategoryID(), cfsqltype = "cf_sql_number");	

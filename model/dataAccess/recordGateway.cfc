@@ -1,29 +1,19 @@
 component RecordGateway
 {
-	variables.datasource = '';
 	variables.queryHandler = '';
 
 	public RecordGateway function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.datasource = arguments.datasource;
-		variables.queryHandler = new dotlog.model.queryHandler();
+		variables.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
 	public array function search(required struct searchFilter)
 	{
 		var userObjects = [];
-
-		DSname = variables.datasource.getDSName();
-		DSusername = variables.datasource.getUsername();
-		DSpassword = variables.datasource.getPassword();
-
 		var queryService = new query();
 
 		queryService.setName("fetchRecords");
-		queryService.setDataSource(variables.datasource.getDSName());
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
 
 		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title FROM DL_RECORDS WHERE 1 = 1 ";
 		sqlStringUsers = "SELECT username FROM DL_USERS WHERE 1 = 1 ";
@@ -70,10 +60,10 @@ component RecordGateway
 			}
 		}
 
-		queryResult = queryService.execute(sql=sqlStringRecords);
-		result = queryResult.getResult();
+		var queryResult = variables.queryHandler.executeQuery(queryService, sqlStringRecords);
+		var result = queryResult.getResult();
 
-		recordObjects = [];
+		var recordObjects = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
 			 recordObject = new dotlog.model.beans.record(recordText = result["record_text"][ii],
 							username = result["username"][ii],

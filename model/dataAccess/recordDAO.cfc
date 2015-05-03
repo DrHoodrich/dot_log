@@ -1,12 +1,10 @@
 component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 {
-	variables.datasource = '';
 	variables.queryHandler = '';
 
 	public RecordDAO function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.datasource = arguments.datasource;
-		variables.queryHandler = new dotlog.model.queryHandler();
+		variables.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	} 
 
@@ -26,17 +24,9 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 	public dotlog.model.beans.record function search(required struct searchFilter)
 	{
 		var userObjects = [];
-
-		DSname = variables.datasource.getDSName();
-		DSusername = variables.datasource.getUsername();
-		DSpassword = variables.datasource.getPassword();
-
 		var queryService = new query();
 
 		queryService.setName("fetchRecord");
-		queryService.setDataSource(variables.datasource.getDSName());
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
 
 		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title FROM DL_RECORDS WHERE 1 = 1 ";
 
@@ -47,7 +37,7 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 			}
 		}
 
-		var queryResult = queryService.execute(sql=sqlStringRecords);
+		var queryResult = variables.queryHandler.executeQuery(queryService, sqlStringRecords);
 		var result = queryResult.getResult();
 
 		var recordObject = '';
@@ -100,9 +90,6 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 		var queryService = new query();
 
 		queryService.setName(arguments.queryName);
-		queryService.setDataSource(variables.datasource.getDSName());
-		queryService.setUsername(variables.datasource.getUsername());
-		queryService.setPassword(variables.datasource.getPassword());
 
 		if ( record.getRecordID() ) {
 			queryService.addParam(name = "record_id", value = arguments.record.getRecordID(), cfsqltype = "cf_sql_number");
