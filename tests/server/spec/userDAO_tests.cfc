@@ -7,13 +7,15 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 	username = "tester";
     firstName = "Bob";
     lastName = "Dylan";
-    airportCode = "AUK";
+    airportCode = "AFM";
     permissions = "1";
     enabled = "1";
     emailAddr = "test";
 	public void function setUp()
 	{
 		datasource = new dotlog.model.beans.datasource(DSName, DSuser, DSpasswd);
+		userDAO = new dotlog.model.dataAccess.userDAO(datasource);
+		testUserDAO = new dotlog.tests.server.DAOTestAdapter(userDAO);
 		testUser = new dotlog.model.beans.user(username,
                                               firstName,
                                               lastName,
@@ -24,37 +26,21 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 	}
 
 	public void function userDAOConstruction()
-	{
-		userDAO = new dotlog.model.dataAccess.userDAO(datasource);
+	{		
 		assertSame(userDAO, userDAO.init(datasource));
 	}
 
-	public void function userDAOCreateUesr()
+	public void function userDAOCreateUser()
 	{
-		fail("Need to implement.");
-		userDAO = new dotlog.model.dataAccess.userDAO(datasource);
-		transaction action="begin"
-		{
-			userDAO.getUserByUsername("us");
-	        
-	        transactionSetSavepoint( "SP1" );
-			userDAO.init(datasource);
-			if (false) {
-	            transactionRollback();
-	        }			
-			userDAO.createUser(testUser);			
-	        
-	        transactionRollback();
-	    }
+		assertTrue(testUserDAO.save(testUser));
 	}
 
-	public void function tryCreateExistingUser()
+	public void function updateUser()
 	{
-		fail("Need to implement.");
 		username = "Administrator";
 	    firstName = "Bob";
 	    lastName = "Dylan";
-	    airportCode = "AUK";
+	    airportCode = "AFM";
 	    permissions = "1";
 	    enabled = "1";
 	    emailAddr = "test";
@@ -66,7 +52,6 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 	                                              enabled,
 	                                              emailAddr);
 
-	    userDAO = new dotlog.model.dataAccess.userDAOTestAdapter(datasource);
-	    userDAO.createNewUser(testUser);
+	    assertTrue(testUserDAO.save(testUser));
 	}
 }
