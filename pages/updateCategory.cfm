@@ -15,7 +15,7 @@ category = application.categoryService.getCategoryByTitle(FORM.categoryTitle);
 </cfscript>
 
 <cfform name="updateCategory" action="saveCategory.cfm" method="post">
-	<cfinput type="hidden" name="recordID" value="#category.getCategoryID()#"/>
+	<cfinput type="hidden" name="categoryID" value="#category.getCategoryID()#"/>
 	<table>
 		<tr>
 			<td>Category Title</td>
