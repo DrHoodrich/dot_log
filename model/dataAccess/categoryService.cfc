@@ -1,34 +1,33 @@
-component CategoryService
+component CategoryService extends = "dotlog.model.dataAccess.DAO"
 {
-	variables.instance = {
-		categoryDAO = '',
-		categoryGW = ''
-	};
+	variables.categoryDAO = '';
+	variables.categoryGW = '';
 	
 	public CategoryService function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.categoryDAO = new dotlog.model.dataAccess.categoryDAO(arguments.datasource);
-		variables.instance.categoryGW = new dotlog.model.dataAccess.categoryGateway(arguments.datasource);
+		variables.categoryDAO = new dotlog.model.dataAccess.categoryDAO(arguments.datasource);
+		variables.categoryGW = new dotlog.model.dataAccess.categoryGateway(arguments.datasource);
 		return this;
 	}
 
 	public array function getEnabledCategories()
 	{
-		return variables.instance.categoryGW.getEnabledCategories();
+		return variables.categoryGW.getEnabledCategories();
 	}
 
 	public array function getAllCategories()
 	{
-		return variables.instance.categoryGW.getAllCategories();
+		return variables.categoryGW.getAllCategories();
 	}
 
 	public dotlog.model.beans.category function getCategoryByTitle(required string categoryTitle)
 	{
-		return variables.instance.categoryDAO.getCategoryByTitle(arguments.categoryTitle);
+		var searchParam = { category_title = arguments.categoryTitle };
+		return variables.categoryDAO.search(searchParam);
 	}
 
 	public boolean function saveCategory(required dotlog.model.beans.category category)
 	{
-		return variables.instance.categoryDAO.saveCategory(arguments.category);
+		return variables.categoryDAO.save(arguments.category);
 	}
 }
