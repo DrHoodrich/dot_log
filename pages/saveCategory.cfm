@@ -21,7 +21,7 @@
 			}			
 		} 
 	} else if ( structKeyExists(FORM,"updateCategory_button") ) {
-		if (!StructKeyExists(FORM, "enabled")) {
+		if ( !StructKeyExists(FORM, "enabled") ) {
 			FORM.enabled = 0;
 		}
 		if (!StructKeyExists(FORM, "inWeeklyReport")) {
