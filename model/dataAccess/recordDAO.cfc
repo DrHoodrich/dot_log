@@ -28,7 +28,9 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 
 		queryService.setName("fetchRecord");
 
-		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title FROM DL_RECORDS WHERE 1 = 1 ";
+		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title "
+						& " FROM DL_RECORDS "
+						& "WHERE 1 = 1 ";
 
 		if ( !structIsEmpty(searchFilter) ) {
 			if ( structKeyExists(searchFilter, "id") ) {
