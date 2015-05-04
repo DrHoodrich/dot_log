@@ -37,16 +37,10 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 
 	public void function updateUser()
 	{
-		username = "Administrator";
-	    firstName = "Bob";
-	    lastName = "Dylan";
-	    airportCode = "AFM";
-	    permissions = "1";
-	    enabled = "1";
-	    emailAddr = "test";
+	    lastNameChanged = "DylanBob";
 	    testUser = new dotlog.model.beans.user(username,
 	                                              firstName,
-	                                              lastName,
+	                                              lastNameChanged,
 	                                              airportCode,
 	                                              permissions,
 	                                              enabled,
