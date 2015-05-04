@@ -1,28 +1,31 @@
-component CategoryDAO
+component CategoryDAO extends = "dotlog.model.dataAccess.DAO"
 {
-	variables.instance = {
-		queryHandler = ''
-	};
+	variables.queryHandler = '';
 
 	public CategoryDAO function init(required dotlog.model.beans.datasource datasource)
 	{
-		
-		variables.instance.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
+		variables.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
-	public dotlog.model.beans.category function getCategoryByTitle(required string categoryTitle)
+	public dotlog.model.beans.category function search(required struct searchFilter)
 	{
-		var queryHandler = new query();
-
-		queryHandler.setName("fetchCategoryByTitle");
-		queryHandler.addParam(name = "category_title", value = arguments.categoryTitle, cfsqltype = "cf_sql_varchar");
-				
+		var query = new query();
+		query.setName("fetchCategoryByTitle");
+						
 		sqlString = "SELECT category_id, category_title, description, enabled, in_weekly_report "
-					& "FROM DL_CATEGORIES WHERE category_title = :category_title";
+					& " FROM DL_CATEGORIES "
+					& " WHERE 1 = 1 ";
 
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
-		result = queryResult.getResult();
+		if ( !structIsEmpty(searchFilter) ) {
+			if ( structKeyExists(searchFilter, "category_title") ) {
+				query.addParam(name = "category_title", value = arguments.searchFilter.category_title, cfsqltype = "cf_sql_varchar");	
+				sqlString &= " AND category_title = :category_title";
+			}
+		}
+		
+		var queryResult = variables.queryHandler.executeQuery(query, sqlString);
+		var result = queryResult.getResult();
 
 		return new dotlog.model.beans.category(categoryTitle = result["category_title"][1],
 												description = result["description"][1],
@@ -31,7 +34,7 @@ component CategoryDAO
 												categoryID = result["category_id"][1]);
 	}
 
-	public boolean function saveCategory(required dotlog.model.beans.category category)
+	public boolean function save(required dotlog.model.beans.category category)
 	{
 		if ( categoryExists(arguments.category) ) {
 			return updateCategory(arguments.category);
@@ -47,7 +50,7 @@ component CategoryDAO
 		sqlString = "UPDATE DL_CATEGORIES SET "
 					& "DESCRIPTION = :description, ENABLED = :enabled, IN_WEEKLY_REPORT = :in_weekly_report, CATEGORY_TITLE = :category_title "
 					& "WHERE CATEGORY_ID = :category_id";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}
 
@@ -57,7 +60,7 @@ component CategoryDAO
 		sqlString = "INSERT INTO DL_CATEGORIES "
 					& "(CATEGORY_TITLE, DESCRIPTION, ENABLED, IN_WEEKLY_REPORT) "
 					& "VALUES (:category_title, :description, :enabled, :in_weekly_report)";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
@@ -66,8 +69,8 @@ component CategoryDAO
 		var queryHandler = getQueryHandler("doesCategoryExist", arguments.category);
 		sqlString = "SELECT category_title "
 					& "FROM DL_CATEGORIES "
-					& "WHERE category_title = :category_title";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+					& "WHERE category_id = :category_id";
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return queryResult.getResult().recordCount;
 	}
 
