@@ -14,7 +14,7 @@ component AirportService
 
 	public boolean function saveAirport(required dotlog.model.beans.airport airport)
 	{
-		return variables.instance.airportDAO.saveAirport(arguments.airport);
+		return variables.instance.airportDAO.save(arguments.airport);
 	} 
 
 	public array function getChildAirports(required string airportCode)
@@ -24,6 +24,7 @@ component AirportService
 
 	public dotlog.model.beans.airport function getAirportByAirportCode(required string airportCode)
 	{
-		return variables.instance.airportDAO.getAirportByAirportCode(arguments.airportCode);		
+		var searchFilter = { airportCode = arguments.airportCode };
+		return variables.instance.airportDAO.search(searchFilter);		
 	}
 }
