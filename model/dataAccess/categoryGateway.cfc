@@ -1,4 +1,4 @@
-component CategoryGateway
+component CategoryGateway extends = "dotlog.model.dataAccess.gateway"
 {
 	variables.queryHandler = '';
 

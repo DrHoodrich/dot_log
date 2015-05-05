@@ -1,4 +1,4 @@
-component UserGateway
+component UserGateway extends = "dotlog.model.dataAccess.gateway"
 {
 	variables.instance = {
 		datasource = '',

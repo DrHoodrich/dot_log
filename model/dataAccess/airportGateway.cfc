@@ -1,4 +1,4 @@
-component AirportGateway
+component AirportGateway extends = "dotlog.model.dataAccess.gateway"
 {
 	variables.queryHandler = '';
 	

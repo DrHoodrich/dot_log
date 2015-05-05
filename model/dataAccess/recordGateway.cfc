@@ -1,4 +1,4 @@
-component RecordGateway
+component RecordGateway extends = "dotlog.model.dataAccess.gateway"
 {
 	variables.queryHandler = '';
 
