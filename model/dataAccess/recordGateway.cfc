@@ -10,27 +10,18 @@ component RecordGateway
 
 	public array function search(required struct searchFilter)
 	{
-		var userObjects = [];
 		var queryService = new query();
-
 		queryService.setName("fetchRecords");
 
-		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title FROM DL_RECORDS WHERE 1 = 1 ";
-		sqlStringUsers = "SELECT username FROM DL_USERS WHERE 1 = 1 ";
+		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title "
+						& " FROM DL_RECORDS "
+						& " WHERE 1 = 1 ";
 
 		if ( !structIsEmpty(searchFilter) ) {
 			if ( structKeyExists(searchFilter, "username") ) {
 				queryService.addParam(name = "username", value = "%"&arguments.searchFilter.username&"%", cfsqltype = "cf_sql_varchar");	
 				sqlStringRecords &= " AND username LIKE :username";
-			} /*
-			if ( structKeyExists(searchFilter, "firstName") ) {
-				queryService.addParam(name = "firstName", value = "%"&arguments.searchFilter.firstName&"%", cfsqltype = "cf_sql_varchar");	
-				sqlStringUsers &= " AND first_name LIKE :firstName";
-			}
-			if ( structKeyExists(searchFilter, "lastName") ) {
-				queryService.addParam(name = "lastName", value = "%"&arguments.searchFilter.lastName&"%", cfsqltype = "cf_sql_varchar");	
-				sqlStringUsers &= " AND last_name LIKE :lastName";
-			}*/
+			} 
 			if ( structKeyExists(searchFilter, "keyword") ) {
 				queryService.addParam(name = "keyword", value = "%"&arguments.searchFilter.keyword&"%", cfsqltype = "cf_sql_varchar");	
 				sqlStringRecords &= " AND LOWER(record_text) LIKE LOWER(:keyword)";
@@ -51,7 +42,6 @@ component RecordGateway
 				queryService.addParam(name = "included", value = arguments.searchFilter.included, cfsqltype = "cf_sql_number");	
 				sqlStringRecords &= " AND in_weekly_report = :included";
 			}
-
 			if ( structKeyExists(searchFilter,"startDate") && structKeyExists(searchFilter,"endDate") ) {
 				queryService.addParam(name = "startDate", value = arguments.searchFilter.startDate, cfsqltype = "cf_sql_timestamp");
 				queryService.addParam(name = "endDate", value = dateAdd("d", 1, arguments.searchFilter.endDate), cfsqltype = "cf_sql_timestamp");
