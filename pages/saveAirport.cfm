@@ -25,7 +25,9 @@
 
 	existingAirport = '';
 	if ( structKeyExists(FORM, 'saveAirport_button') ) {
-		
+		if ( !structKeyExists(FORM,"enabled") ) {
+			FORM.enabled = 0;
+		}
 		existingAirport = new dotlog.model.beans.airport(argumentCollection = FORM);
 		
 		if ( application.airportService.saveAirport(existingAirport) ) {
