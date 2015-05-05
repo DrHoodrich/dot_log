@@ -12,12 +12,13 @@ component CategoryService extends = "dotlog.model.dataAccess.DAO"
 
 	public array function getEnabledCategories()
 	{
-		return variables.categoryGW.getEnabledCategories();
+		var searchParam = { enabled = 1 };
+		return variables.categoryGW.filter(searchParam);
 	}
 
 	public array function getAllCategories()
 	{
-		return variables.categoryGW.getAllCategories();
+		return variables.categoryGW.filter();
 	}
 
 	public dotlog.model.beans.category function getCategoryByTitle(required string categoryTitle)
