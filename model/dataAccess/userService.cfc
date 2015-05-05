@@ -16,7 +16,7 @@ component UserService
 	public array function getUsersByAirportCode(required string airportCode)
 	{
 		var searchParam = { airportCode = arguments.airportCode };
-		return variables.instance.userGW.filterUsers(searchParam);
+		return variables.instance.userGW.filter(searchParam);
 	} 
 
 	public boolean function saveUser(required dotlog.model.beans.user user)
@@ -33,6 +33,6 @@ component UserService
 	public query function getUsersByLastName(required string lastNameFilter)
 	{
 		var queryFilter = { lastname = arguments.lastNameFilter };
-		return variables.instance.userGW.filterUsers(queryFilter);
+		return variables.instance.userGW.filter(queryFilter);
 	}
 }
