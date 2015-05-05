@@ -19,12 +19,13 @@ component AirportService
 
 	public array function getChildAirports(required string airportCode)
 	{
-		return variables.instance.airportGW.getChildAirports(arguments.airportCode);	
+		var searchFilter = { parentAirportCode = arguments.airportCode, getChildren = 1 };
+		return variables.instance.airportGW.filter(searchFilter);
 	}
 
 	public dotlog.model.beans.airport function getAirportByAirportCode(required string airportCode)
 	{
 		var searchFilter = { airportCode = arguments.airportCode };
-		return variables.instance.airportDAO.search(searchFilter);		
+		return variables.instance.airportDAO.search(searchFilter);
 	}
 }
