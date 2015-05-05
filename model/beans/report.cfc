@@ -12,8 +12,7 @@ component Report
 								required string airportCode,
 								required string beginDate,
 								required string endDate,
-								required numeric reportID = -1
-								)
+								required numeric reportID = -1)
 	{
 		variables.instance.reportID = arguments.reportID;
 		variables.instance.username = arguments.username;
@@ -21,6 +20,11 @@ component Report
 		variables.instance.beginDate = arguments.beginDate;
 		variables.instance.endDate = arguments.endDate;
 		return this;
+	}
+
+	public numeric function getReportID()
+	{
+		return variables.instance.reportID;
 	}
 
 	public string function getUsername()
