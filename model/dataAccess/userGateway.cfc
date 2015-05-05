@@ -41,14 +41,14 @@ component UserGateway
 
 		var userObjects = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 objUser = new dotlog.model.beans.user(username = result["username"][ii],
+			 user = new dotlog.model.beans.user(username = result["username"][ii],
 														firstName= result["FIRST_NAME"][ii],
 														lastName = result["LAST_NAME"][ii],
 														airportCode = result["FAA_CODE"][ii],
 														permissions = result["USER_PERMISSIONS"][ii],
 														enabled = result["ENABLED"][ii],
 														emailAddr = result["EMAIL_ADDR"][ii]);
-			 arrayAppend(userObjects, objUser);
+			 arrayAppend(userObjects, user);
 		}
 		return userObjects;
 	}
