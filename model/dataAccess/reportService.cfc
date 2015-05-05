@@ -14,12 +14,13 @@ component ReportService
 
 	public dotlog.model.beans.report function getLastReport(required string airportCode)
 	{
-		return variables.instance.reportDAO.getLastReport(arguments.airportCode);
+		searchFilter = { lastReport = True, airportCode = airportCode };
+		return variables.instance.reportDAO.search(searchFilter);
 	}
 
 	public boolean function saveReport(required dotlog.model.beans.report report)
 	{
-		return variables.instance.reportDAO.saveReport(arguments.report);
+		return variables.instance.reportDAO.save(arguments.report);
 	}
 
 	public array function getHubReports(required string airportCode)
