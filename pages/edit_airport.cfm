@@ -11,7 +11,6 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-  user = application.userService.getUserByUsername("us");
   statewide = application.airportService.getAirportByAirportCode("Statewide");
   regionAirports = application.airportService.getChildAirports("Statewide");
   hubAirports = [];
