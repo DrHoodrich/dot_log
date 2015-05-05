@@ -17,12 +17,7 @@ component UserGateway
 		return filterUsers(queryFilter);
 	} 
 
-	public query function getAllUsers()
-	{
-		return filterUsers();
-	} 
-
-	public array function filterUsers(struct searchFilter=structNew())
+	public array function filter(struct searchFilter=structNew())
 	{
 		var queryService = new query();
 		queryService.setName("fetchUsers");
