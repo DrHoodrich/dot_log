@@ -1,27 +1,31 @@
-component AirportDAO
+component AirportDAO extends = "dotlog.model.dataAccess.DAO"
 {
-	variables.instance = {	
-		queryHandler = ''
-	};
+	variables.queryHandler = '';
 
 	public airportDAO function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
+		variables.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
-	public dotlog.model.beans.airport function getAirportByAirportCode(required string airportCode)
+	public dotlog.model.beans.airport function search(required struct searchFilter)
 	{
 		var queryHandler = new query();
 
-		//queryHandler = setQueryHandlerDatasource(queryHandler);
-		queryHandler.setName("fetchChildAirports");
-		queryHandler.addParam(name = "faa_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
+		queryHandler.setName("searchForAirport");
+		
+		var sqlString = "SELECT faa_code, parent_faa_code, airport_name, enabled "
+					& "FROM DL_AIRPORTS " 
+					& "WHERE 1 = 1 ";
 
-		sqlString = "SELECT faa_code, parent_faa_code, airport_name, enabled "
-					& "FROM DL_AIRPORTS WHERE faa_code = :faa_code";
-
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString).getResult();
+		if ( !structIsEmpty(searchFilter) ) {
+			if ( structKeyExists(arguments.searchFilter, "airportCode") ) {
+				queryHandler.addParam(name = "faa_code", value = arguments.searchFilter.airportCode, cfsqltype = "cf_sql_varchar");
+				sqlString &= " AND faa_code = :faa_code";
+			}
+		}
+					
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString).getResult();
 		
 		return new dotlog.model.beans.airport(airportCode = queryResult["faa_code"][1],
 											parentAirportCode = queryResult["parent_faa_code"][1],
@@ -29,7 +33,7 @@ component AirportDAO
 											enabled = queryResult["enabled"][1]);
 	}
 
-	public boolean function saveAirport(required dotlog.model.beans.airport airport)
+	public boolean function save(required dotlog.model.beans.airport airport)
 	{
 		if ( airportExists(arguments.airport) ) {
 			return updateAirport(arguments.airport);
@@ -41,9 +45,10 @@ component AirportDAO
 	private boolean function airportExists(required dotlog.model.beans.airport airport)
 	{
 		var queryHandler = getQueryHandler("doesAirportExist", arguments.airport);
-		sqlString = "SELECT faa_code FROM DL_AIRPORTS "
-					&"WHERE faa_code = :faa_code";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		sqlString = "SELECT faa_code "
+					& " FROM DL_AIRPORTS "
+					& " WHERE faa_code = :faa_code";
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return queryResult.getResult().recordCount;
 	}
 
@@ -53,7 +58,7 @@ component AirportDAO
 		sqlString = "INSERT INTO DL_AIRPORTS " 
 					& "(faa_code, parent_faa_code, airport_name, enabled) "
 					& "VALUES (:faa_code, :parent_faa_code, :airport_name, :enabled)";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
 
@@ -63,7 +68,7 @@ component AirportDAO
 		sqlString = "UPDATE DL_AIRPORTS SET "
 					& "parent_faa_code = :parent_faa_code, airport_name = :airport_name, enabled = :enabled "
 					& "WHERE faa_code = :faa_code";
-		queryResult = variables.instance.queryHandler.executeQuery(queryHandler, sqlString);
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}
 
@@ -71,7 +76,6 @@ component AirportDAO
 	{
 		var queryHandler = new query();
 
-		//queryHandler = setQueryHandlerDatasource(queryHandler);
 		queryHandler.setName(arguments.queryName);
 
 		queryHandler.addParam(name = "faa_code", value = arguments.airport.getAirportCode(), cfsqltype = "cf_sql_varchar");
@@ -80,14 +84,5 @@ component AirportDAO
 		queryHandler.addParam(name = "enabled", value = arguments.airport.isEnabled(), cfsqltype = "cf_sql_number");
 
 		return queryHandler;
-	}
-
-	private base function setQueryHandlerDatasource(required base queryHandler)
-	{
-		var returnedQueryHandler = arguments.queryHandler;
-		returnedQueryHandler.setDataSource(variables.instance.datasource.getDSName());
-		returnedQueryHandler.setUsername(variables.instance.datasource.getUsername());
-		returnedQueryHandler.setPassword(variables.instance.datasource.getPassword());
-		return returnedQueryHandler;
 	}
 }
