@@ -1,35 +1,24 @@
 component CategoryGateway
 {
-	variables.instance = {
-		datasource = ''
-	};
+	variables.queryHandler = '';
 
 	public CategoryGateway function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.datasource = arguments.datasource;
+		variables.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
 	public array function getEnabledCategories()
 	{
-		var categoryObjects = [];
-
-		DSname = variables.instance.datasource.getDSName();
-		DSusername = variables.instance.datasource.getUsername();
-		DSpassword = variables.instance.datasource.getPassword();
-
 		var queryService = new query();
-
 		queryService.setName("fetchEnabledCategories");
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
-
 		queryService.addParam(name = "enabled", value = 1, cfsqltype = "cf_sql_number");
-		queryResult = queryService.execute(sql = "SELECT category_title, description, enabled, in_weekly_report
-			FROM DL_CATEGORIES WHERE enabled = :enabled");
+
+		var sqlString = "SELECT category_title, description, enabled, in_weekly_report FROM DL_CATEGORIES WHERE enabled = :enabled";
+		queryResult = queryHandler.executeQuery(queryService, sqlString);
 		result = queryResult.getResult();
 
+		var categoryObjects = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
 			 categoryObject = new dotlog.model.beans.category(categoryTitle = result["category_title"][ii],
 																description = result["description"][ii],
@@ -42,23 +31,15 @@ component CategoryGateway
 
 	public array function getAllCategories()
 	{
-		var categoryObjects = [];
-
-		DSname = variables.instance.datasource.getDSName();
-		DSusername = variables.instance.datasource.getUsername();
-		DSpassword = variables.instance.datasource.getPassword();
 
 		var queryService = new query();
-
 		queryService.setName("fetchEnabledCategories");
-		queryService.setDataSource(variables.instance.datasource.getDSName());
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
 
-		queryResult = queryService.execute(sql = "SELECT category_title, description, enabled, in_weekly_report
-			FROM DL_CATEGORIES");
+		var sqlString = "SELECT category_title, description, enabled, in_weekly_report FROM DL_CATEGORIES ";
+		queryResult = queryHandler.executeQuery(queryService, sqlString);
 		result = queryResult.getResult();
 
+		var categoryObjects = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
 			 categoryObject = new dotlog.model.beans.category(categoryTitle = result["category_title"][ii],
 																description = result["description"][ii],
