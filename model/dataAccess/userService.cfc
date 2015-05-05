@@ -30,11 +30,6 @@ component UserService
 		return variables.instance.userDAO.search(searchParam);
 	}
 
-	public query function getAllUsers()
-	{
-		return variables.instance.userGW.getAllUsers();
-	}
-
 	public query function getUsersByLastName(required string lastNameFilter)
 	{
 		var queryFilter = { lastname = arguments.lastNameFilter };
