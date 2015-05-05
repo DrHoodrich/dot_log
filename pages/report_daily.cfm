@@ -12,13 +12,8 @@
 <cfscript>
     airports = application.airportService.getChildAirports(session.user.getAirportCode());
     categories = application.categoryService.getAllCategories();
-
-    datasource = new dotlog.model.beans.datasource(DSName = "DOTlogDB", username = "", password = "");
-    reportDAO = new dotlog.model.dataAccess.reportDAO(datasource);
-    reportGW = new dotlog.model.dataAccess.reportGateway(datasource);
-    reports = reportGW.getHubReports(session.user.getAirportCode());    
-
-    lastReport = reportDAO.getLastReport(session.user.getAirportCode());
+    reports = application.reportService.getHubReports(session.user.getAirportCode());    
+    lastReport = application.reportService.getLastReport(session.user.getAirportCode());
     lastReportedDate = lastReport.getEndDate();
 
     if (arrayLen(reports)) {
