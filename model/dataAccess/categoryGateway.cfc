@@ -32,6 +32,5 @@ component CategoryGateway
 			 arrayAppend(categoryObjects, categoryObject);
 		}
 		return categoryObjects;
-		queryResult = queryHandler.executeQuery(queryService, sqlString);
 	}
 }
