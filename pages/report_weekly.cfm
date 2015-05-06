@@ -47,7 +47,9 @@
 
 </cfform>
 
+<!---
 <cfform name="weeklyReport" method="post" action="stubbedGeneratePDF.cfm">
   <cfinput type="submit" name="submitReportEmail_button" value="Preview Report PDF"> 
 </cfform>
+--->
 <cfinclude template="/dotlog/includes/footer.cfm">

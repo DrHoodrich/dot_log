@@ -40,9 +40,10 @@
   <cfinput type="submit" name="submitDailyReport_button" value="Submit Daily Report"> <br>
   <cfinput type="submit" name="viewDailyReport_button" value="View Report"> <br>
 </cfform>
-
+<!---
 <cfform name="dailyReport" method="post" action="stubbedGeneratePDF.cfm">
   <cfinput type="submit" name="submitReportEmail_button" value="Preview Report PDF"> // for dev
 </cfform>
+--->
 <cfinclude template="/dotlog/includes/footer.cfm">
 
