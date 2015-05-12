@@ -15,7 +15,7 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		queryHandler.setName("fetchUserByUsername");
 		queryHandler.addParam(name = "username", value = searchFilter.username, cfsqltype = "cf_sql_varchar");
 
-		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, email_addr "
+		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, district_manager, region_manager, email_addr "
 					& "FROM DL_USERS "
 					& "WHERE 1 = 1 ";
 
@@ -36,7 +36,11 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 														airportCode = result["FAA_CODE"][1],
 														permissions = result["USER_PERMISSIONS"][1],
 														enabled = result["ENABLED"][1],
+														districtManager = result["DISTRICT_MANAGER"][1],
+														regionManager = result["REGION_MANAGER"][1],
 														emailAddr = result["EMAIL_ADDR"][1]);
+		} else {
+			throw(type="dotlog.model.errors.InvalidData", message="Unregistered DOTLog Username.");
 		}
 		return objUser;
 	}
@@ -55,7 +59,13 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		var queryHandler = getQueryHandler("updateUser", arguments.user);
 
 		sqlString = "UPDATE DL_USERS SET "
-					& "USERNAME = :username, FIRST_NAME = :firstName, LAST_NAME = :lastName, FAA_CODE = :airportCode, USER_PERMISSIONS = :permissions,  ENABLED = :enabled "
+					& "USERNAME = LOWER(:username), FIRST_NAME = :firstName,
+													LAST_NAME = :lastName, 
+													FAA_CODE = :airportCode, 
+													USER_PERMISSIONS = :permissions,  
+													ENABLED = :enabled, 
+													DISTRICT_MANAGER = :districtManager, 
+													REGION_MANAGER = :regionManager "
 					& "WHERE USERNAME = :username";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 
@@ -67,8 +77,8 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		var queryHandler = getQueryHandler("createUser", arguments.user);
 
 		sqlString = "INSERT INTO DL_USERS "
-					& "(USERNAME, FIRST_NAME, LAST_NAME, FAA_CODE, USER_PERMISSIONS, EMAIL_ADDR, ENABLED) "
-					& "VALUES (:username, :firstName, :lastName, :airportCode, :permissions, :emailAddr, :enabled)";
+					& "(USERNAME, FIRST_NAME, LAST_NAME, FAA_CODE, USER_PERMISSIONS, EMAIL_ADDR, ENABLED, DISTRICT_MANAGER, REGION_MANAGER) "
+					& "VALUES (LOWER(:username), :firstName, :lastName, :airportCode, :permissions, :emailAddr, :enabled, :districtManager, :regionManager)";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
@@ -97,6 +107,8 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		queryHandler.addParam(name = "permissions", value = arguments.user.getPermissions(), cfsqltype = "cf_sql_number");
 		queryHandler.addParam(name = "emailAddr", value = arguments.user.getEmailAddr(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = user.isEnabled(), cfsqltype = "cf_sql_number");
+		queryHandler.addParam(name = "districtManager", value = user.isDistrictManager(), cfsqltype = "cf_sql_number");
+		queryHandler.addParam(name = "regionManager", value = user.isDistrictManager(), cfsqltype = "cf_sql_number");
 
 		return queryHandler;
 	}

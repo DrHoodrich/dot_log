@@ -5,8 +5,8 @@ component userTest extends = "mxunit.framework.TestCase" {
 	airportCode = "AUK";
 	permissions = "1";
 	enabled = "1";
-	districtManager = "1";
-	regionalManager = "1";
+	districtManager = 1;
+	regionalManager = 1;
 	emailAddr = "test";
 
 	public void function setUp()

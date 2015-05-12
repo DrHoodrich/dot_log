@@ -5,24 +5,29 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 	DSpasswd = " ";
 
 	username = "tester";
-    firstName = "Bob";
-    lastName = "Dylan";
-    airportCode = "AFM";
-    permissions = "1";
-    enabled = "1";
-    emailAddr = "test";
+	firstName = "Bob";
+	lastName = "Dylan";
+	airportCode = "AUK";
+	permissions = "1";
+	enabled = "1";
+	districtManager = "1";
+	regionManager = "1";
+	emailAddr = "test";
+	
 	public void function setUp()
 	{
 		datasource = new dotlog.model.beans.datasource(DSName, DSuser, DSpasswd);
 		userDAO = new dotlog.model.dataAccess.userDAO(datasource);
 		testUserDAO = new dotlog.tests.server.DAOTestAdapter(userDAO);
 		testUser = new dotlog.model.beans.user(username,
-                                              firstName,
-                                              lastName,
-                                              airportCode,
-                                              permissions,
-                                              enabled,
-                                              emailAddr);
+												firstName,
+												lastName,
+												airportCode,
+												permissions,
+												enabled,
+												districtManager,
+												regionManager,
+												emailAddr);
 	}
 
 	public void function userDAOConstruction()
@@ -37,15 +42,17 @@ component UserDAOTests extends = "mxunit.framework.TestCase"
 
 	public void function updateUser()
 	{
-	    lastNameChanged = "DylanBob";
-	    testUser = new dotlog.model.beans.user(username,
-	                                              firstName,
-	                                              lastNameChanged,
-	                                              airportCode,
-	                                              permissions,
-	                                              enabled,
-	                                              emailAddr);
+		lastNameChanged = "DylanBob";
+		testUser = new dotlog.model.beans.user(username,
+											firstName,
+											lastNameChanged,
+											airportCode,
+											permissions,
+											enabled,
+											districtManager,
+											regionManager,
+											emailAddr);
 
-	    assertTrue(testUserDAO.save(testUser));
+		assertTrue(testUserDAO.save(testUser));
 	}
 }
