@@ -1,29 +1,55 @@
 component extends = "taffy.core.resource" taffy_uri="/api/airports"
-
 {
 
+	//TODO unstub and pull live from database.
 	function get()
 	{	
-		airports = [];
-		airportChildren = [];
-		airport = session.user.getAirportCode();
-
-		airportStruct = structNew();
-		airportStruct.faa_code = session.user.getAirportCode();
-		arrayAppend(airports, airportStruct);
+		containingStruct = {};
+		REGIONS = [];
+		REGION_STRUCT = structNew();
+		REGION_STRUCT.REGION_NAME = "Northern";
 		
-		airportChildren = application.airportService.getChildAirports(airport);
+		districts = [];
+		districtStruct = structNew();
+		districtStruct.district_name = "Western";
+		districtStruct.hubs = [];
 
-		for (i = 1 ; i <= ArrayLen(airportChildren); i++)
-		{
-			airportStruct = structNew();
-			airportStruct.faa_code = airportChildren[i].getAirportCode();
-			arrayAppend(airports,airportStruct);
-		}
+
+		hubData = structNew();
+		hubData.hub_name = "OTZ";
+		hubData.Airports = [];
+
+		airportStruct1 = structNew();
+		airportStruct1.FAA_CODE = "OTZ";
+		airportStruct2 = structNew();
+		airportStruct2.FAA_CODE = "AFM";
+		arrayAppend(hubData.airports, airportStruct1);
+		arrayAppend(hubData.airports, airportStruct2);
+
+		hubData2 = structNew();
+		hubData2.hub_name = "RND";
+		hubData2.Airports = [];
+
+		airportStruct3 = structNew();
+		airportStruct3.FAA_CODE = "RND";
+		airportStruct4 = structNew();
+		airportStruct4.FAA_CODE = "FAI";
+		arrayAppend(hubData2.airports, airportStruct3);
+		arrayAppend(hubData2.airports, airportStruct4);
+
+
+		arrayAppend(districtStruct.hubs, hubData);
+		arrayAppend(districtStruct.hubs, hubData2);
+		arrayAppend( districts, districtStruct);
 		
-		containingStr = structNew();
-		containingStr.airports = airports;
+		REGION_STRUCT.districts = districts;
+		arrayAppend(REGIONS, REGION_STRUCT);
+		
 
-		return representationOf(containingStr).withStatus(200);
+		containingStruct = structNew();
+		containingStruct.REGIONS = REGIONS;
+		
+
+		return representationOf(containingStruct).withStatus(200);
 	}
 }
