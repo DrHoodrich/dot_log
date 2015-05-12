@@ -12,7 +12,6 @@ component UserService
 		return this;
 	}
 
-
 	public array function getUsersByAirportCode(required string airportCode)
 	{
 		var searchParam = { airportCode = arguments.airportCode };
