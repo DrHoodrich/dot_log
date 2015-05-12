@@ -39,13 +39,6 @@ component userTest extends = "mxunit.framework.TestCase" {
 		assertEquals(expected, actual);
     }
 
-    public void function getInitials()
-    {
-    	expected = Left(firstName, 1) & "." & Left(lastName, 1) & ".";
-    	actual = testUser.getInitials();
-    	assertEquals(expected, actual);
-    }
-
     public void function getPermissions()
     {
             expected = permissions;
