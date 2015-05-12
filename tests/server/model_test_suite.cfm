@@ -6,7 +6,7 @@
 	testSuite.addAll( "model.beans.category_tests" );
 	testSuite.addAll( "model.beans.datasource_tests" );
 	testSuite.addAll( "model.dataAccess.recordDAO_tests" );
-	testSuite.addAll( "model.recordService_tests" );
+	testSuite.addAll( "model.service.recordService_tests" );
 	testSuite.addAll( "model.beans.record_tests" );
 	testSuite.addAll( "model.dataAccess.reportDAO_tests" );
 	testSuite.addAll( "model.beans.report_tests" );

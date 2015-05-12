@@ -20,7 +20,7 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
         testRecordDAO = new dotlog.tests.server.DAOTestAdapter(recordDAO);
         testRecordGW = new dotlog.model.dataAccess.recordGatewayTestAdapter(datasource);
         
-        testRecordService = new dotlog.model.dataAccess.recordService(datasource);
+        testRecordService = new dotlog.model.service.recordService(datasource);
 		testRecord = new dotlog.model.beans.record(recordText,
                                                 username,
                                                 airportCode,
