@@ -5,9 +5,10 @@ component AirportDAOTests extends = "mxunit.framework.TestCase"
 	DSpasswd = " ";
 
 	AirportCode = "AUK";
-    parentAirportCode = "Northern";
-    airportName = "Alakanuk";
-    enabled = 1;
+	hubCode = "AUK";
+	airportName = "Alakanuk";
+	enabled = 1;
+	districtName = "Tok";
 
 	public void function setUp()
 	{
@@ -15,9 +16,10 @@ component AirportDAOTests extends = "mxunit.framework.TestCase"
 		airportDAO = new dotlog.model.dataAccess.airportDAO(datasource);
 		testAirportDAO = new dotlog.tests.server.DAOTestAdapter(airportDAO);
 		testAirport = new dotlog.model.beans.airport(AirportCode,
-                                                 parentAirportCode,
-                                                 airportName,
-                                                 enabled);
+													hubCode,
+													airportName,
+													districtName,
+													enabled);
 	}
 
 	public void function airportDAOConstruction()
@@ -32,10 +34,11 @@ component AirportDAOTests extends = "mxunit.framework.TestCase"
 
 	public void function updateAirport()
 	{
-	    testAirport = new dotlog.model.beans.airport(AirportCode,
-                                                 parentAirportCode,
-                                                 airportName,
-                                                 enabled);
-	    assertTrue(testAirportDAO.save(testAirport));
+		testAirport = new dotlog.model.beans.airport(AirportCode,
+													hubCode,
+													airportName,
+													districtName,
+													enabled);
+		assertTrue(testAirportDAO.save(testAirport));
 	}
 }

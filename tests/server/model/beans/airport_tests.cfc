@@ -1,15 +1,18 @@
-component userTest extends = "mxunit.framework.TestCase" {
+component userTest extends = "mxunit.framework.TestCase"
+{
 	AirportCode = "AUK";
-    parentAirportCode = "Northern";
-    airportName = "Alakanuk";
-    enabled = 1;
+	hubCode = "Northern";
+	airportName = "Alakanuk";
+	districtName = "Tok";
+	enabled = 1;
 
 	public void function setUp()
 	{
 		testAirport = new dotlog.model.beans.airport(AirportCode,
-                                                 parentAirportCode,
-                                                 airportName,
-                                                 enabled);
+													hubCode,
+													airportName,
+													districtName,
+													enabled);
 	}
 
 	public void function getAirportCode()
@@ -19,22 +22,29 @@ component userTest extends = "mxunit.framework.TestCase" {
 		assertEquals(expected, actual);
 	}
 
-    public void function getParentAirportCode()
+    public void function getHubCode()
     {
-        expected = ParentAirportCode;
-        actual = testAirport.getParentAirportCode();
+        expected = hubCode;
+        actual = testAirport.getHubCode();
         assertEquals(expected, actual);
     }
 
-    public void function getName() 
-    {
-    	expected = airportName;
-    	actual = testAirport.getAirportName();
-    	assertEquals(expected, actual);
-    }
+	public void function getName() 
+	{
+		expected = airportName;
+		actual = testAirport.getAirportName();
+		assertEquals(expected, actual);
+	}
 
-    public void function isEnabled()
-    {
-        assert(testAirport.isEnabled());
-    }
+	public void function getDistrict() 
+	{
+		expected = districtName;
+		actual = testAirport.getDistrictName();
+		assertEquals(expected, actual);
+	}
+
+	public void function isEnabled()
+	{
+		assert(testAirport.isEnabled());
+	}
 }
