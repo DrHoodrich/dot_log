@@ -29,9 +29,18 @@ component
 	{
 		try {
 			session.user = application.userService.getUserByUsername(removeChars(getAuthUser(), 1, len(this.domain)));
-		} catch (any expt) {
-			writeDump(expt);
-			onApplicationStart();
+		} catch (any e) {
+			writeDump(SESSION);
+			throw;
+		}
+	}
+
+	function onError(required any e, required string EventName)
+	{
+		if (arguments.EventName == "onSessionStart") {
+			if (e.Type == "InvalidData") {
+				include "/dotlog/templates/error.cfm";
+			}
 		}
 	}
 }
