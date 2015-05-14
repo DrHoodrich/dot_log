@@ -1,4 +1,4 @@
-component userTest extends = "mxunit.framework.TestCase"
+component AirportTest extends = "mxunit.framework.TestCase"
 {
 	AirportCode = "AUK";
 	hubCode = "Northern";
