@@ -52,6 +52,8 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 							inWeeklyReport = result["in_weekly_report"][1],
 							categoryTitle = result["category_title"][1],
 							recordID = result["record_id"][1]);
+		} else { 
+			throw(message = "record does not exist");
 		}
 		return recordObject;
 	}

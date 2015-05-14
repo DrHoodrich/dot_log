@@ -14,13 +14,13 @@ component ReportDAO extends = "dotlog.model.dataAccess.DAO"
 
 		queryHandler.setName("fetchReportByAirportCode");
 
-		sqlString = "SELECT report_id, username, airport_code, begin_date, end_date " 
+		sqlString = "SELECT report_id, username, airport_code, begin_date, end_date, weekly_report " 
 					& " WHERE 1 = 1";
 
 		if ( structKeyExists(arguments.searchFilter, "lastReport") ) {
 			if ( structKeyExists(arguments.searchFilter, "airportCode") ) {
-				sqlString = "SELECT report_id, username, airport_code, begin_date, end_date "
-							& " FROM ( SELECT report_id, username, airport_code, begin_date, end_date "
+				sqlString = "SELECT report_id, username, airport_code, begin_date, end_date, weekly_report "
+							& " FROM ( SELECT report_id, username, airport_code, begin_date, end_date, weekly_report "
 								   & " FROM DL_REPORTS "
 								   & " ORDER BY report_id DESC ) " 
                             & " WHERE ROWNUM <= 1";	
@@ -29,11 +29,18 @@ component ReportDAO extends = "dotlog.model.dataAccess.DAO"
 
 		var queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		var result = queryResult.getResult();
-		var report = new dotlog.model.beans.report(username = result["username"][1],
-													airportCode = result["airport_code"][1],
-													beginDate = result["begin_date"][1],
-													endDate = result["end_date"][1],
-													recordID = result["report_id"][1]);
+		writeDump(result);
+		var report = '';
+		if (result.RecordCount) {
+			new dotlog.model.beans.report(username = result["username"][1],
+											airportCode = result["airport_code"][1],
+											beginDate = result["begin_date"][1],
+											endDate = result["end_date"][1],
+											weeklyReport = result["weekly_report"][1],
+											recordID = result["report_id"][1]);
+		} else {
+			throw(type = "Exception", message = "No reports.");
+		}
 		return report;
 	}
 
@@ -49,10 +56,10 @@ component ReportDAO extends = "dotlog.model.dataAccess.DAO"
 	private boolean function updateReport(required dotlog.model.beans.report report)
 	{
 		var queryHandler = getQueryHandler("updateReport", arguments.report);
-		queryHandler.addParam(name = "report_id", value = arguments.report.getReportID(), cfsqltype = "cf_sql_number");
+		queryHandler.addParam(name = "reportID", value = arguments.report.getReportID(), cfsqltype = "cf_sql_number");
 		sqlString = "UPDATE DL_REPORTS SET "
-					& "DESCRIPTION = :description, ENABLED = :enabled, IN_WEEKLY_REPORT = :in_weekly_report "
-					& "WHERE report_id = :report_id";
+					& "username = :username, airport_code = :airportCode, begin_date = :beginDate, end_date = :endDate, weekly_report = :weeklyReport "
+					& "WHERE report_id = :reportID";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}
@@ -61,8 +68,8 @@ component ReportDAO extends = "dotlog.model.dataAccess.DAO"
 	{
 		var queryHandler = getQueryHandler("createReport", arguments.report);
 		sqlString = "INSERT INTO DL_REPORTS "
-					& "(username, airport_code, begin_date, end_date) "
-					& "VALUES (:username, :airport_code, :begin_date, :end_date)";
+					& "(username, airport_code, begin_date, end_date, weekly_report) "
+					& "VALUES (:username, :airportCode, :beginDate, :endDate, :weeklyReport)";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
@@ -84,9 +91,10 @@ component ReportDAO extends = "dotlog.model.dataAccess.DAO"
 
 		queryHandler.setName(arguments.queryName);
 		queryHandler.addParam(name = "username", value = arguments.report.getUsername(), cfsqltype = "cf_sql_varchar");
-		queryHandler.addParam(name = "airport_code", value = arguments.report.getAirportCode(), cfsqltype = "cf_sql_varchar");
-		queryHandler.addParam(name = "begin_date", value = arguments.report.getBeginDate(), cfsqltype = "cf_sql_date");
-		queryHandler.addParam(name = "end_date", value = arguments.report.getEndDate(), cfsqltype = "cf_sql_date");
+		queryHandler.addParam(name = "airportCode", value = arguments.report.getAirportCode(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "beginDate", value = arguments.report.getBeginDate(), cfsqltype = "cf_sql_date");
+		queryHandler.addParam(name = "endDate", value = arguments.report.getEndDate(), cfsqltype = "cf_sql_date");
+		queryHandler.addParam(name = "weeklyReport", value = arguments.report.isWeeklyReport(), cfsqltype = "cf_sql_number");
 
 		return queryHandler;
 	}

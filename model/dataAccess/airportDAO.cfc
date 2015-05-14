@@ -57,7 +57,7 @@ component AirportDAO extends = "dotlog.model.dataAccess.DAO"
 	{
 		var queryHandler = getQueryHandler("createAirport", arguments.airport);
 		sqlString = "INSERT INTO DL_AIRPORTS " 
-					& "(faa_code, hub_code, airport_name, districtName, enabled) "
+					& "(faa_code, hub_code, airport_name, district_name, enabled) "
 					& "VALUES (:faa_code, :hub_code, :airport_name, :districtName, :enabled)";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
@@ -67,7 +67,7 @@ component AirportDAO extends = "dotlog.model.dataAccess.DAO"
 	{
 		var queryHandler = getQueryHandler("updateAirport", arguments.airport);
 		sqlString = "UPDATE DL_AIRPORTS SET "
-					& "hub_code = :hub_code, airport_name = :airport_name, district_name = :district_name, enabled = :enabled "
+					& "hub_code = :hub_code, airport_name = :airport_name, district_name = :districtName, enabled = :enabled "
 					& "WHERE faa_code = :faa_code";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
@@ -82,7 +82,7 @@ component AirportDAO extends = "dotlog.model.dataAccess.DAO"
 		queryHandler.addParam(name = "faa_code", value = arguments.airport.getAirportCode(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "hub_code", value = arguments.airport.getHubCode(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "airport_name", value = arguments.airport.getAirportName(), cfsqltype = "cf_sql_varchar");
-		queryHandler.addParam(name = "district_name", value = arguments.airport.getDistrictName(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "districtName", value = arguments.airport.getDistrictName(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = arguments.airport.isEnabled(), cfsqltype = "cf_sql_number");
 
 		return queryHandler;
