@@ -18,7 +18,7 @@ component User
 		airportCode = '',
 		enabled = '',
 		districtManager = '',
-		regionalManager = '',
+		regionManager = '',
 		emailAddr = '' 
 	};
 
@@ -29,17 +29,17 @@ component User
 								required numeric permissions,
 								required numeric enabled,
 								required numeric districtManager,
-								required numeric regionalManager,
+								required numeric regionManager,
 								required string emailAddr)
 	{
-		variables.instance.username = arguments.username;
+		variables.instance.username = LCase(arguments.username);
 		variables.instance.firstName = arguments.firstName;
 		variables.instance.lastName = arguments.lastName;
 		variables.instance.permissions = arguments.permissions;
 		variables.instance.airportCode = arguments.airportCode;
 		variables.instance.enabled = arguments.enabled;
 		variables.instance.districtManager = arguments.districtManager;
-		variables.instance.regionalManager = arguments.regionalManager;
+		variables.instance.regionManager = arguments.regionManager;
 		variables.instance.emailAddr = arguments.emailAddr;
 
 		return this;
@@ -90,9 +90,9 @@ component User
 		return (variables.instance.districtManager);
 	}
 
-	public boolean function isRegionalManager()
+	public boolean function isRegionManager()
 	{
-		return (variables.instance.RegionalManager);
+		return (variables.instance.RegionManager);
 	}
 
 	public string function getEmailAddr()
