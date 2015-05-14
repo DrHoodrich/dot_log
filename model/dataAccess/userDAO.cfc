@@ -85,7 +85,7 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 
 	private boolean function userExists(required dotlog.model.beans.user user)
 	{
-		var queryHandler = getQueryHandler("SeeIfUserExists", arguments.user);
+		var queryHandler = getQueryHandler("userExists", arguments.user);
 
 		sqlString = "SELECT username "
 					& "FROM DL_USERS "
