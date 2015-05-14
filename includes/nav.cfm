@@ -29,6 +29,18 @@
 					<li><a href="/dotlog/pages/edit_airport.cfm">Edit Airport</a></li>
 				</ul>
 			</li>
+			<li class="dir"><a href="/dotlog/pages/add_district.cfm">Districts</a>
+	        	<ul>
+					<li><a href="/dotlog/pages/add_district.cfm">Add District</a></li>
+					<li><a href="/dotlog/pages/edit_district.cfm">Edit District</a></li>
+				</ul>
+			</li>
+			<li class="dir"><a href="/dotlog/pages/add_region.cfm">Regions</a>
+	        	<ul>
+					<li><a href="/dotlog/pages/add_region.cfm">Add Region</a></li>
+					<li><a href="/dotlog/pages/edit_region.cfm">Edit Region</a></li>
+				</ul>
+			</li>
 			<cfelse>
 			<li class="dir"><a href="/dotlog/pages/category_help.cfm">Category Help</a></li>
 		</cfif>
