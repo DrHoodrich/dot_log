@@ -3,12 +3,14 @@ component ReportTest extends = "mxunit.framework.TestCase" {
     beginDate = dateFormat(now(), 'yyyy-mm-dd');
     endDate = dateFormat(now(), 'yyyy-mm-dd');
     airportCode = "Statewide";
+    weeklyReport = 1;
 
 	public void function setUp()
 	{
 		testReport = new dotlog.model.beans.report(username = username,
                                                     airportCode = airportCode,
                                                     beginDate = beginDate,
+                                                    weeklyReport = weeklyReport,
                                                     endDate = endDate);
 	}
 
@@ -26,6 +28,7 @@ component ReportTest extends = "mxunit.framework.TestCase" {
                                             airportCode = airportCode,
                                             beginDate = beginDate,
                                             endDate = endDate,
+                                            weeklyReport = weeklyReport,
                                             reportID = expectedReportID);
         
         actualReportID = testReport.getReportID();
