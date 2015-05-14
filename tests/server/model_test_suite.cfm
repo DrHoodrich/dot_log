@@ -10,7 +10,11 @@
 	testSuite.addAll( "model.beans.record_tests" );
 	testSuite.addAll( "model.dataAccess.reportDAO_tests" );
 	testSuite.addAll( "model.beans.report_tests" );
+	testSuite.addAll( "model.beans.region_tests" );
+	testSuite.addAll( "model.beans.district_tests" );
 	testSuite.addAll( "model.dataAccess.userDAO_tests" );
+	testSuite.addAll( "model.dataAccess.regionDAO_tests" );
+	testSuite.addAll( "model.dataAccess.districtDAO_tests" );
 	testSuite.addAll( "model.beans.user_tests" );
 	testResults = testSuite.run();
 	writeOutput(testResults.getHtmlResults( "../mxunit/" ));
