@@ -6,7 +6,7 @@ component userTest extends = "mxunit.framework.TestCase" {
 	permissions = "1";
 	enabled = "1";
 	districtManager = 1;
-	regionalManager = 1;
+	regionManager = 1;
 	emailAddr = "test";
 
 	public void function setUp()
@@ -18,7 +18,7 @@ component userTest extends = "mxunit.framework.TestCase" {
 												permissions,
 												enabled,
 												districtManager,
-												regionalManager,
+												regionManager,
 												emailAddr);
 	}
 
@@ -69,6 +69,6 @@ component userTest extends = "mxunit.framework.TestCase" {
 
 	public void function isRegionalManager()
 	{
-		assert(testUser.isRegionalManager());
+		assert(testUser.isRegionManager());
 	}
 }
