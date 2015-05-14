@@ -4,11 +4,11 @@ component AirportDAOTests extends = "mxunit.framework.TestCase"
 	DSuser = " ";
 	DSpasswd = " ";
 
-	AirportCode = "AUK";
-	hubCode = "AUK";
-	airportName = "Alakanuk";
+	AirportCode = "test";
+	hubCode = "test";
+	airportName = "A test port";
 	enabled = 1;
-	districtName = "Tok";
+	districtName = "testDistrict";
 
 	public void function setUp()
 	{
