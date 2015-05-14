@@ -4,10 +4,11 @@ component ReportDAOTests extends = "mxunit.framework.TestCase"
 	DSuser = " ";
 	DSpasswd = " ";
 
-	username = "Administrator";
+	username = "test";
     beginDate = dateFormat(now(), 'yyyy-mm-dd');
     endDate = dateFormat(now(), 'yyyy-mm-dd');
-    airportCode = "Statewide";
+    airportCode = "test";
+    weeklyReport = 1;
 
 	public void function setUp()
 	{
@@ -17,6 +18,7 @@ component ReportDAOTests extends = "mxunit.framework.TestCase"
 		testReport = new dotlog.model.beans.report(username = username,
                                             airportCode = airportCode,
                                             beginDate = beginDate,
+                                            weeklyReport = weeklyReport,
                                             endDate = endDate);
 	}
 
