@@ -8,7 +8,7 @@ component RecordGateway extends = "dotlog.model.dataAccess.gateway"
 		return this;
 	}
 
-	public array function search(required struct searchFilter)
+	public array function filter(required struct searchFilter)
 	{
 		var queryService = new query();
 		queryService.setName("fetchRecords");
