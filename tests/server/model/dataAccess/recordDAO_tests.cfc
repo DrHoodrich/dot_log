@@ -5,8 +5,8 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
     DSpasswd = " ";
 
 	recordText = "Unit Test at " & now();
-    username = "Administrator";
-    airportCode = "AFM";
+    username = "test";
+    airportCode = "test";
     eventTime = CreateODBCDateTime( now() );
     recordTime = CreateODBCDateTime( now() );
     inWeeklyReport = 1;
