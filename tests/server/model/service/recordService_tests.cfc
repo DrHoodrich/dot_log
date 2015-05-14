@@ -16,11 +16,12 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
 	{
         datasource = new dotlog.model.beans.datasource(DSName, DSuser, DSpasswd);
         recordDAO = new dotlog.model.dataAccess.recordDAO(datasource);
+        recordGW = new dotlog.model.dataAccess.recordGateway(datasource);
         
         testRecordDAO = new dotlog.tests.server.DAOTestAdapter(recordDAO);
-        testRecordGW = new dotlog.model.dataAccess.recordGatewayTestAdapter(datasource);
-        
+        testRecordGW = new dotlog.tests.server.gatewayTestAdapter(recordGW);
         testRecordService = new dotlog.model.service.recordService(datasource);
+
 		testRecord = new dotlog.model.beans.record(recordText,
                                                 username,
                                                 airportCode,
@@ -32,7 +33,7 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
 
     public void function recordByID()
     {
-        recordID = 300; // TODO: find a good way to get a value that exists from database, wrap an insert into a transaction?
+        recordID = 655; // TODO: find a good way to get a value that exists from database, wrap an insert into a transaction?
 
         searchStruct = { id = recordID };
         
@@ -44,10 +45,10 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
 
     public void function recordsByAirportCode()
     {
-        var airportCode = "AFM";
+        var airportCode = "test";
         searchStruct = { airportCode = airportCode };
 
-        resultFromGW = testRecordGW.search(searchStruct);
+        resultFromGW = testRecordGW.filter(searchStruct);
         resultFromService = testRecordService.getRecordsByAirportCode(airportCode);
 
         assertEquals(resultFromGW, resultFromService);
