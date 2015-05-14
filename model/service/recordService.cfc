@@ -18,13 +18,13 @@ component RecordService
 	public array function getRecordsByAirportCode(required string airportCode)
 	{
         var searchStruct = { airportCode = arguments.airportCode };
-		return variables.recordGW.search(searchStruct);
+		return variables.recordGW.filter(searchStruct);
 	}
 
 	public array function getRecordsAfterDate(required string date)
 	{
 		searchParam = { date = arguments.date };
-		return variables.recordGW.search(searchParam);
+		return variables.recordGW.filter(searchParam);
 	}
 
 	public dotlog.model.beans.record function getRecordByID(required numeric recordID)
@@ -35,6 +35,6 @@ component RecordService
 
 	public array function search(required struct searchParam)
 	{
-		return variables.recordGW.search(searchParam);
+		return variables.recordGW.filter(searchParam);
 	}
 }
