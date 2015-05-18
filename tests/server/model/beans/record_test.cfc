@@ -5,7 +5,7 @@ component userTest extends = "mxunit.framework.TestCase" {
     eventTime = CreateODBCDateTime( now() );
     recordTime = CreateODBCDateTime( now() );
     inWeeklyReport = 1;
-    categoryTitle = "Fire";
+    categoryID = 1;
 
 	public void function setUp()
 	{
@@ -15,7 +15,7 @@ component userTest extends = "mxunit.framework.TestCase" {
                                                     eventTime,
                                                     recordTime,
                                                     inWeeklyReport,
-                                                    categoryTitle);
+                                                    categoryID);
 	}
 
 	public void function getRecordText()
@@ -58,10 +58,10 @@ component userTest extends = "mxunit.framework.TestCase" {
         assertEquals(expected, actual);
     }
 
-    public void function getCategory()
+    public void function getCategoryID()
     {
-        expected = categoryTitle;
-        actual = testRecord.getCategory();
+        expected = categoryID;
+        actual = testRecord.getCategoryID();
         assertEquals(expected, actual);
     }
 }
