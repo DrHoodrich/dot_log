@@ -8,32 +8,6 @@ component CategoryDAO extends = "dotlog.model.dataAccess.DAO"
 		return this;
 	}
 
-	public dotlog.model.beans.category function search(required struct searchFilter)
-	{
-		var query = new query();
-		query.setName("fetchCategoryByTitle");
-						
-		sqlString = "SELECT category_id, category_title, description, enabled, in_weekly_report "
-					& " FROM DL_CATEGORIES "
-					& " WHERE 1 = 1 ";
-
-		if ( !structIsEmpty(searchFilter) ) {
-			if ( structKeyExists(searchFilter, "category_title") ) {
-				query.addParam(name = "category_title", value = arguments.searchFilter.category_title, cfsqltype = "cf_sql_varchar");	
-				sqlString &= " AND category_title = :category_title";
-			}
-		}
-		
-		var queryResult = variables.queryHandler.executeQuery(query, sqlString);
-		var result = queryResult.getResult();
-
-		return new dotlog.model.beans.category(categoryTitle = result["category_title"][1],
-												description = result["description"][1],
-												enabled = result["enabled"][1],
-												inWeeklyReport = result["in_weekly_report"][1],
-												categoryID = result["category_id"][1]);
-	}
-
 	public boolean function save(required dotlog.model.beans.category category)
 	{
 		if ( categoryExists(arguments.category) ) {

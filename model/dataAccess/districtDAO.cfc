@@ -8,38 +8,6 @@ component DistrictDAO extends = "dotlog.model.dataAccess.DAO"
 		return this;
 	}
 
-	public dotlog.model.beans.district function search(required struct searchFilter)
-	{
-		var queryHandler = new query();
-
-		queryHandler.setName("searchForDistrict");
-		
-		var sqlString = "SELECT region_id, district_name, enabled "
-					& " FROM DL_DISTRICTS " 
-					& " WHERE 1 = 1 ";
-
-		if ( !structIsEmpty(searchFilter) ) {
-			if ( structKeyExists(arguments.searchFilter, "districtName") ) {
-				queryHandler.addParam(name = "districtName", value = arguments.searchFilter.districtName, cfsqltype = "cf_sql_varchar");
-				sqlString &= " AND district_name = :districtName ";
-			}
-			if ( structKeyExists(arguments.searchFilter, "regionID") ) {
-				queryHandler.addParam(name = "regionID", value = arguments.searchFilter.regionID, cfsqltype = "cf_sql_varchar");
-				sqlString &= " AND region_id = :regionID ";
-			}
-			if ( structKeyExists(arguments.searchFilter, "districtID") ) {
-				queryHandler.addParam(name = "districtID", value = arguments.searchFilter.districtID, cfsqltype = "cf_sql_number");
-				sqlString &= " AND district_id = :districtID ";
-			}
-		}
-					
-		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString).getResult();
-		
-		return new dotlog.model.beans.district(districtName = queryResult["district_name"][1],
-											regionID = queryResult["region_id"][1],
-											enabled = queryResult["enabled"][1]);
-	}
-
 	public boolean function save(required dotlog.model.beans.district district)
 	{
 		if ( exists(arguments.district) ) {
