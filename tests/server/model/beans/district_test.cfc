@@ -2,13 +2,13 @@ component DistrictTest extends = "mxunit.framework.TestCase"
 {
 	districtID = "1";
 	districtName = "testDistrict";
-	regionName = "testRegion";
+	regionID = 1;
 	enabled = 1;
 
 	public void function setUp()
 	{
 		testDistrict = new dotlog.model.beans.district(districtName,
-													regionName,
+													regionID,
 													enabled,
 													districtID);
 	}
@@ -27,10 +27,10 @@ component DistrictTest extends = "mxunit.framework.TestCase"
         assertEquals(expected, actual);
     }
 
-	public void function getRegionName() 
+	public void function getRegionID() 
 	{
-		expected = regionName;
-		actual = testDistrict.getRegionName();
+		expected = regionID;
+		actual = testDistrict.getRegionID();
 		assertEquals(expected, actual);
 	}
 
