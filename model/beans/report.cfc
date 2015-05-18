@@ -5,8 +5,8 @@ component Report
 		username = '',
 		airportCode = '',
 		beginDate = '',
-		weeklyReport = '',
-		endDate = ''
+		endDate = '',
+		weeklyReport = ''
 	};
 
 	public Report function init(required string username,
