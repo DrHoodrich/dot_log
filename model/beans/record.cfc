@@ -8,7 +8,7 @@ component Record
             eventTime = '',
             recordTime = '',
             inWeeklyReport = '',
-            categoryTitle = ''
+            categoryID = ''
         };
         
 
@@ -18,7 +18,7 @@ component Record
                                     required string eventTime,
                                     required string recordTime,
                                     required numeric inWeeklyReport,
-                                    required string categoryTitle,
+                                    required numeric categoryID,
                                     numeric recordID = -1)
         {
                 variables.instance.recordID = recordID;
@@ -28,7 +28,7 @@ component Record
                 variables.instance.eventTime = arguments.eventTime;
                 variables.instance.recordTime = arguments.recordTime;
                 variables.instance.inWeeklyReport = arguments.inWeeklyReport;
-                variables.instance.categoryTitle = arguments.categoryTitle;
+                variables.instance.categoryID = arguments.categoryID;
                 return this;
         }
 
@@ -67,8 +67,8 @@ component Record
                 return (variables.instance.inWeeklyReport);
         }
 
-        public string function getCategory() 
+        public string function getCategoryID() 
         {
-                return variables.instance.categoryTitle;
+                return variables.instance.categoryID;
         }
 }
