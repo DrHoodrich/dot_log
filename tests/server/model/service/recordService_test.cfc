@@ -5,12 +5,12 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
     DSpasswd = " ";
 
 	recordText = "Unit Test at " & now();
-    username = "Administrator";
+    username = "test";
     airportCode = "AFM";
     eventTime = CreateODBCDateTime( now() );
     recordTime = CreateODBCDateTime( now() );
     inWeeklyReport = 1;
-    categoryTitle = "Fire";
+    categoryID = 428;
 
 	public void function setUp()
 	{
@@ -28,12 +28,12 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
                                                 eventTime,
                                                 recordTime,
                                                 inWeeklyReport,
-                                                categoryTitle);
+                                                categoryID);
 	}
 
     public void function recordByID()
     {
-        recordID = 655; // TODO: find a good way to get a value that exists from database, wrap an insert into a transaction?
+        recordID = 669; // TODO: find a good way to get a value that exists from database, wrap an insert into a transaction?
 
         searchStruct = { id = recordID };
         
