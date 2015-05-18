@@ -28,12 +28,7 @@ component CategoryServiceTests extends = "mxunit.framework.TestCase"
 
     public void function saveCategory()
     {
-        searchStruct = { categoryID = categoryID };
-        
-        resultFromService = testCategoryService.getCategoryByID(searchStruct.categoryID);
-        resultFromGW = testCategoryGW.filter(searchStruct);
-
-        assertEquals(resultFromService.getCategoryTitle(), resultFromGW[1].getCategoryTitle());
+        fail("Should be working, need to correlate service with DAO.");
     }
 
     public void function getCategoryByTitle()
