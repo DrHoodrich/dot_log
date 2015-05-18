@@ -12,8 +12,8 @@ component CategoryService extends = "dotlog.model.dataAccess.DAO"
 
 	public array function getEnabledCategories()
 	{
-		var searchParam = { enabled = 1 };
-		return variables.categoryGW.filter(searchParam);
+		var searchStruct = { enabled = 1 };
+		return variables.categoryGW.filter(searchStruct);
 	}
 
 	public array function getAllCategories()
@@ -23,8 +23,24 @@ component CategoryService extends = "dotlog.model.dataAccess.DAO"
 
 	public dotlog.model.beans.category function getCategoryByTitle(required string categoryTitle)
 	{
-		var searchParam = { category_title = arguments.categoryTitle };
-		return variables.categoryDAO.search(searchParam);
+		var searchStruct = { categoryTitle = arguments.categoryTitle };
+		var category = '';
+		var result = variables.categoryGW.filter(searchStruct);
+		if ( arrayLen(result) ) {
+			category = result[1];
+		}
+		return category;
+	}
+
+	public dotlog.model.beans.category function getCategoryByID(required numeric categoryID)
+	{
+		var searchStruct = { categoryID = arguments.categoryID };
+		var category = '';
+		var result = variables.categoryGW.filter(searchStruct);
+		if ( arrayLen(result) ) {
+			category = result[1];
+		}
+		return category;
 	}
 
 	public boolean function saveCategory(required dotlog.model.beans.category category)
