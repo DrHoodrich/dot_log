@@ -1,35 +1,56 @@
 component ReportGateway extends = "dotlog.model.dataAccess.gateway"
 {
-	variables.instance = {
-		datasource = ''
-	};
-
+	variables.queryHandler = '';
+	
 	public reportGateway function init(required dotlog.model.beans.datasource datasource)
 	{
-		variables.instance.datasource = arguments.datasource;
+		variables.queryHandler = new dotlog.model.queryHandler(arguments.datasource);
 		return this;
 	}
 
-	public array function getHubReports(required string airportCode)
+	public array function filter(struct searchFilter=structNew())
 	{
-		DSname = variables.instance.datasource.getDSName();
-		DSusername = variables.instance.datasource.getUsername();
-		DSpassword = variables.instance.datasource.getPassword();
-
 		var queryService = new query();
 
-		queryService.setName("fetchHubReports");
-	
-		queryService.setDataSource(DSName);
-		queryService.setUsername(DSusername);
-		queryService.setPassword(DSpassword);
+		var sqlString = " SELECT report_id, username, airport_code, begin_date, end_date, weekly_report "
+						& " FROM DL_REPORTS "
+						& " WHERE 1 = 1 ";
 
-		queryService.addParam(name = "airport_code", value = arguments.airportCode, cfsqltype = "cf_sql_varchar");
+		if ( !structIsEmpty(searchFilter) ) {
+			queryService.setName("filterReports");
+			if ( structKeyExists(searchFilter, "reportID") ) {
+				queryService.addParam(name = "reportID", value = arguments.searchFilter.reportID, cfsqltype = "cf_sql_number");
+				sqlString &= " AND report_id = :reportID";
+			}
+			if ( structKeyExists(searchFilter, "username") ) {
+				queryService.addParam(name = "username", value = arguments.searchFilter.username, cfsqltype = "cf_sql_varchar");
+				sqlString &= " AND username = :username";
+			}
+			if ( structKeyExists(searchFilter, "airportCode") ) {
+				queryService.addParam(name = "airportCode", value = arguments.searchFilter.airportCode, cfsqltype = "cf_sql_varchar");
+				sqlString &= " AND airport_code = :airportCode";
+			}
+			if ( structKeyExists(searchFilter, "date") ) {
+				queryService.addParam(name = "date", value = arguments.searchFilter.date, cfsqltype = "cf_sql_timestamp");
+				sqlString &= " AND begin_date >= :date";
 
-		queryResult = queryService.execute(sql = "SELECT * FROM ( SELECT report_id, username, AIRPORT_CODE, begin_date, end_date
-			FROM DL_REPORTS WHERE airport_code = :airport_code ORDER BY end_date DESC ) WHERE ROWNUM <= 10");
+			}
+			if ( structKeyExists(searchFilter,"startDate") && structKeyExists(searchFilter,"endDate") ) {
+				queryService.addParam(name = "startDate", value = arguments.searchFilter.startDate, cfsqltype = "cf_sql_timestamp");
+				queryService.addParam(name = "endDate", value = dateAdd("d", 1, arguments.searchFilter.endDate), cfsqltype = "cf_sql_timestamp");
+				sqlString &= " AND begin_date >= :startDate";
+				sqlString &= " AND end_date <= :endDate";
+			}
+			if ( structKeyExists(searchFilter, "weeklyReport") ) {
+				queryService.addParam(name = "weeklyReport", value = arguments.searchFilter.weeklyReport, cfsqltype = "cf_sql_number");	
+				sqlString &= " AND weekly_report = :weeklyReport";
+			}
+		} else {
+			queryService.setName("getAllReports");
+		}
+
+		var queryResult = queryHandler.executeQuery(queryService, sqlString);
 		result = queryResult.getResult();
-
 		
 		var reports = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
@@ -37,7 +58,8 @@ component ReportGateway extends = "dotlog.model.dataAccess.gateway"
 													airportCode = result["airport_code"][ii],
 													beginDate = result["begin_date"][ii],
 													endDate = result["end_date"][ii],
-													reportID = result["report_id"][ii]);
+													reportID = result["report_id"][ii],
+													weeklyReport = result["weekly_report"][ii]);
 			 arrayAppend(reports, report);
 		}
 		return reports;

@@ -26,9 +26,9 @@ component RecordGateway extends = "dotlog.model.dataAccess.gateway"
 				queryService.addParam(name = "keyword", value = "%"&arguments.searchFilter.keyword&"%", cfsqltype = "cf_sql_varchar");	
 				sqlStringRecords &= " AND LOWER(record_text) LIKE LOWER(:keyword)";
 			}
-			if ( structKeyExists(searchFilter, "categoryTitle") ) {
-				queryService.addParam(name = "category_id", value = "%"&arguments.searchFilter.categoryTitle&"%", cfsqltype = "cf_sql_varchar");	
-				sqlStringRecords &= " AND LOWER(category_id) LIKE LOWER(:category_id)";
+			if ( structKeyExists(searchFilter, "categoryID") ) {
+				queryService.addParam(name = "category_id", value = arguments.searchFilter.categoryID, cfsqltype = "cf_sql_number");	
+				sqlStringRecords &= " AND category_id = :category_id";
 			}
 			if ( structKeyExists(searchFilter, "airportCode") ) {
 				queryService.addParam(name = "faa_code", value = "%"&arguments.searchFilter.airportCode&"%", cfsqltype = "cf_sql_varchar");	

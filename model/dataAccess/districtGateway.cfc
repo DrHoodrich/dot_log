@@ -11,25 +11,39 @@ component DistrictGateway extends = "dotlog.model.dataAccess.gateway"
 	public array function filter(struct searchFilter=structNew())
 	{
 		var queryService = new query();
-		var sqlString = " SELECT district_name, region_name, enabled "
+		var sqlString = "SELECT district_id, district_name, region_id, enabled "
 						& " FROM DL_DISTRICTS "
 						& " WHERE 1 = 1 ";
 
-		if ( structKeyExists(searchFilter, "districtName") ) {
-			queryService.setName("fetchDistrict");
-			queryService.addParam(name = "districtName", value = arguments.searchFilter.parentAirportCode, cfsqltype = "cf_sql_varchar");
-			sqlString &= " AND district_name = :districtName";
-		}
-		if ( structKeyExists(searchFilter, "regionName") ) {
-			queryService.setName("fetchRegion");
-			queryService.addParam(name = "regionName", value = arguments.searchFilter.regionName, cfsqltype = "cf_sql_varchar");
-			sqlString &= " AND region_name = :regionName";
+		if ( !structIsEmpty(searchFilter) ) {
+			queryService.setName("filterDistricts");
+			if ( structKeyExists(arguments.searchFilter, "districtID") ) {
+				queryHandler.addParam(name = "districtID", value = arguments.searchFilter.districtID, cfsqltype = "cf_sql_number");
+				sqlString &= " AND district_id = :districtID ";
+			}
+			if ( structKeyExists(searchFilter, "districtName") ) {
+				queryService.setName("fetchDistrict");
+				queryService.addParam(name = "districtName", value = arguments.searchFilter.parentAirportCode, cfsqltype = "cf_sql_varchar");
+				sqlString &= " AND district_name = :districtName";
+			}
+			if ( structKeyExists(searchFilter, "regionID") ) {
+				queryService.setName("fetchRegion");
+				queryService.addParam(name = "regionID", value = arguments.searchFilter.regionID, cfsqltype = "cf_sql_varchar");
+				sqlString &= " AND region_id = :regionID";
+			}
+			if ( structKeyExists(searchFilter, "enabled") ) {
+				queryService.addParam(name = "enabled", value = 1, cfsqltype = "cf_sql_number");
+				sqlString &= " AND enabled = :enabled";
+			}
+		} else {
+			queryService.setName("getAllDistricts");		
 		}
 		var queryResult = queryHandler.executeQuery(queryService, sqlString);
 		var result = queryResult.getResult();
 		var districts = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 district = new dotlog.model.beans.district(regionName = result["region_name"][ii],
+			 district = new dotlog.model.beans.district(districtID = result["district_id"][ii],
+			 											regionID = result["region_id"][ii],
 														districtName = result["district_name"][ii],
 														enabled = result["enabled"][ii]);
 							
