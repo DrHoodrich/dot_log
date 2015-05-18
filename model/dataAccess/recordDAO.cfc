@@ -28,7 +28,7 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 
 		queryService.setName("fetchRecord");
 
-		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title "
+		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_id "
 						& " FROM DL_RECORDS "
 						& "WHERE 1 = 1 ";
 
@@ -50,7 +50,7 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 							eventTime = result["event_time"][1],
 							recordTime = result["record_time"][1],
 							inWeeklyReport = result["in_weekly_report"][1],
-							categoryTitle = result["category_title"][1],
+							categoryTitle = result["category_id"][1],
 							recordID = result["record_id"][1]);
 		} else { 
 			throw(message = "record does not exist");
@@ -73,8 +73,8 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 		var queryHandler = getQueryHandler("createRecord", arguments.record);
 
 		sqlString = "INSERT INTO DL_RECORDS "
-					& "(record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title) "
-					& "VALUES (:record_text, :username, :faa_code, :event_time, :record_time, :in_weekly_report, :category_title)";
+					& "(record_text, username, faa_code, event_time, record_time, in_weekly_report, category_id) "
+					& "VALUES (:record_text, :username, :faa_code, :event_time, :record_time, :in_weekly_report, :category_id)";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
@@ -83,7 +83,7 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 	{
 		var queryHandler = getQueryHandler("updateRecord", arguments.record);
 		sqlString = "UPDATE DL_RECORDS SET "
-					& "record_text = :record_text, faa_code = :faa_code, event_time = :event_time, in_weekly_report = :in_weekly_report, category_title = :category_title "
+					& "record_text = :record_text, faa_code = :faa_code, event_time = :event_time, in_weekly_report = :in_weekly_report, category_id = :category_id "
 					& "WHERE record_id = :record_id";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
@@ -104,7 +104,7 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 		queryService.addParam(name = "event_time", value = arguments.record.getEventTime(), cfsqltype = "cf_sql_timestamp");
 		queryService.addParam(name = "record_time", value = arguments.record.getRecordTime(), cfsqltype = "cf_sql_timestamp");
 		queryService.addParam(name = "in_weekly_report", value = arguments.record.isInWeeklyReport(), cfsqltype = "cf_sql_number");
-		queryService.addParam(name = "category_title", value = arguments.record.getCategory(), cfsqltype = "cf_sql_varchar");
+		queryService.addParam(name = "category_id", value = arguments.record.getCategoryID(), cfsqltype = "cf_sql_varchar");
 
 		return queryService;
 	}

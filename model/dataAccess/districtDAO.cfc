@@ -14,7 +14,7 @@ component DistrictDAO extends = "dotlog.model.dataAccess.DAO"
 
 		queryHandler.setName("searchForDistrict");
 		
-		var sqlString = "SELECT region_name, district_name, enabled "
+		var sqlString = "SELECT region_id, district_name, enabled "
 					& " FROM DL_DISTRICTS " 
 					& " WHERE 1 = 1 ";
 
@@ -23,9 +23,9 @@ component DistrictDAO extends = "dotlog.model.dataAccess.DAO"
 				queryHandler.addParam(name = "districtName", value = arguments.searchFilter.districtName, cfsqltype = "cf_sql_varchar");
 				sqlString &= " AND district_name = :districtName ";
 			}
-			if ( structKeyExists(arguments.searchFilter, "regionName") ) {
-				queryHandler.addParam(name = "regionName", value = arguments.searchFilter.regionName, cfsqltype = "cf_sql_varchar");
-				sqlString &= " AND region_name = :regionName ";
+			if ( structKeyExists(arguments.searchFilter, "regionID") ) {
+				queryHandler.addParam(name = "regionID", value = arguments.searchFilter.regionID, cfsqltype = "cf_sql_varchar");
+				sqlString &= " AND region_id = :regionID ";
 			}
 			if ( structKeyExists(arguments.searchFilter, "districtID") ) {
 				queryHandler.addParam(name = "districtID", value = arguments.searchFilter.districtID, cfsqltype = "cf_sql_number");
@@ -36,7 +36,7 @@ component DistrictDAO extends = "dotlog.model.dataAccess.DAO"
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString).getResult();
 		
 		return new dotlog.model.beans.district(districtName = queryResult["district_name"][1],
-											regionName = queryResult["region_name"][1],
+											regionID = queryResult["region_id"][1],
 											enabled = queryResult["enabled"][1]);
 	}
 
@@ -63,8 +63,8 @@ component DistrictDAO extends = "dotlog.model.dataAccess.DAO"
 	{
 		var queryHandler = getQueryHandler("createDistrict", arguments.district);
 		sqlString = "INSERT INTO DL_DISTRICTS " 
-					& "(district_name, region_name, enabled) "
-					& "VALUES (:districtName, :regionName, :enabled)";
+					& "(district_name, region_id, enabled) "
+					& "VALUES (:districtName, :regionID, :enabled)";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().rowID); //returns a number - need to fix?
 	}
@@ -73,7 +73,7 @@ component DistrictDAO extends = "dotlog.model.dataAccess.DAO"
 	{
 		var queryHandler = getQueryHandler("updateDistrict", arguments.district);
 		sqlString = "UPDATE DL_DISTRICTS SET "
-					& "district_name = :districtName, region_name = :regionName, enabled = :enabled "
+					& "district_name = :districtName, region_id = :regionID, enabled = :enabled "
 					& "WHERE district_id = :districtID";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
@@ -88,7 +88,7 @@ component DistrictDAO extends = "dotlog.model.dataAccess.DAO"
 		if ( arguments.district.getDistrictID() ) {
 			queryHandler.addParam(name = "districtID", value = arguments.district.getDistrictID(), cfsqltype = "cf_sql_number");
 		}
-		queryHandler.addParam(name = "regionName", value = arguments.district.getRegionName(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "regionID", value = arguments.district.getRegionID(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "districtName", value = arguments.district.getDistrictName(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = arguments.district.isEnabled(), cfsqltype = "cf_sql_number");
 
