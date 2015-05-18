@@ -53,4 +53,19 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
 
         assertEquals(resultFromGW, resultFromService);
     }
+
+    public void function getRecordsAfterDate()
+    {
+        fail("Todo");
+    }
+
+    public void function search()
+    {
+        fail("Todo");
+    }
+
+    public void function save()
+    {
+        fail("Todo");
+    }
 }
