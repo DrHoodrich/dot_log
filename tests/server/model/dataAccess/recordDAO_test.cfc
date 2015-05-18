@@ -10,7 +10,7 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
     eventTime = CreateODBCDateTime( now() );
     recordTime = CreateODBCDateTime( now() );
     inWeeklyReport = 1;
-    categoryTitle = "Fire";
+    categoryID = 428;
 
 	public void function setUp()
 	{
@@ -22,7 +22,7 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
                                                 eventTime,
                                                 recordTime,
                                                 inWeeklyReport,
-                                                categoryTitle);
+                                                categoryID);
 	}
 
     public void function createNewRecord()
@@ -43,7 +43,7 @@ component RecordDAOTests extends = "mxunit.framework.TestCase"
                                                 eventTime,
                                                 recordTime,
                                                 inWeeklyReport,
-                                                categoryTitle);
+                                                categoryID);
         testRecordDAO = new dotlog.tests.server.DAOTestAdapter(recordDAO);
 
         try {

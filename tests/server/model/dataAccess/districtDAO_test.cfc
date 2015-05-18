@@ -8,7 +8,7 @@ component DistrictDAOTests extends = "mxunit.framework.TestCase"
 	districtID = 1;
 	districtName = "testDistrict1";
 	enabled = 1;
-	regionName = "testRegion";
+	regionID = 120;
 
 	public void function setUp()
 	{
@@ -16,7 +16,7 @@ component DistrictDAOTests extends = "mxunit.framework.TestCase"
 		districtDAO = new dotlog.model.dataAccess.districtDAO(datasource);
 		testDistrictDAO = new dotlog.tests.server.DAOTestAdapter(districtDAO);
 		testDistrict = new dotlog.model.beans.district(districtName,
-													regionName,
+													regionID,
 													enabled);
 	}
 
@@ -33,7 +33,7 @@ component DistrictDAOTests extends = "mxunit.framework.TestCase"
 	public void function updateDistrict()
 	{
 		testDistrict = new dotlog.model.beans.district(districtName,
-													regionName,
+													regionID,
 													enabled,
 													districtID);
 		assertTrue(testDistrictDAO.save(testDistrict));

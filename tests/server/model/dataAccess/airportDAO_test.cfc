@@ -4,11 +4,11 @@ component AirportDAOTests extends = "mxunit.framework.TestCase"
 	DSuser = " ";
 	DSpasswd = " ";
 
-	AirportCode = "test";
-	hubCode = "test";
-	airportName = "A test port";
+	AirportCode = "unit";
+	hubCode = "unit test";
+	airportName = "A unit test port";
 	enabled = 1;
-	districtName = "testDistrict";
+	districtID = 93;
 
 	public void function setUp()
 	{
@@ -18,7 +18,7 @@ component AirportDAOTests extends = "mxunit.framework.TestCase"
 		testAirport = new dotlog.model.beans.airport(AirportCode,
 													hubCode,
 													airportName,
-													districtName,
+													districtID,
 													enabled);
 	}
 
@@ -37,7 +37,7 @@ component AirportDAOTests extends = "mxunit.framework.TestCase"
 		testAirport = new dotlog.model.beans.airport(AirportCode,
 													hubCode,
 													airportName,
-													districtName,
+													districtID,
 													enabled);
 		assertTrue(testAirportDAO.save(testAirport));
 	}
