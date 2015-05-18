@@ -50,7 +50,7 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 							eventTime = result["event_time"][1],
 							recordTime = result["record_time"][1],
 							inWeeklyReport = result["in_weekly_report"][1],
-							categoryTitle = result["category_id"][1],
+							categoryID = result["category_id"][1],
 							recordID = result["record_id"][1]);
 		} else { 
 			throw(message = "record does not exist");
