@@ -35,12 +35,12 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
     {
         recordID = 669; // TODO: find a good way to get a value that exists from database, wrap an insert into a transaction?
 
-        searchStruct = { id = recordID };
+        searchStruct = { recordID = recordID };
         
-        resultFromService = testRecordService.getRecordByID(searchStruct.id);
-        resultFromDAO = testRecordDAO.search(searchStruct);
+        resultFromService = testRecordService.getRecordByID(searchStruct.recordID);
+        resultFromGW = testRecordGW.filter(searchStruct);
 
-        assertEquals(resultFromService.getRecordText(), resultFromDAO.getRecordText());
+        assertEquals(resultFromService.getRecordText(), resultFromGW[1].getRecordText());
     }
 
     public void function recordsByAirportCode()
