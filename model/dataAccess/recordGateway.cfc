@@ -13,7 +13,7 @@ component RecordGateway extends = "dotlog.model.dataAccess.gateway"
 		var queryService = new query();
 		queryService.setName("fetchRecords");
 
-		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_title "
+		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_id "
 						& " FROM DL_RECORDS "
 						& " WHERE 1 = 1 ";
 
@@ -27,8 +27,8 @@ component RecordGateway extends = "dotlog.model.dataAccess.gateway"
 				sqlStringRecords &= " AND LOWER(record_text) LIKE LOWER(:keyword)";
 			}
 			if ( structKeyExists(searchFilter, "categoryTitle") ) {
-				queryService.addParam(name = "category_title", value = "%"&arguments.searchFilter.categoryTitle&"%", cfsqltype = "cf_sql_varchar");	
-				sqlStringRecords &= " AND LOWER(category_title) LIKE LOWER(:category_title)";
+				queryService.addParam(name = "category_id", value = "%"&arguments.searchFilter.categoryTitle&"%", cfsqltype = "cf_sql_varchar");	
+				sqlStringRecords &= " AND LOWER(category_id) LIKE LOWER(:category_id)";
 			}
 			if ( structKeyExists(searchFilter, "airportCode") ) {
 				queryService.addParam(name = "faa_code", value = "%"&arguments.searchFilter.airportCode&"%", cfsqltype = "cf_sql_varchar");	
@@ -61,7 +61,7 @@ component RecordGateway extends = "dotlog.model.dataAccess.gateway"
 							eventTime = result["event_time"][ii],
 							recordTime = result["record_time"][ii],
 							inWeeklyReport = result["in_weekly_report"][ii],
-							categoryTitle = result["category_title"][ii],
+							categoryID = result["category_id"][ii],
 							recordID = result["record_id"][ii]);
 			 arrayAppend(recordObjects, recordObject);
 		}
