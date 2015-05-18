@@ -3,7 +3,7 @@ component AirportTest extends = "mxunit.framework.TestCase"
 	AirportCode = "AUK";
 	hubCode = "Northern";
 	airportName = "Alakanuk";
-	districtName = "Tok";
+	districtID = 3;
 	enabled = 1;
 
 	public void function setUp()
@@ -11,7 +11,7 @@ component AirportTest extends = "mxunit.framework.TestCase"
 		testAirport = new dotlog.model.beans.airport(AirportCode,
 													hubCode,
 													airportName,
-													districtName,
+													districtID,
 													enabled);
 	}
 
@@ -38,7 +38,7 @@ component AirportTest extends = "mxunit.framework.TestCase"
 
 	public void function getDistrict() 
 	{
-		expected = districtName;
+		expected = districtID;
 		actual = testAirport.getDistrictName();
 		assertEquals(expected, actual);
 	}
