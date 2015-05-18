@@ -29,8 +29,13 @@ component RecordService
 
 	public dotlog.model.beans.record function getRecordByID(required numeric recordID)
 	{
-		var searchStruct = { id = arguments.recordID };
-		return variables.recordDAO.search(searchStruct);
+		var record = '';
+		var searchStruct = { recordID = arguments.recordID };
+		var result = variables.recordGW.filter(searchStruct);
+		if ( arrayLen(result) ) {
+			record = result[1];
+		}
+		return record;
 	}
 
 	public array function search(required struct searchParam)

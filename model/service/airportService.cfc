@@ -17,15 +17,20 @@ component AirportService
 		return variables.instance.airportDAO.save(arguments.airport);
 	} 
 
-	public array function getChildAirports(required string airportCode)
+	public array function getSpokeAirports(required string airportCode)
 	{
-		var searchFilter = { parentAirportCode = arguments.airportCode, getChildren = 1 };
+		var searchFilter = { hubCode = arguments.airportCode };
 		return variables.instance.airportGW.filter(searchFilter);
 	}
 
 	public dotlog.model.beans.airport function getAirportByAirportCode(required string airportCode)
 	{
-		var searchFilter = { airportCode = arguments.airportCode };
-		return variables.instance.airportDAO.search(searchFilter);
+		var airport = '';
+		var searchStruct = { airportCode = arguments.airportCode };
+		var result = variables.instance.airportGW.filter(searchStruct);
+		if ( arrayLen(result) ) {
+			airport = result[1];
+		}
+		return airport;
 	}
 }
