@@ -24,26 +24,26 @@ component Airport
 
     public string function getAirportCode()
     {
-    return variables.instance.airportCode;
+        return variables.instance.airportCode;
     }
 
     public string function getHubCode()
     {
-    return variables.instance.hubCode;
+        return variables.instance.hubCode;
     }
 
     public string function getAirportName()
     {
-    return variables.instance.airportName;
+        return variables.instance.airportName;
     }
 
     public numeric function getDistrictName()
     {
-    return variables.instance.districtID;
+        return variables.instance.districtID;
     }
 
     public boolean function isEnabled() 
     {
-    return variables.instance.enabled;
+        return variables.instance.enabled;
     }
 }
