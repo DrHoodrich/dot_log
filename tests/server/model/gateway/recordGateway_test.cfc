@@ -11,6 +11,7 @@ component RecordGatewayTest extends = "mxunit.framework.TestCase"
     recordTime = CreateODBCDateTime( now() );
     inWeeklyReport = 1;
     categoryID = 428;
+    recordID = 681;
 
 	public void function setUp()
 	{
@@ -18,6 +19,14 @@ component RecordGatewayTest extends = "mxunit.framework.TestCase"
         recordGW = new dotlog.model.dataAccess.recordGateway(datasource);
         testRecordGW = new dotlog.tests.server.gatewayTestAdapter(recordGW);
 	}
+
+    public void function recordsByID()
+    {
+        expected = 1;
+        searchStruct = { recordID = recordID };
+        actual = arrayLen(testRecordGW.filter(searchStruct));
+        assertEquals(expected, actual);
+    }
 
     public void function recordsByUsername()
     {

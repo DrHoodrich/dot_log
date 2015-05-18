@@ -18,6 +18,10 @@ component RecordGateway extends = "dotlog.model.dataAccess.gateway"
 						& " WHERE 1 = 1 ";
 
 		if ( !structIsEmpty(searchFilter) ) {
+			if ( structKeyExists(searchFilter, "recordID") ) {
+				queryService.addParam(name = "recordID", value = arguments.searchFilter.recordID, cfsqltype = "cf_sql_number");	
+				sqlStringRecords &= " AND record_id = :recordID";
+			}
 			if ( structKeyExists(searchFilter, "username") ) {
 				queryService.addParam(name = "username", value = "%"&arguments.searchFilter.username&"%", cfsqltype = "cf_sql_varchar");	
 				sqlStringRecords &= " AND username LIKE :username";
