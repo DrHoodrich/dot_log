@@ -18,21 +18,19 @@ component DistrictGateway extends = "dotlog.model.dataAccess.gateway"
 		if ( !structIsEmpty(searchFilter) ) {
 			queryService.setName("filterDistricts");
 			if ( structKeyExists(arguments.searchFilter, "districtID") ) {
-				queryHandler.addParam(name = "districtID", value = arguments.searchFilter.districtID, cfsqltype = "cf_sql_number");
+				queryService.addParam(name = "districtID", value = arguments.searchFilter.districtID, cfsqltype = "cf_sql_number");
 				sqlString &= " AND district_id = :districtID ";
 			}
 			if ( structKeyExists(searchFilter, "districtName") ) {
-				queryService.setName("fetchDistrict");
-				queryService.addParam(name = "districtName", value = arguments.searchFilter.parentAirportCode, cfsqltype = "cf_sql_varchar");
+				queryService.addParam(name = "districtName", value = arguments.searchFilter.districtName, cfsqltype = "cf_sql_varchar");
 				sqlString &= " AND district_name = :districtName";
 			}
 			if ( structKeyExists(searchFilter, "regionID") ) {
-				queryService.setName("fetchRegion");
 				queryService.addParam(name = "regionID", value = arguments.searchFilter.regionID, cfsqltype = "cf_sql_varchar");
 				sqlString &= " AND region_id = :regionID";
 			}
 			if ( structKeyExists(searchFilter, "enabled") ) {
-				queryService.addParam(name = "enabled", value = 1, cfsqltype = "cf_sql_number");
+				queryService.addParam(name = "enabled", value = arguments.searchFilter.enabled, cfsqltype = "cf_sql_number");
 				sqlString &= " AND enabled = :enabled";
 			}
 		} else {
