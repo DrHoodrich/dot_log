@@ -13,7 +13,7 @@
 		FORM.enabled = 1;
 		newUser = new dotlog.model.beans.user(argumentCollection=FORM);
 		if ( application.userService.saveUser(newUser) ) {
-			writeOutput('<h2>New user "' & newUser.getUsername() & '" Added</h2>');
+			writeOutput('<h2>New User "' & newUser.getUsername() & '" Added</h2>');
 		} else {
 			writeOutput('Error creating user ' & newUser.getUsername());
 		}
