@@ -32,6 +32,9 @@ component AirportGateway extends = "dotlog.model.dataAccess.gateway"
 			if ( structKeyExists(searchFilter, "districtID") ) {
 				queryService.addParam(name = "districtID", value = arguments.searchFilter.districtID, cfsqltype = "cf_sql_number");
 				sqlString &= " AND district_id = :districtID";
+				if ( structKeyExists(searchFilter,"hubAirports") ) {
+					sqlString &= " AND hub_code = faa_code";
+				}
 			}
 			if ( structKeyExists(searchFilter, "enabled") ) {
 				queryService.addParam(name = "enabled", value = arguments.searchFilter.enabled, cfsqltype = "cf_sql_number");

@@ -25,7 +25,7 @@ component AirportService
 
 	public array function getHubAirportsByDistrictID(required numeric districtID)
 	{
-		var searchFilter = { districtID = arguments.districtID };
+		var searchFilter = { hubAirports = '', districtID = arguments.districtID };
 		return variables.instance.airportGW.filter(searchFilter);
 	}
 
