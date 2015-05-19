@@ -61,10 +61,16 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
 
     public void function search()
     {
-        fail("Todo");
+        var airportCode = "test";
+
+        searchStruct = { airportCode = airportCode, username = username };
+        resultFromGW = testRecordGW.filter(searchStruct);
+        resultFromService = testRecordService.search(searchStruct);
+
+        assertEquals(resultFromGW, resultFromService);
     }
 
-    public void function save()
+    public void function saveRecord()
     {
         fail("Todo");
     }
