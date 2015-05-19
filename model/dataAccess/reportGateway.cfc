@@ -33,7 +33,6 @@ component ReportGateway extends = "dotlog.model.dataAccess.gateway"
 			if ( structKeyExists(searchFilter, "date") ) {
 				queryService.addParam(name = "date", value = arguments.searchFilter.date, cfsqltype = "cf_sql_timestamp");
 				sqlString &= " AND begin_date >= :date";
-
 			}
 			if ( structKeyExists(searchFilter,"startDate") && structKeyExists(searchFilter,"endDate") ) {
 				queryService.addParam(name = "startDate", value = arguments.searchFilter.startDate, cfsqltype = "cf_sql_timestamp");
@@ -44,6 +43,15 @@ component ReportGateway extends = "dotlog.model.dataAccess.gateway"
 			if ( structKeyExists(searchFilter, "weeklyReport") ) {
 				queryService.addParam(name = "weeklyReport", value = arguments.searchFilter.weeklyReport, cfsqltype = "cf_sql_number");	
 				sqlString &= " AND weekly_report = :weeklyReport";
+			}
+			if ( structKeyExists(arguments.searchFilter, "lastReport") ) {
+				if ( structKeyExists(arguments.searchFilter, "airportCode") ) {
+					sqlString = "SELECT report_id, username, airport_code, begin_date, end_date, weekly_report "
+								& " FROM ( SELECT report_id, username, airport_code, begin_date, end_date, weekly_report "
+									   & " FROM DL_REPORTS "
+									   & " ORDER BY report_id DESC ) " 
+	                            & " WHERE ROWNUM <= 1";
+	            }
 			}
 		} else {
 			queryService.setName("getAllReports");

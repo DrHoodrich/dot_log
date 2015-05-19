@@ -8,42 +8,6 @@ component ReportDAO extends = "dotlog.model.dataAccess.DAO"
 		return this;
 	}
 
-	public dotlog.model.beans.report function search(required struct searchFilter)
-	{
-		var queryHandler = new query();
-
-		queryHandler.setName("fetchReportByAirportCode");
-
-		sqlString = "SELECT report_id, username, airport_code, begin_date, end_date, weekly_report " 
-					& " WHERE 1 = 1";
-
-		if ( structKeyExists(arguments.searchFilter, "lastReport") ) {
-			if ( structKeyExists(arguments.searchFilter, "airportCode") ) {
-				sqlString = "SELECT report_id, username, airport_code, begin_date, end_date, weekly_report "
-							& " FROM ( SELECT report_id, username, airport_code, begin_date, end_date, weekly_report "
-								   & " FROM DL_REPORTS "
-								   & " ORDER BY report_id DESC ) " 
-                            & " WHERE ROWNUM <= 1";	
-			}
-		}
-
-		var queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
-		var result = queryResult.getResult();
-		writeDump(result);
-		var report = '';
-		if (result.RecordCount) {
-			new dotlog.model.beans.report(username = result["username"][1],
-											airportCode = result["airport_code"][1],
-											beginDate = result["begin_date"][1],
-											endDate = result["end_date"][1],
-											weeklyReport = result["weekly_report"][1],
-											recordID = result["report_id"][1]);
-		} else {
-			throw(type = "Exception", message = "No reports.");
-		}
-		return report;
-	}
-
 	public boolean function save(required dotlog.model.beans.report report)
 	{
 		if ( reportExists(arguments.report) ) {
