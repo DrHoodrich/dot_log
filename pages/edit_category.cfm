@@ -10,21 +10,34 @@
   <!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
+<cffunction name="selectCategoryTitle">
+  <cfset categories = #application.categoryService.getAllCategories()#>
+  <cfform name="editCategory" action="updateCategory.cfm" method="post">
+    <table>
+      <tr>
+        <td>Category</td>
+        <td>
+          <cfselect name="categoryTitle">
+            <option value="-1"/>--Category--</option>
+            <cfloop index="category" array="#categories#">
+              <cfoutput><option value="#category.getCategoryID()#">#category.getCategoryTitle()#</cfoutput>
+            </cfloop>
+          </cfselect>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><cfinput type="submit" name="selectCategory_button" value="Select"></cfinput></td>
+      </tr>
+    </table>
+  </cfform>
+</cffunction>
+
 <cfscript>
-	allCategories = application.categoryService.getAllCategories();
+  if ( !structKeyExists(FORM, "categoryTitle") ) {
+    selectCategoryTitle();
+  }
 </cfscript>
-  
-<cfform name="search" action="updateCategory.cfm" method="post">
-  Category to Edit:<cfselect name="categoryTitle" id="categoryTitle">
-    <cfscript>
-          writeOutput('<option value="none"></option>');
-          for (ii = 1; ii <= arrayLen(allCategories); ++ii) {
-            writeOutput('<option value=#allCategories[ii].getCategoryTitle()#>#allCategories[ii].getCategoryTitle()#</option>');
-          }
-    </cfscript>
-  </cfselect><br>
-  <cfinput type="submit" name="selectCategory_button" id="searchRecords" value="Edit"></cfinput>
-</cfform>
   <!-- TemplateEndEditable -->
 <!-- END YOUR CONTENT HERE -->
 <cfinclude template="/dotlog/includes/footer.cfm">
