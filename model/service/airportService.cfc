@@ -23,6 +23,12 @@ component AirportService
 		return variables.instance.airportGW.filter(searchFilter);
 	}
 
+	public array function getHubAirportsByDistrictID(required numeric districtID)
+	{
+		var searchFilter = { districtID = arguments.districtID };
+		return variables.instance.airportGW.filter(searchFilter);
+	}
+
 	public dotlog.model.beans.airport function getAirportByAirportCode(required string airportCode)
 	{
 		var airport = '';
