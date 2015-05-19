@@ -4,7 +4,7 @@ component CategoryServiceTests extends = "mxunit.framework.TestCase"
     DSuser = " ";
     DSpasswd = " ";
 
-    categoryTitle = "Fire";
+    categoryTitle = "Unit Test";
     categoryID = 428;
     description = "burny";
     enabled = 1;
@@ -28,7 +28,9 @@ component CategoryServiceTests extends = "mxunit.framework.TestCase"
 
     public void function saveCategory()
     {
-        fail("Should be working, need to correlate service with DAO.");
+        expected = testCategoryDAO.save(testCategory);
+        actual = testCategoryService.saveCategory(testCategory);
+        assert((expected > 0) && (actual > 0));
     }
 
     public void function getCategoryByTitle()
