@@ -10,7 +10,7 @@ component RecordService
 		return this;
 	}
 
-	public boolean function save(required dotlog.model.beans.record record)
+	public boolean function saveRecord(required dotlog.model.beans.record record)
 	{
 		return variables.recordDAO.save(arguments.record);
 	}
