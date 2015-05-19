@@ -41,9 +41,9 @@ component DistrictService
 		return district;
 	}
 
-	public array function getDistrictsByRegion(required string regionName)
+	public array function getDistrictsByRegionID(required numeric regionID)
 	{
-		var searchFilter = { regionName = arguments.regionName };
+		var searchFilter = { regionID = arguments.regionID };
 		return variables.instance.districtGW.filter(searchFilter);
 	}
 
