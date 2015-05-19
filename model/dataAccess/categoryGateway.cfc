@@ -41,11 +41,11 @@ component CategoryGateway extends = "dotlog.model.dataAccess.gateway"
 		var result = queryResult.getResult();
 		var categorys = [];
 		for (var ii = 1; ii <= result.RecordCount; ++ii) {
-			 category = new dotlog.model.beans.category(categoryTitle = result["category_title"][1],
-															description = result["description"][1],
-															enabled = result["enabled"][1],
-															inWeeklyReport = result["in_weekly_report"][1],
-															categoryID = result["category_id"][1]);
+			 category = new dotlog.model.beans.category(categoryTitle = result["category_title"][ii],
+															description = result["description"][ii],
+															enabled = result["enabled"][ii],
+															inWeeklyReport = result["in_weekly_report"][ii],
+															categoryID = result["category_id"][ii]);
 			 arrayAppend(categorys, category);
 		}
 		return categorys;
