@@ -14,8 +14,13 @@ component ReportService
 
 	public dotlog.model.beans.report function getLastReport(required string airportCode)
 	{
-		searchFilter = { lastReport = True, airportCode = airportCode };
-		return variables.instance.reportDAO.search(searchFilter);
+		var report = '';
+		var searchFilter = { lastReport = '', airportCode = arguments.airportCode };
+		var result = variables.instance.reportGW.filter(searchFilter);
+		if ( arrayLen(result) ) {
+			report = result[1];
+		}
+		return report;
 	}
 
 	public boolean function saveReport(required dotlog.model.beans.report report)
@@ -25,6 +30,7 @@ component ReportService
 
 	public array function getHubReports(required string airportCode)
 	{
-		return variables.instance.reportGW.getHubReports(arguments.airportCode);
+		searchFilter = { airportCode = arguments.airportCode };
+		return variables.instance.reportGW.filter(searchFilter);
 	}
 }
