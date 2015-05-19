@@ -10,7 +10,7 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 <cfscript>
-    airports = application.airportService.getChildAirports(session.user.getAirportCode());
+    airports = application.airportService.getSpokeAirports(session.user.getAirportCode());
     categories = application.categoryService.getAllCategories();
     reports = application.reportService.getHubReports(session.user.getAirportCode());    
     lastReport = application.reportService.getLastReport(session.user.getAirportCode());

@@ -11,19 +11,19 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	childAirports = application.airportService.getChildAirports(session.user.getAirportCode());
+	childAirports = application.airportService.getSpokeAirports(session.user.getAirportCode());
 
 	airports = [];
 
 	for (ii = 1; ii <= arrayLen(childAirports); ++ii) {
-		temp = application.airportService.getChildAirports(childAirports[ii].getAirportCode());
+		temp = application.airportService.getSpokeAirports(childAirports[ii].getAirportCode());
 		arrayPrepend(temp, childAirports[ii]);
 		arrayAppend(airports, temp);
 		for (jj = 2; jj <= arrayLen(temp); ++jj) {
-			temp2 = application.airportService.getChildAirports(temp[jj].getAirportCode());
+			temp2 = application.airportService.getSpokeAirports(temp[jj].getAirportCode());
 			arrayAppend(airports, temp2);
 			for (kk = 1; kk <= arrayLen(temp2); ++kk) {
-				temp3 = application.airportService.getChildAirports(temp2[kk].getAirportCode());
+				temp3 = application.airportService.getSpokeAirports(temp2[kk].getAirportCode());
 				arrayAppend(airports, temp3);
 			}
 		}
