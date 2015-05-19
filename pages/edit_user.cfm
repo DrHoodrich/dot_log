@@ -10,7 +10,7 @@
 
 <cffunction name="getUserRegionID">
 	<cfset regions = "#application.regionService.getAllRegions()#" />
-	<cfform name="createUser" action="edit_user.cfm" method="post">
+	<cfform name="editUser" action="edit_user.cfm" method="post">
 		<table>
 			<tr>
 				<td>User's Region</td>
@@ -33,7 +33,7 @@
 
 <cffunction name="getUserDistrictID">
 	<cfset districts = "#application.districtService.getDistrictsByRegionID(FORM.userRegionID)#" />
-	<cfform name="createUser" action="edit_user.cfm" method="post">
+	<cfform name="editUser" action="edit_user.cfm" method="post">
 		<table>
 			<tr>
 				<td>User's District</td>
@@ -56,7 +56,7 @@
 
 <cffunction name="getUserHub">
 	<cfset hubs = "#application.airportService.getHubAirportsByDistrictID(FORM.userDistrictID)#" />
-	<cfform name="createUser" action="edit_user_action.cfm" method="post">
+	<cfform name="editUser" action="edit_user.cfm" method="post">
 		<table>
 			<tr>
 				<td>User's Hub</td>
@@ -77,8 +77,102 @@
 	</cfform>
 </cffunction>
 
+<cffunction name="getUser">
+	<cfset users = "#application.userService.getUsersByAirportCode(FORM.userHubCode)#" />
+	<cfform name="editUser" action="edit_user.cfm" method="post">
+		<table>
+			<tr>
+				<td>User</td>
+				<td>
+					<cfselect name="username">
+						<option value="-1"/>--user--</option>
+						<cfloop index="user" array="#users#">
+							<cfoutput><option value="#user.getUsername()#">#user.getFullName()#</cfoutput>
+						</cfloop>
+					</cfselect>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><cfinput type="submit" name="selectUser_button" value="Select"></td>
+			</tr>
+		</table>
+	</cfform>
+</cffunction>
+
+<cffunction name="editUserDetails">
+	<cfset user = "#application.userService.getUserByUsername(FORM.username)#" />
+	<cfform name="editUser" action="saveUser.cfm" method="post">
+		<table>
+			<tr>
+				<td>Username</td>
+				<td><cfoutput><strong>#user.getUsername()#</strong></cfoutput></td>
+				<cfinput type="hidden" name="username" value="#user.getUsername()#"/>
+			</tr>
+			<tr>
+				<td>Assigned Hub</td>
+				<td><cfoutput><strong>#user.getAirportCode()#</strong></cfoutput></td>
+				<cfinput type="hidden" name="airportCode" value="#user.getAirportCode()#"/>
+			</tr>
+			<tr>
+				<td>First Name</td>
+				<td><cfinput type="text" name="firstName" value="#user.getFirstName()#"/></td>
+			</tr>
+			<tr>
+				<td>Last Name</td>
+				<td><cfinput type="text" name="lastName" value="#user.getLastName()#"></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td><cfinput type="text" name="emailAddr" value="#user.getEmailAddr()#"></td>
+			</tr>
+			<tr>
+				<td>Account Type</td>
+				<td>
+					<cfselect name = "permissions">
+						<cfif user.getPermissions() IS True>
+							<cfoutput><option value=#user.getPermissions()#>Admin</option></cfoutput>
+							<option value=0>User</option>
+						<cfelse>
+							<cfoutput><option value=#user.getPermissions()#>User</option></cfoutput>
+							<option value=1>Admin</option>
+						</cfif>
+					</cfselect>
+				</td>
+			</tr>
+			<tr>
+				<td>Active</td>
+				<td><cfinput type="checkbox" name="enabled" value="#user.isEnabled()#" checked="#user.isEnabled()#" id="enabled"/></td>
+			</tr>
+			<tr>
+				<td>Regional Manager</td>
+				<td>
+					<cfselect name="regionManager">
+						<option value=0>No</option>
+						<option value=1>Yes</option>
+					</cfselect>
+				</td>
+			</tr>
+			<tr>
+				<td>District Manager</td>
+				<td>
+					<cfselect name="districtManager">
+						<option value=0>No</option>
+						<option value=1>Yes</option>
+					</cfselect>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><cfinput type="submit" name="updateUser_button" value="Update User"></td>
+			</tr>
+		</table>
+	</cfform>
+</cffunction>
+
 <cfscript>
-	if ( !structKeyExists(FORM, "userRegionID")  && !structKeyExists(FORM, "userDistrictID")  && !structKeyExists(FORM, "userHubCode")) {
+	writeDump(FORM);
+	if ( !structKeyExists(FORM, "userRegionID")  && !structKeyExists(FORM, "userDistrictID")  && !structKeyExists(FORM, "userHubCode") && !structKeyExists(FORM, "username")) {
 		getUserRegionID();
 	}
 	if ( !structKeyExists(FORM, "userDistrictID") && structKeyExists(FORM, "userRegionID") ) {
@@ -87,8 +181,11 @@
 	if ( !structKeyExists(FORM, "userHubCode") && structKeyExists(FORM, "userDistrictID") ) {
 		getUserHub();
 	}
-	if ( structKeyExists(FORM, "userHubCode") ) {
-		getUserDetails();
+	if ( structKeyExists(FORM, "userHubCode") && !structKeyExists(FORM, "userDistrictID") ) {
+		getUser();
+	}
+	if ( structKeyExists(FORM, "username") && !structKeyExists(FORM, "userHubCode") ) {
+		editUserDetails();
 	}
 </cfscript>
 <cfinclude template="/dotlog/includes/footer.cfm">
