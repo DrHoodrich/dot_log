@@ -1,4 +1,5 @@
-component ReportTest extends = "mxunit.framework.TestCase" {
+component ReportTest extends = "mxunit.framework.TestCase" 
+{
 	username = "tester";
     beginDate = dateFormat(now(), 'yyyy-mm-dd');
     endDate = dateFormat(now(), 'yyyy-mm-dd');
