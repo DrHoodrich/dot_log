@@ -28,10 +28,4 @@ component UserService
 		var searchParam = { username = arguments.username };
 		return variables.instance.userDAO.search(searchParam);
 	}
-
-	public query function getUsersByLastName(required string lastNameFilter)
-	{
-		var queryFilter = { lastname = arguments.lastNameFilter };
-		return variables.instance.userGW.filter(queryFilter);
-	}
 }
