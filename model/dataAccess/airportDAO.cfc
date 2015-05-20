@@ -56,7 +56,7 @@ component AirportDAO extends = "dotlog.model.dataAccess.DAO"
 		queryHandler.addParam(name = "faa_code", value = arguments.airport.getAirportCode(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "hub_code", value = arguments.airport.getHubCode(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "airport_name", value = arguments.airport.getAirportName(), cfsqltype = "cf_sql_varchar");
-		queryHandler.addParam(name = "districtID", value = arguments.airport.getDistrictName(), cfsqltype = "cf_sql_varchar");
+		queryHandler.addParam(name = "districtID", value = arguments.airport.getDistrictID(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = arguments.airport.isEnabled(), cfsqltype = "cf_sql_number");
 
 		return queryHandler;

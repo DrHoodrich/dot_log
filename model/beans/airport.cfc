@@ -37,7 +37,7 @@ component Airport
         return variables.instance.airportName;
     }
 
-    public numeric function getDistrictName()
+    public numeric function getDistrictID()
     {
         return variables.instance.districtID;
     }
