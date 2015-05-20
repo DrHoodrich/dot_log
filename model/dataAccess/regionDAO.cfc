@@ -68,7 +68,7 @@ component RegionDAO extends = "dotlog.model.dataAccess.DAO"
 	{
 		var queryHandler = getQueryHandler("updateRegion", arguments.region);
 		sqlString = "UPDATE DL_REGIONS SET "
-					& " region_name = :region_name "
+					& " region_name = :regionName "
 					& "WHERE region_id = :regionID";
 		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
