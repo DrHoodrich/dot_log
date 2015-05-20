@@ -23,6 +23,12 @@ component AirportService
 		return variables.instance.airportGW.filter(searchFilter);
 	}
 
+	public array function getHubAndSpokesAirports(required string airportCode)
+	{
+		var searchFilter = { hubCode = arguments.airportCode, spokes = '' };
+		return variables.instance.airportGW.filter(searchFilter);
+	}
+
 	public array function getHubAirportsByDistrictID(required numeric districtID)
 	{
 		var searchFilter = { hubAirports = '', districtID = arguments.districtID };
