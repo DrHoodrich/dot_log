@@ -12,7 +12,7 @@
 	}
 	if ( structKeyExists(FORM, 'createSpokeAirport_button') ) {
 		FORM.enabled = 1;		
-	} else if ( structKeyExists(FORM, 'saveAirport_button') ) {
+	} else if ( structKeyExists(FORM, 'editAirport_button') ) {
 		if ( !structKeyExists(FORM,"enabled") ) {
 			FORM.enabled = 0;
 		}
