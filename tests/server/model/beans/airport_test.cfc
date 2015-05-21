@@ -36,10 +36,10 @@ component AirportTest extends = "mxunit.framework.TestCase"
 		assertEquals(expected, actual);
 	}
 
-	public void function getDistrict() 
+	public void function getDistrictID() 
 	{
 		expected = districtID;
-		actual = testAirport.getDistrictName();
+		actual = testAirport.getDistrictID();
 		assertEquals(expected, actual);
 	}
 
