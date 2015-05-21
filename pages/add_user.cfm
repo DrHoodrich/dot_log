@@ -11,7 +11,7 @@
 
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
-<cffunction name="getUserRegionID">
+<cffunction name="getUserRegionID" output="true" access="public" returnType="void">
 	<cfset regions = "#application.regionService.getAllRegions()#" />
 	<cfform name="createUser" action="add_user.cfm" method="post">
 		<table>
@@ -34,8 +34,9 @@
 	</cfform>
 </cffunction>
 
-<cffunction name="getUserDistrictID">
-	<cfset districts = "#application.districtService.getDistrictsByRegionID(FORM.userRegionID)#" />
+<cffunction name="getUserDistrictID" output="true" access="public" returnType="void">
+	<cfargument name="regionID" type="numeric" required="true" default="" />
+	<cfset districts = "#application.districtService.getDistrictsByRegionID(arguments.regionID)#" />
 	<cfform name="createUser" action="add_user.cfm" method="post">
 		<table>
 			<tr>
@@ -57,8 +58,9 @@
 	</cfform>
 </cffunction>
 
-<cffunction name="getUserHub">
-	<cfset hubs = "#application.airportService.getHubAirportsByDistrictID(FORM.userDistrictID)#" />
+<cffunction name="getUserHub" output="true" access="public" returnType="void">
+	<cfargument name="districtID" type="numeric" required="true" default="" />
+	<cfset hubs = "#application.airportService.getHubAirportsByDistrictID(arguments.districtID)#" />
 	<cfform name="createUser" action="add_user.cfm" method="post">
 		<table>
 			<tr>
@@ -80,9 +82,10 @@
 	</cfform>
 </cffunction>
 
-<cffunction name="getUserDetails">
+<cffunction name="getUserDetails" output="true" access="public" returnType="void">
+	<cfargument name="hubCode" type="string" required="true" default="" />
 	<cfform name="createUser" action="saveUser.cfm" method="post">
-		<cfinput type="hidden" name="airportCode" value="#FORM.userHubCode#"/>
+		<cfinput type="hidden" name="airportCode" value="#arguments.HubCode#"/>
 		<table>
 			<tr>
 				<td>Username</td>
@@ -140,13 +143,13 @@
 		getUserRegionID();
 	}
 	if ( !structKeyExists(FORM, "userDistrictID") && structKeyExists(FORM, "userRegionID") ) {
-		getUserDistrictID();
+		getUserDistrictID(FORM.userRegionID);
 	}
 	if ( !structKeyExists(FORM, "userHubCode") && structKeyExists(FORM, "userDistrictID") ) {
-		getUserHub();
+		getUserHub(FORM.userDistrictID);
 	}
 	if ( structKeyExists(FORM, "userHubCode") ) {
-		getUserDetails();
+		getUserDetails(FORM.userHubCode);
 	}
 </cfscript>
 

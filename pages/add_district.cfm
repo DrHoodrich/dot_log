@@ -10,7 +10,7 @@
 	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
-<cffunction name="getDistrictRegionID">
+<cffunction name="getDistrictRegionID" output="true" access="public" returnType="void">
 	<cfset regions = "#application.regionService.getAllRegions()#" />
 	<cfform name="createDistrict" action="add_district.cfm" method="post">
 		<table>
@@ -33,9 +33,10 @@
 	</cfform>
 </cffunction>
 
-<cffunction name="setDistrictValues">
+<cffunction name="setDistrictValues" output="true" access="public" returnType="void">
+	<cfargument name="regionID" type="numeric" required="true" default="" />
 	<cfform name="createDistrict" action="saveDistrict.cfm" method="post">
-		<cfinput type="hidden" name="regionID" value="#FORM.districtRegionID#"/>
+		<cfinput type="hidden" name="regionID" value="#arguments.regionID#"/>
 		<cfinput type="hidden" name="enabled" value="1"/>
 		<table>
 			<tr>
@@ -55,7 +56,7 @@
 		getDistrictRegionID();
 	}	
 	if ( structKeyExists(FORM, "districtRegionID") ) {
-		setDistrictValues();
+		setDistrictValues(FORM.districtRegionID);
 	}	
 </cfscript>
 	<!-- TemplateEndEditable -->

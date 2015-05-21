@@ -11,7 +11,7 @@
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 
-<cffunction name="setRegionValues">
+<cffunction name="setRegionValues" output="true" access="public" returnType="void">
 	<cfform name="createRegion" action="saveRegion.cfm" method="post">
 		<cfinput type="hidden" name="enabled" value="1"/>
 		<table>

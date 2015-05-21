@@ -34,7 +34,8 @@
 </cffunction>
 
 <cffunction name="getAirportDistrictID">
-	<cfset districts = "#application.districtService.getDistrictsByRegionID(FORM.airportRegionID)#" />
+	<cfargument name="regionID" type="numeric" required="true" default="" />
+	<cfset districts = "#application.districtService.getDistrictsByRegionID(arguments.regionID)#" />
 	<cfform name="createAirport" action="add_airport.cfm" method="post">
 		<table>
 			<tr>
@@ -57,9 +58,10 @@
 </cffunction>
 
 <cffunction name="getAirportHub">
-	<cfset hubs = "#application.airportService.getHubAirportsByDistrictID(FORM.airportDistrictID)#" />
+	<cfargument name="districtID" type="numeric" required="true" default="" />
+	<cfset hubs = "#application.airportService.getHubAirportsByDistrictID(arguments.districtID)#" />
 	<cfform name="createAirport" action="add_airport.cfm" method="post">
-		<cfinput type="hidden" name="districtID" value="#FORM.airportDistrictID#"/>
+		<cfinput type="hidden" name="districtID" value="#arguments.districtID#"/>
 		<table>
 			<tr>
 				<td>Airport's Hub</td>
@@ -81,8 +83,9 @@
 </cffunction>
 
 <cffunction name="setHubAirportValues">
+	<cfargument name="districtID" type="numeric" required="true" default="" />
 	<cfform name="createAirport" action="saveAirport.cfm" method="post">
-		<cfinput type="hidden" name="districtID" value="#FORM.districtID#"/>
+		<cfinput type="hidden" name="districtID" value="#arguments.districtID#"/>
 		<cfinput type="hidden" name="enabled" value="1"/>
 		<table>
 			<tr>
@@ -102,9 +105,11 @@
 </cffunction>
 
 <cffunction name="setSpokeAirportValues">
+	<cfargument name="districtID" type="numeric" required="true" default="" />
+	<cfargument name="hubCode" type="string" required="true" default="" />
 	<cfform name="createAirport" action="saveAirport.cfm" method="post">
-		<cfinput type="hidden" name="districtID" value="#FORM.districtID#"/>
-		<cfinput type="hidden" name="hubCode" value="#FORM.airportHubCode#"/>
+		<cfinput type="hidden" name="districtID" value="#arguments.districtID#"/>
+		<cfinput type="hidden" name="hubCode" value="#arguments.hubCode#"/>
 		<cfinput type="hidden" name="enabled" value="1"/>
 		<table>
 			<tr>
@@ -128,16 +133,16 @@
 		getAirportRegionID();
 	}
 	if ( !structKeyExists(FORM, "airportDistrictID") && structKeyExists(FORM, "airportRegionID") ) {
-		getAirportDistrictID();
+		getAirportDistrictID(FORM.airportRegionID);
 	}
 	if ( !structKeyExists(FORM, "airportHubCode") && structKeyExists(FORM, "airportDistrictID") ) {
-		getAirportHub();
+		getAirportHub(FORM.airportDistrictID);
 	}
 	if ( structKeyExists(FORM, "airportHubCode") && FORM.airportHubCode == -1 ) {
-		setHubAirportValues();
+		setHubAirportValues(FORM.districtID);
 	}
 	if ( structKeyExists(FORM, "airportHubCode") && FORM.airportHubCode > 0) {
-		setSpokeAirportValues();
+		setSpokeAirportValues(districtID = FORM.districtID, hubCode = FORM.airportHubCode);
 	}
 </cfscript>
 	<!-- TemplateEndEditable -->
