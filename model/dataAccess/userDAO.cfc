@@ -8,43 +8,6 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		return this;
 	}
 
-	public dotlog.model.beans.user function search(required struct searchFilter)
-	{
-		var queryHandler = new query();
-
-		queryHandler.setName("fetchUserByUsername");
-		queryHandler.addParam(name = "username", value = searchFilter.username, cfsqltype = "cf_sql_varchar");
-
-		sqlString = "SELECT username, first_name, last_name, faa_code, user_permissions, enabled, district_manager, region_manager, email_addr "
-					& "FROM DL_USERS "
-					& "WHERE 1 = 1 ";
-
-		if ( !structIsEmpty(searchFilter) ) {
-			if ( structKeyExists(searchFilter, "username") ) {
-				queryHandler.addParam(name = "username", value = arguments.searchFilter.username, cfsqltype = "cf_sql_varchar");
-				sqlString &= " AND username = :username";
-			}
-		}
-
-		var queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
-		var result = queryResult.getResult();
-		var objUser = '';
-		if (result.RecordCount) {
-			objUser = new dotlog.model.beans.user(username = result["username"][1],
-														firstName= result["FIRST_NAME"][1],
-														lastName = result["LAST_NAME"][1],
-														airportCode = result["FAA_CODE"][1],
-														permissions = result["USER_PERMISSIONS"][1],
-														enabled = result["ENABLED"][1],
-														districtManager = result["DISTRICT_MANAGER"][1],
-														regionManager = result["REGION_MANAGER"][1],
-														emailAddr = result["EMAIL_ADDR"][1]);
-		} else {
-			throw(type="dotlog.model.errors.InvalidData", message="Unregistered DOTLog Username.");
-		}
-		return objUser;
-	}
-
 	public boolean function save(required dotlog.model.beans.user user)
 	{
 		if ( userExists(user) ) {

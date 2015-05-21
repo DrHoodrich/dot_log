@@ -8,33 +8,6 @@ component RegionDAO extends = "dotlog.model.dataAccess.DAO"
 		return this;
 	}
 
-	public dotlog.model.beans.region function search(required struct searchFilter)
-	{
-		var queryHandler = new query();
-
-		queryHandler.setName("searchForRegion");
-		
-		var sqlString = "SELECT region_name, region_name "
-					& " FROM DL_REGIONS " 
-					& " WHERE 1 = 1 ";
-
-		if ( !structIsEmpty(searchFilter) ) {
-			if ( structKeyExists(arguments.searchFilter, "regionName") ) {
-				queryHandler.addParam(name = "regionName", value = arguments.searchFilter.regionName, cfsqltype = "cf_sql_varchar");
-				sqlString &= " AND region_name = :regionName ";
-			}
-			if ( structKeyExists(arguments.searchFilter, "regionID") ) {
-				queryHandler.addParam(name = "regionID", value = arguments.searchFilter.regionID, cfsqltype = "cf_sql_number");
-				sqlString &= " AND region_id = :regionID ";
-			}
-		}
-					
-		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString).getResult();
-		
-		return new dotlog.model.beans.region(regionID = queryResult["region_id"][1],
-											regionName = queryResult["region_name"][1]);
-	}
-
 	public boolean function save(required dotlog.model.beans.region region)
 	{
 		if ( exists(arguments.region) ) {

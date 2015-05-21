@@ -20,44 +20,6 @@ component RecordDAO extends = "dotlog.model.dataAccess.DAO"
 		} 
 	}
 
-	//Could just call the recordGW search function...
-	public dotlog.model.beans.record function search(required struct searchFilter)
-	{
-		var userObjects = [];
-		var queryService = new query();
-
-		queryService.setName("fetchRecord");
-
-		sqlStringRecords = "SELECT record_id, record_text, username, faa_code, event_time, record_time, in_weekly_report, category_id "
-						& " FROM DL_RECORDS "
-						& "WHERE 1 = 1 ";
-
-		if ( !structIsEmpty(searchFilter) ) {
-			if ( structKeyExists(searchFilter, "id") ) {
-				queryService.addParam(name = "id", value = arguments.searchFilter.id, cfsqltype = "cf_sql_number");	
-				sqlStringRecords &= " AND record_id = :id";
-			}
-		}
-
-		var queryResult = variables.queryHandler.executeQuery(queryService, sqlStringRecords);
-		var result = queryResult.getResult();
-
-		var recordObject = '';
-		if (result.RecordCount) {
-			 recordObject = new dotlog.model.beans.record(recordText = result["record_text"][1],
-							username = result["username"][1],
-							airportCode = result["faa_code"][1],
-							eventTime = result["event_time"][1],
-							recordTime = result["record_time"][1],
-							inWeeklyReport = result["in_weekly_report"][1],
-							categoryID = result["category_id"][1],
-							recordID = result["record_id"][1]);
-		} else { 
-			throw(message = "record does not exist");
-		}
-		return recordObject;
-	}
-
 	private boolean function recordExists(required dotlog.model.beans.record record)
 	{		
 		var queryHandler = getQueryHandler("doesRecordExist", arguments.record);

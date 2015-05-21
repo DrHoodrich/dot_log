@@ -20,17 +20,4 @@ component DAOTestAdapter
 			rethrow;
 		}
 	}
-
-	public any function search(required struct searchParameters) //TODO: figure a way to return proper objects for DB
-	{
-		try {
-			transaction action="begin" {
-				result = variables.dataAccessObject.search(searchParameters);
-				transactionRollBack();
-				return result;
-			}
-		} catch (database expt) {
-			rethrow;
-		}
-	}
 }
