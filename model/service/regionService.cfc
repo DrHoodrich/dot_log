@@ -5,10 +5,11 @@ component RegionService
 		regionGW = ''
 	};
 
-	public RegionService function init(required dotlog.model.beans.datasource datasource)
+	public RegionService function init(required dotlog.model.dataAccess.DAO DAO,
+										required dotlog.model.dataAccess.gateway GW)
 	{
-		variables.instance.regionDAO = new dotlog.model.dataAccess.regionDAO(arguments.datasource);
-		variables.instance.regionGW = new dotlog.model.dataAccess.regionGateway(arguments.datasource);
+		variables.instance.regionDAO = arguments.DAO;
+		variables.instance.regionGW = arguments.GW;
 		return this;
 	}
 

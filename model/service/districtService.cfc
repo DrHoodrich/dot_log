@@ -5,10 +5,11 @@ component DistrictService
 		districtGW = ''
 	};
 
-	public DistrictService function init(required dotlog.model.beans.datasource datasource)
+	public DistrictService function init(required dotlog.model.dataAccess.DAO DAO,
+										required dotlog.model.dataAccess.gateway GW)
 	{
-		variables.instance.districtDAO = new dotlog.model.dataAccess.districtDAO(arguments.datasource);
-		variables.instance.districtGW = new dotlog.model.dataAccess.districtGateway(arguments.datasource);
+		variables.instance.districtDAO = arguments.DAO;
+		variables.instance.districtGW = arguments.GW;
 		return this;
 	}
 

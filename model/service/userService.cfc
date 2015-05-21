@@ -5,10 +5,11 @@ component UserService
 		userGW = ''
 	};
 
-	public UserService function init(required dotlog.model.beans.datasource datasource)
+	public UserService function init(required dotlog.model.dataAccess.DAO DAO,
+									required dotlog.model.dataAccess.gateway GW)
 	{
-		variables.instance.userDAO = new dotlog.model.dataAccess.userDAO(arguments.datasource);
-		variables.instance.userGW = new dotlog.model.dataAccess.userGateway(arguments.datasource);
+		variables.instance.userDAO = arguments.DAO;
+		variables.instance.userGW = arguments.GW;
 		return this;
 	}
 

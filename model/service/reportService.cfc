@@ -5,10 +5,11 @@ component ReportService
 		reportGW = ''
 	};
 
-	public reportService function init(required dotlog.model.beans.datasource datasource)
+	public reportService function init(required dotlog.model.dataAccess.DAO DAO,
+										required dotlog.model.dataAccess.gateway GW)
 	{
-		variables.instance.reportDAO = new dotlog.model.dataAccess.reportDAO(arguments.datasource);
-		variables.instance.reportGW = new dotlog.model.dataAccess.reportGateway(arguments.datasource);
+		variables.instance.reportDAO = arguments.DAO;
+		variables.instance.reportGW = arguments.GW;
 		return this;
 	}
 

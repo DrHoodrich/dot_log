@@ -1,31 +1,34 @@
-component CategoryService extends = "dotlog.model.dataAccess.DAO"
+component CategoryService
 {
-	variables.categoryDAO = '';
-	variables.categoryGW = '';
+	variables.instance = {
+		categoryDAO = '',
+		categoryGW = ''
+	};
 	
-	public CategoryService function init(required dotlog.model.beans.datasource datasource)
+	public CategoryService function init(required dotlog.model.dataAccess.DAO DAO,
+										required dotlog.model.dataAccess.gateway GW)
 	{
-		variables.categoryDAO = new dotlog.model.dataAccess.categoryDAO(arguments.datasource);
-		variables.categoryGW = new dotlog.model.dataAccess.categoryGateway(arguments.datasource);
+		variables.instance.categoryDAO = arguments.DAO;
+		variables.instance.categoryGW = arguments.GW;
 		return this;
 	}
 
 	public array function getEnabledCategories()
 	{
 		var searchStruct = { enabled = 1 };
-		return variables.categoryGW.filter(searchStruct);
+		return variables.instance.categoryGW.filter(searchStruct);
 	}
 
 	public array function getAllCategories()
 	{
-		return variables.categoryGW.filter();
+		return variables.instance.categoryGW.filter();
 	}
 
 	public dotlog.model.beans.category function getCategoryByTitle(required string categoryTitle)
 	{
 		var searchStruct = { categoryTitle = arguments.categoryTitle };
 		var category = '';
-		var result = variables.categoryGW.filter(searchStruct);
+		var result = variables.instance.categoryGW.filter(searchStruct);
 		if ( arrayLen(result) ) {
 			category = result[1];
 		}
@@ -36,7 +39,7 @@ component CategoryService extends = "dotlog.model.dataAccess.DAO"
 	{
 		var searchStruct = { categoryID = arguments.categoryID };
 		var category = '';
-		var result = variables.categoryGW.filter(searchStruct);
+		var result = variables.instance.categoryGW.filter(searchStruct);
 		if ( arrayLen(result) ) {
 			category = result[1];
 		}
@@ -45,6 +48,6 @@ component CategoryService extends = "dotlog.model.dataAccess.DAO"
 
 	public boolean function saveCategory(required dotlog.model.beans.category category)
 	{
-		return variables.categoryDAO.save(arguments.category);
+		return variables.instance.categoryDAO.save(arguments.category);
 	}
 }

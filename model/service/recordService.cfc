@@ -1,37 +1,40 @@
 component RecordService
 {
-	variables.recordDAO = '';
-	variables.recordGW = '';
+	variables.instance = {
+		recordDAO = '',
+		recordGW = ''
+	};
 
-	public RecordService function init(required dotlog.model.beans.datasource datasource)
+	public RecordService function init(required dotlog.model.dataAccess.DAO DAO,
+										required dotlog.model.dataAccess.gateway GW)
 	{
-		variables.recordDAO = new dotlog.model.dataAccess.recordDAO(arguments.datasource);
-		variables.recordGW = new dotlog.model.dataAccess.recordGateway(arguments.datasource);
+		variables.instance.recordDAO = arguments.DAO;
+		variables.instance.recordGW = arguments.GW;
 		return this;
 	}
 
 	public boolean function saveRecord(required dotlog.model.beans.record record)
 	{
-		return variables.recordDAO.save(arguments.record);
+		return variables.instance.recordDAO.save(arguments.record);
 	}
 
 	public array function getRecordsByAirportCode(required string airportCode)
 	{
         var searchStruct = { airportCode = arguments.airportCode };
-		return variables.recordGW.filter(searchStruct);
+		return variables.instance.recordGW.filter(searchStruct);
 	}
 
 	public array function getRecordsAfterDate(required string date)
 	{
 		searchParam = { date = arguments.date };
-		return variables.recordGW.filter(searchParam);
+		return variables.instance.recordGW.filter(searchParam);
 	}
 
 	public dotlog.model.beans.record function getRecordByID(required numeric recordID)
 	{
 		var record = '';
 		var searchStruct = { recordID = arguments.recordID };
-		var result = variables.recordGW.filter(searchStruct);
+		var result = variables.instance.recordGW.filter(searchStruct);
 		if ( arrayLen(result) ) {
 			record = result[1];
 		}
@@ -40,6 +43,6 @@ component RecordService
 
 	public array function search(required struct searchParam)
 	{
-		return variables.recordGW.filter(searchParam);
+		return variables.instance.recordGW.filter(searchParam);
 	}
 }

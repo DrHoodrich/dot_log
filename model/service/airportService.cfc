@@ -5,10 +5,11 @@ component AirportService
 		airportGW = ''
 	};
 
-	public AirportService function init(required dotlog.model.beans.datasource datasource)
+	public AirportService function init(required dotlog.model.dataAccess.DAO DAO,
+										required dotlog.model.dataAccess.gateway GW)
 	{
-		variables.instance.airportDAO = new dotlog.model.dataAccess.airportDAO(arguments.datasource);
-		variables.instance.airportGW = new dotlog.model.dataAccess.airportGateway(arguments.datasource);
+		variables.instance.airportDAO = arguments.DAO;
+		variables.instance.airportGW = arguments.GW;
 		return this;
 	}
 
