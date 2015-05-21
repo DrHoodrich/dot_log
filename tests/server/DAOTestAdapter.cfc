@@ -1,4 +1,4 @@
-component DAOTestAdapter
+component DAOTestAdapter extends = "dotlog.model.dataAccess.DAO"
 {
 	variables.dataAccessObject = '';
 
