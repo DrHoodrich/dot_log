@@ -4,20 +4,19 @@ component DistrictGatewayTest extends = "mxunit.framework.TestCase"
     DSuser = " ";
     DSpasswd = " ";
 
-    categoryTitle = "test";
-    description = "test";
-    airportName = "test";    
+    districtName = "test";    
     isEnabled = 1;
-    districtID = 428;
+    districtID = 93;
+    regionID = 120;
         
 	public void function setUp()
 	{
         datasource = new dotlog.model.beans.datasource(DSName, DSuser, DSpasswd);     
-        districtGW = new dotlog.model.dataAccess.categoryGateway(datasource);
+        districtGW = new dotlog.model.dataAccess.districtGateway(datasource);
         testDistrictGW = new dotlog.tests.server.gatewayTestAdapter(districtGW);
 	}
 
-    public void function categoryByID()
+    public void function districtByID()
     {
         expected = 1;
         searchStruct = { districtID = districtID };
@@ -25,24 +24,23 @@ component DistrictGatewayTest extends = "mxunit.framework.TestCase"
         assertEquals(expected, actual);
     }
 
-    public void function categoriesByDescription()
+    public void function districtByRegion()
     {
-        searchStruct = { description = description };
-        categories = testDistrictGW.filter(searchStruct);
-        assertTrue(arrayLen(categories));
+        searchStruct = { regionID = regionID };
+        districts = testDistrictGW.filter(searchStruct);
+        assertTrue(arrayLen(districts));
     }
 
-    public void function enabledCategories()
+    public void function enabledDistricts()
     {
-        searchStruct = { enabled = isEnabled };
-        categories = testDistrictGW.filter(searchStruct);
-        assertTrue(arrayLen(categories));
-    }
-
-    public void function allCategories()
-    {
-        searchStruct = {};
-        categories = testDistrictGW.filter(searchStruct);
-        assertTrue(arrayLen(categories));
+        searchStruct = { enabled = 1 };
+        districts = testDistrictGW.filter(searchStruct);
+        var allEnabled = 1;
+        for (var ii = 1; ii <= arrayLen(districts); ++ii) {
+            if (!districts[ii].isEnabled()) {
+                allEnabled = 0;
+            }
+        }
+        assertTrue(allEnabled);
     }
 }
