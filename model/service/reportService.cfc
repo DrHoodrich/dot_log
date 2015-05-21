@@ -1,4 +1,4 @@
-component ReportService
+component ReportService extends = "dotlog.model.service.service"
 {
 	variables.instance = {
 		reportDAO = '',

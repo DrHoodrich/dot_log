@@ -1,4 +1,4 @@
-component UserService
+component UserService extends = "dotlog.model.service.service"
 {
 	variables.instance = {
 		userDAO = '',

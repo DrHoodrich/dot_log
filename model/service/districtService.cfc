@@ -1,4 +1,4 @@
-component DistrictService
+component DistrictService extends = "dotlog.model.service.service"
 {
 	variables.instance = {
 		districtDAO = '',

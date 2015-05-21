@@ -1,4 +1,4 @@
-component AirportService
+component AirportService extends = "dotlog.model.service.service"
 {
 	variables.instance = {
 		airportDAO = '',

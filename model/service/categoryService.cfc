@@ -1,4 +1,4 @@
-component CategoryService
+component CategoryService extends = "dotlog.model.service.service"
 {
 	variables.instance = {
 		categoryDAO = '',

@@ -1,4 +1,4 @@
-component RecordService
+component RecordService extends = "dotlog.model.service.service"
 {
 	variables.instance = {
 		recordDAO = '',
