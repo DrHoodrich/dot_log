@@ -29,8 +29,8 @@ component UserGateway extends = "dotlog.model.dataAccess.gateway"
 		if ( !structIsEmpty(searchFilter) ) {
 			queryService.setName("filterUsers");
 			if ( structKeyExists(searchFilter, "username") ) {
-				queryService.addParam(name = "username", value = "%"&arguments.searchFilter.username&"%", cfsqltype = "cf_sql_varchar");
-				sqlString &= " AND username LIKE :username";
+				queryService.addParam(name = "username", value = arguments.searchFilter.username, cfsqltype = "cf_sql_varchar");
+				sqlString &= " AND username = :username";
 			}
 			if ( structKeyExists(searchFilter, "firstName") ) {
 				queryService.addParam(name = "firstName", value = "%"&arguments.searchFilter.firstName&"%", cfsqltype = "cf_sql_varchar");
