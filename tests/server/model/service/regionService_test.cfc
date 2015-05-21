@@ -16,14 +16,14 @@ component regionServiceTests extends = "mxunit.framework.TestCase"
         
         testRegionDAO = new dotlog.tests.server.DAOTestAdapter(regionDAO);
         testRegionGW = new dotlog.tests.server.gatewayTestAdapter(regionGW);
-        testRegionService = new dotlog.model.service.regionService(datasource);
+        testRegionService = new dotlog.model.service.regionService(testRegionDAO, testRegionGW);
 
 		testRegion = new dotlog.model.beans.region(regionName, regionID);
 	}
 
     public void function saveRegion()
     {
-        fail("TODO");
+        assertTrue(testRegionService.saveRegion(testRegion) && testRegionDAO.save(testRegion));
     }
 
     public void function getRegionByID()

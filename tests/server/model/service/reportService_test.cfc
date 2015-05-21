@@ -19,7 +19,7 @@ component reportServiceTests extends = "mxunit.framework.TestCase"
         
         testReportDAO = new dotlog.tests.server.DAOTestAdapter(reportDAO);
         testReportGW = new dotlog.tests.server.gatewayTestAdapter(reportGW);
-        testReportService = new dotlog.model.service.reportService(datasource);
+        testReportService = new dotlog.model.service.reportService(testReportDAO, testReportGW);
 
 		testReport = new dotlog.model.beans.report(username = username,
                                                     airportCode = airportCode,
@@ -30,7 +30,7 @@ component reportServiceTests extends = "mxunit.framework.TestCase"
 
     public void function saveReport()
     {
-        fail("TODO");
+        assertTrue(testReportService.saveReport(testReport) && testReportDAO.save(testReport));
     }
 
     public void function getHubReports()

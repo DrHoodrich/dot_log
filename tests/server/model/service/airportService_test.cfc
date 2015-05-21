@@ -18,7 +18,7 @@ component AirportServiceTests extends = "mxunit.framework.TestCase"
         
         testAirportDAO = new dotlog.tests.server.DAOTestAdapter(airportDAO);
         testAirportGW = new dotlog.tests.server.gatewayTestAdapter(airportGW);
-        testAirportService = new dotlog.model.service.airportService(datasource);
+        testAirportService = new dotlog.model.service.airportService(testAirportDAO, testAirportGW);
 
 		testAirport = new dotlog.model.beans.airport(AirportCode,
                                                     hubCode,
@@ -29,12 +29,7 @@ component AirportServiceTests extends = "mxunit.framework.TestCase"
 
     public void function saveAirport()
     {
-        searchStruct = { airportCode = airportCode };
-        
-        resultFromService = testAirportService.getAirportByAirportCode(searchStruct.airportCode);
-        resultFromGW = testAirportGW.filter(searchStruct);
-
-        assertEquals(resultFromService.getAirportName(), resultFromGW[1].getAirportName());
+        assertTrue(testAirportService.saveAirport(testAirport) && testAirportDAO.save(testAirport));
     }
 
     public void function getSpokeAirports()

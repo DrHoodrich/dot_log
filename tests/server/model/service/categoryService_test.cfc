@@ -1,8 +1,8 @@
 component CategoryServiceTests extends = "mxunit.framework.TestCase"
 {
     DSName = "DOTlogDB";
-    DSuser = " ";
-    DSpasswd = " ";
+    DSuser = "";
+    DSpasswd = "";
 
     categoryTitle = "Unit Test";
     categoryID = 428;
@@ -18,7 +18,7 @@ component CategoryServiceTests extends = "mxunit.framework.TestCase"
         
         testCategoryDAO = new dotlog.tests.server.DAOTestAdapter(categoryDAO);
         testCategoryGW = new dotlog.tests.server.gatewayTestAdapter(categoryGW);
-        testCategoryService = new dotlog.model.service.categoryService(datasource);
+        testCategoryService = new dotlog.model.service.categoryService(testCategoryDAO, testCategoryGW);
 
 		testCategory = new dotlog.model.beans.category(categoryTitle,
                                                         description,
@@ -28,9 +28,7 @@ component CategoryServiceTests extends = "mxunit.framework.TestCase"
 
     public void function saveCategory()
     {
-        expected = testCategoryDAO.save(testCategory);
-        actual = testCategoryService.saveCategory(testCategory);
-        assert((expected > 0) && (actual > 0));
+        assertTrue(testCategoryDAO.save(testCategory) && testCategoryService.saveCategory(testCategory));
     }
 
     public void function getCategoryByTitle()

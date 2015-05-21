@@ -18,7 +18,7 @@ component DistrictServiceTests extends = "mxunit.framework.TestCase"
         
         testDistrictDAO = new dotlog.tests.server.DAOTestAdapter(districtDAO);
         testDistrictGW = new dotlog.tests.server.gatewayTestAdapter(districtGW);
-        testDistrictService = new dotlog.model.service.districtService(datasource);
+        testDistrictService = new dotlog.model.service.districtService(testDistrictDAO, testDistrictGW);
 
 		testDistrict = new dotlog.model.beans.district(districtName,
                                                         regionID,
@@ -28,7 +28,7 @@ component DistrictServiceTests extends = "mxunit.framework.TestCase"
 
     public void function saveDistrict()
     {
-        fail("Should be working, need to correlate service with DAO.");
+        assertTrue(testDistrictService.saveDistrict(testDistrict) && testDistrictDAO.save(testDistrict));
     }
 
     public void function getDistrictByName()

@@ -6,7 +6,7 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
 
 	recordText = "Unit Test at " & now();
     username = "test";
-    airportCode = "AFM";
+    airportCode = "test";
     eventTime = CreateODBCDateTime( now() );
     recordTime = CreateODBCDateTime( now() );
     inWeeklyReport = 1;
@@ -20,7 +20,7 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
         
         testRecordDAO = new dotlog.tests.server.DAOTestAdapter(recordDAO);
         testRecordGW = new dotlog.tests.server.gatewayTestAdapter(recordGW);
-        testRecordService = new dotlog.model.service.recordService(datasource);
+        testRecordService = new dotlog.model.service.recordService(testRecordDAO, testRecordGW);
 
 		testRecord = new dotlog.model.beans.record(recordText,
                                                 username,
@@ -72,6 +72,6 @@ component RecordServiceTests extends = "mxunit.framework.TestCase"
 
     public void function saveRecord()
     {
-        fail("Todo");
+        assertTrue(testRecordService.saveRecord(testRecord) && testRecordDAO.save(testRecord));
     }
 }
