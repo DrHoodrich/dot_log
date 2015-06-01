@@ -12,11 +12,14 @@ component extends = "taffy.core.api"
 	function onApplicationStart()
 	{
 		var datasource = new dotlog.model.beans.datasource(DSName = "DOTlogDB", username = "", password = "");
-		Application.airportService = new dotlog.model.dataAccess.airportService(datasource);
-		Application.categoryService = new dotlog.model.dataAccess.categoryService(datasource);
+		var serviceFactory = new dotlog.model.service.serviceFactory(datasource);
 
-		Application.recordService = new dotlog.model.dataAccess.recordService(datasource);
-		Application.userService = new dotlog.model.dataAccess.userService(datasource);
+		Application.airportService = serviceFactory.get("airportService");
+		Application.categoryService = serviceFactory.get("categoryService");
+		Application.recordService = serviceFactory.get("recordService");
+		Application.userService = serviceFactory.get("userService");
+		Application.regionService = serviceFactory.get("regionService");
+		Application.districtService = serviceFactory.get("districtService");
 
 		return super.onApplicationStart();
 	}
