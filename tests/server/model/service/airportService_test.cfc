@@ -39,7 +39,27 @@ component AirportServiceTests extends = "mxunit.framework.TestCase"
         resultFromGW = testAirportGW.filter(searchStruct);
         resultFromService = testAirportService.getAirportByAirportCode(airportCode);
 
+        for (var ii = 1; ii <= arrayLen(resultFromGW) ) {
+            if (resultFromGW[ii].getHubCode() == resultFromGW[ii].getAirportCode()) {
+                fail("Returned a hub airport from GW filter");
+            }
+        }
+        for (var ii = 1; ii <= arrayLen(resultFromService) ) {
+            if (resultFromService[ii].getHubCode() == resultFromService[ii].getAirportCode()) {
+                fail("Returned a hub airport from service function");
+            }
+        }
         assertEquals(resultFromGW[1], resultFromService);
+    }
+
+    public void function getHubAndSpokesAirports()
+    {
+        fail("todo");
+    }
+
+    public void function getHubAirportsByDistrictID()
+    {
+        fail("todo");
     }
 
     public void function getAirportByAirportCode()
