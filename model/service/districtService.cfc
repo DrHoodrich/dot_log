@@ -25,6 +25,8 @@ component DistrictService extends = "dotlog.model.service.service"
 		var result = variables.instance.districtGW.filter(searchStruct);
 		if ( arrayLen(result) ) {
 			district = result[1];
+		} else {
+			throw(message="No district by ID " & arguments.districtID);
 		}
 		return district;
 	}
