@@ -8,6 +8,8 @@ component
 	this.mappings[ "/dotlog" ] = this.rootDir;
 	this.mappings[ "/includes" ] = (this.rootDir & "includes\");
 	this.domain = "DOTLOGDATABASEW\";
+	this.systemEmailAddr = "no-reply@dotlog.ak.us.gov";
+	
 
 	function onApplicationStart()
 	{
@@ -21,6 +23,8 @@ component
 		Application.reportService = serviceFactory.get("reportService");
 		Application.regionService = serviceFactory.get("regionService");
 		Application.districtService = serviceFactory.get("districtService");
+
+		Application.systemEmailAddr = this.systemEmailAddr;
 	}
 
 	function onRequestStart()
@@ -30,14 +34,15 @@ component
 
 	function onSessionStart()
 	{
-		try {
+		//try {
 			session.user = application.userService.getUserByUsername(removeChars(getAuthUser(), 1, len(this.domain)));
-		} catch (any e) {
-			writeDump(SESSION);
-			throw;
-		}
+		//} catch (any e) {
+	//		writeDump(e);
+	//		writeDump(SESSION);
+	//		throw;
+	//	}
 	}
-
+/*
 	function onError(required any e, required string EventName)
 	{
 		if (arguments.EventName == "onSessionStart") {
@@ -46,5 +51,5 @@ component
 			}
 		}
 	}
+*/
 }
-
