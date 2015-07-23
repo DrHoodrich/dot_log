@@ -50,4 +50,15 @@ component CategoryService extends = "dotlog.model.service.service"
 	{
 		return variables.instance.categoryDAO.save(arguments.category);
 	}
+
+	public string function getCategoryTitleByID(required numeric categoryID)
+	{
+		var searchStruct = { categoryID = arguments.categoryID };
+		var category = '';
+		var result = variables.instance.categoryGW.filter(searchStruct);
+		if ( arrayLen(result) ) {
+			category = result[1];
+		}
+		return category.getCategoryTitle();
+	}
 }
