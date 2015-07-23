@@ -1,4 +1,4 @@
-<cfdocument format="PDF">
+<cfdocument format="PDF" name="dailyReport">
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -9,7 +9,7 @@
     <cfscript>
 	    
 	 if ( structKeyExists(FORM, "submitReportEmail_button")) {
-    	airports = application.airportService.getChildAirports(session.user.getAirportCode());
+    	airports = application.airportService.getSpokeAirports(session.user.getAirportCode());
     	categories = application.categoryService.getAllCategories();
   
 		  writeOutput('<table width="783" height="180" border="1">');
@@ -24,7 +24,7 @@
 		          continue;
 		        }
 		        writeOutput('<tr> <td width="117" height="102" align="left" valign="top"> #records[jj].getEventTime()# <br>');
-		        writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportCode()# <br> Category: #records[jj].getCategory()# <br>');
+		        writeOutput(' Reporter: #records[jj].getUsername()# <br>Airport: #records[jj].getAirportCode()# <br> Category: ## <br>');
 		        writeOutput('<td width="560" align="left" valign="top">#records[jj].getRecordText()#</td>');
 		      }
 		    }

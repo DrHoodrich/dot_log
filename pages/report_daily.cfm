@@ -1,10 +1,5 @@
 <cfset pageTitle = "Daily Report"> <!--- Variable that is used in the html included header --->
-<cfinclude template="/dotlog/includes/header.cfm">
-<cfinclude template="/dotlog/includes/banner.cfm">
-    <a id="main_content"></a>
-<cfinclude template="/dotlog/includes/breadcrumb.cfm">
-<cfinclude template="/dotlog/includes/nav.cfm">
-    <div id="content">
+<cfinclude template="/dotlog/view/header.cfm">
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
@@ -17,11 +12,9 @@
 <cfset lastReportedDate = #lastReport.getEndDate()#/>
 
 <table>
-  <!--- <cfloop index="report" array="#reports#"> --->
     <cfoutput><tr><td>Last Submitted Report for:<strong> #reports[1].getAirportCode()#</strong></tr></td></cfoutput>
     <cfoutput><tr><td>&nbsp;&nbsp;Period: #dateformat(reports[1].getBeginDate(), "yyyy-mm-dd")# to #dateformat(reports[1].getEndDate(), "yyyy-mm-dd")#</td></tr></cfoutput>
     <cfoutput><tr><td> &nbsp;&nbsp;Submitted by: #reports[1].getUsername()# </td><tr></cfoutput>
-  <!--- </cfloop> --->
 </table>
 
 <br>

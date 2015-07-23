@@ -1,10 +1,5 @@
 <cfset pageTitle = "Add Event">
-<cfinclude template="/dotlog/includes/header.cfm">
-<cfinclude template="/dotlog/includes/banner.cfm">
-    <a id="main_content"></a>
-<cfinclude template="/dotlog/includes/breadcrumb.cfm">
-<cfinclude template="/dotlog/includes/nav.cfm">
-    <div id="content">
+<cfinclude template="/dotlog/view/header.cfm">
     
 <!-- BEGIN YOUR CONTENT HERE -->
 	<!-- TemplateBeginEditable name="main content" -->
@@ -43,7 +38,7 @@
 			<td>Category</td>
 			<td>
 				<cfselect name="categoryID">
-					<cfoutput><option value="-1">--select category--</option></cfoutput>
+					<cfoutput><option value="-1">--Select Category--</option></cfoutput>
 					<cfloop index="category" array="#categories#">
 							<cfoutput><option value="#category.getCategoryID()#">#category.getCategoryTitle()#</cfoutput>
 						</cfloop>
