@@ -4,8 +4,7 @@ component regionServiceTests extends = "mxunit.framework.TestCase"
     DSuser = " ";
     DSpasswd = " ";
 
-    regionID = "test";
-    regionName = "test";
+    regionName = "testNorth";
     regionID = 120;
     
 	public void function setUp()
