@@ -108,6 +108,7 @@
 	<cfargument name="districtID" type="numeric" required="true" default="" />
 	<cfargument name="hubCode" type="string" required="true" default="" />
 	<cfform name="createAirport" action="saveAirport.cfm" method="post">
+		
 		<cfinput type="hidden" name="districtID" value="#arguments.districtID#"/>
 		<cfinput type="hidden" name="hubCode" value="#arguments.hubCode#"/>
 		<cfinput type="hidden" name="enabled" value="1"/>
@@ -127,24 +128,23 @@
 		</table>
 	</cfform>
 </cffunction>
- 
+
 <cfscript>
-	if ( !structKeyExists(FORM, "airportRegionID")  && !structKeyExists(FORM, "airportDistrictID")  && !structKeyExists(FORM, "airportHubCode") ) {
+	if (structKeyExists(FORM,"selectHub_button")) {
+		if (FORM.airportHubCode > 0) {
+			setSpokeAirportValues(districtID = FORM.districtID, hubCode = FORM.airportHubCode);
+		} else {
+			setHubAirportValues(FORM.districtID);
+		}
+	} else if (structKeyExists(FORM,"selectDistrict_button")) {
+		getAirportHub(FORM.airportDistrictID);	
+	} else if (structKeyExists(FORM,"selectRegion_button")) {
+		getAirportDistrictID(FORM.airportRegionID);
+	} else if (structKeyExists(FORM,"createHubAirport_button")) {
+		//Do nothing, pass to save airport.
+	} else {
 		getAirportRegionID();
 	}
-	if ( !structKeyExists(FORM, "airportDistrictID") && structKeyExists(FORM, "airportRegionID") ) {
-		getAirportDistrictID(FORM.airportRegionID);
-	}
-	if ( !structKeyExists(FORM, "airportHubCode") && structKeyExists(FORM, "airportDistrictID") ) {
-		getAirportHub(FORM.airportDistrictID);
-	}
-	if ( structKeyExists(FORM, "airportHubCode") && FORM.airportHubCode == -1 ) {
-		setHubAirportValues(FORM.districtID);
-	}
-	if ( structKeyExists(FORM, "airportHubCode") && FORM.airportHubCode > 0) {
-		setSpokeAirportValues(districtID = FORM.districtID, hubCode = FORM.airportHubCode);
-	}
 </cfscript>
-	<!-- TemplateEndEditable -->
-<!-- END YOUR CONTENT HERE -->
+
 <cfinclude template="/dotlog/includes/footer.cfm">

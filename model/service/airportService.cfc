@@ -16,7 +16,17 @@ component AirportService extends = "dotlog.model.service.service"
 	public boolean function saveAirport(required dotlog.model.beans.airport airport)
 	{
 		return variables.instance.airportDAO.save(arguments.airport);
-	} 
+	}
+
+	public boolean function createAirport(required dotlog.model.beans.airport airport)
+	{
+		var searchFilter = {airportCode = arguments.airport.getAirportCode()};
+		var result = variables.instance.airportGW.filter(searchFilter);
+		if (arrayLen(result)) {
+			throw (message = arguments.airport.getAirportName() & " already exists at hub " & result[1].getHubCode() &".");
+		}
+		return true;
+	}
 
 	public array function getSpokeAirports(required string airportCode)
 	{
