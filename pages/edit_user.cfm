@@ -77,7 +77,7 @@
 	<cfform name="editUser" action="edit_user.cfm" method="post">
 		<table>
 			<tr>
-				<td>User</td>
+				<td>LDAP User</td>
 				<td>
 					<cfselect name="username">
 						<option value="-1"/>--user--</option>

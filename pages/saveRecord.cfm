@@ -1,8 +1,5 @@
-<cfset pageTitle = "Update Event"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "Update Event">
 <cfinclude template="/dotlog/view/header.cfm">
-    
-<!-- BEGIN YOUR CONTENT HERE -->
-  <!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
@@ -24,7 +21,4 @@
     writeoutput("<strong>Record Updating Failed</strong>");
   }
 </cfscript>
-
-  <!-- TemplateEndEditable -->
-<!-- END YOUR CONTENT HERE -->
 <cfinclude template="/dotlog/includes/footer.cfm">

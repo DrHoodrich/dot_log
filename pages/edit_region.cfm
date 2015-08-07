@@ -1,7 +1,5 @@
 <cfset pageTitle = "Edit Region"> <!--- Variable that is used in the html included header --->
 <cfinclude template="/dotlog/view/header.cfm">
-<!-- BEGIN YOUR CONTENT HERE -->
-	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cffunction name="getRegionID">
@@ -51,7 +49,5 @@
 	if ( structKeyExists(FORM, "regionID") ) {
 		setRegionValues();
 	}
-</cfscript>
-	<!-- TemplateEndEditable -->
-<!-- END YOUR CONTENT HERE -->
+</cfscript>	
 <cfinclude template="/dotlog/includes/footer.cfm">

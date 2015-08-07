@@ -1,3 +1,5 @@
+  <!-- TemplateEndEditable -->
+<!-- END YOUR CONTENT HERE -->
       <div class="clear"></div>
     </div>
 <!-- SOA AND DOT FOOTERS - SERVER SIDE INCLUDES -->

@@ -1,8 +1,5 @@
 <cfset pageTitle = "Add Event">
 <cfinclude template="/dotlog/view/header.cfm">
-    
-<!-- BEGIN YOUR CONTENT HERE -->
-	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfset airports = #application.airportService.getHubAndSpokesAirports(session.user.getAirportCode())# />
@@ -10,10 +7,9 @@
 
 <cfform name="recordCreation" method="post" action="record_action.cfm">
 	<!--- Need to change how user info is passed into the action page --->
-	<cfscript>
-		writeOutput('<input type="hidden" name="userID" value="#session.user.getUsername()#">');
-	</cfscript>
-
+	
+	<input type="hidden" name="userID" value="#session.user.getUsername()#">
+	
 	<table>
 		<tr>
 			<td>Event Date</td>
@@ -63,9 +59,8 @@
 		<br>
 <!--- Gets the latest records and displays under form entry --->		
 <cfinclude template="/dotlog/view/print_reports.cfm">
+
 <cfscript>
 	printAirportRecords(airports);
 </cfscript>
-	<!-- TemplateEndEditable -->
-<!-- END YOUR CONTENT HERE -->
 <cfinclude template="/dotlog/includes/footer.cfm">

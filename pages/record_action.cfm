@@ -1,9 +1,7 @@
-<cfset pageTitle = "Event Added">
+<cfset pageTitle = "Event Saved">
 <cfinclude template="/dotlog/view/header.cfm">
-
 <cfoutput><h2>pageTitle</h2></cfoutput>
 <cfscript>
-
 	if ( isNull(FORM.includeWeeklyReport) ) {
 		reporting = 0;
 	} else {

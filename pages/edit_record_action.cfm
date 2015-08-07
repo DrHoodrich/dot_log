@@ -1,7 +1,5 @@
 <cfset pageTitle = "Edit Event">
 <cfinclude template="/dotlog/view/header.cfm">
-<!-- BEGIN YOUR CONTENT HERE -->
-	<!-- TemplateBeginEditable name="main content" -->
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
@@ -66,6 +64,4 @@
 	<cfinput type="hidden" name="recordID" value="#record.getRecordID()#"></cfinput>
     <cfinput type="submit" name="updateRecord_button" value="Update Record"></cfinput>
 </cfform>
-	<!-- TemplateEndEditable -->
-<!-- END YOUR CONTENT HERE -->
 <cfinclude template="/dotlog/includes/footer.cfm">

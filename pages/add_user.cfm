@@ -82,7 +82,7 @@
 		<cfinput type="hidden" name="airportCode" value="#arguments.HubCode#"/>
 		<table>
 			<tr>
-				<td>Username</td>
+				<td>LDAP User</td>
 				<td><cfinput type="text" name="username" message="username" required="yes"/></td>
 			</tr>
 			<tr>
