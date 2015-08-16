@@ -5,7 +5,6 @@
     <title>A PDF!</title>
 </head>
 <body>
-    
     <cfoutput><strong>DOTLog #dateformat(now(), "yyyy-mm-dd")# Report<hr></strong></cfoutput>
     <cfinclude template="/dotlog/view/print_reports.cfm">
 </body>
