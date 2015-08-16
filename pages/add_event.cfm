@@ -8,7 +8,7 @@
 <cfform name="recordCreation" method="post" action="record_action.cfm">
 	<!--- Need to change how user info is passed into the action page --->
 	
-	<input type="hidden" name="userID" value="#session.user.getUsername()#">
+	<cfinput type="hidden" name="userID" value="#session.user.getUsername()#">
 	
 	<table>
 		<tr>
