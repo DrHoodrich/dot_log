@@ -20,18 +20,6 @@
 			<td><cfinput type = "text" name = "username" message = "" required = "no"/></td>
 			
 		</tr>
-		<!---
-		<tr>
-			<td>First Name</td>
-			<td><cfinput type = "text" name = "firstName" message = "" required = "no"/></td>
-			
-		</tr>
-		<tr>
-			<td>Last Name</td>
-			<td><cfinput type = "text" name = "lastName" message = "" required = "no"/></td>
-			
-		</tr>
-		--->
 		<tr>
 			<td>Airport</td>
 			<td>
