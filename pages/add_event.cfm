@@ -1,12 +1,13 @@
 <cfset pageTitle = "Add Event">
 <cfinclude template="/dotlog/view/header.cfm">
+<cfinclude template="/dotlog/view/print_reports.cfm">
+
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfset airports = #application.airportService.getHubAndSpokesAirports(session.user.getAirportCode())# />
 <cfset categories = #application.categoryService.getAllCategories()# />
 
 <cfform name="recordCreation" method="post" action="record_action.cfm">
-	<!--- Need to change how user info is passed into the action page --->
 	
 	<cfinput type="hidden" name="userID" value="#session.user.getUsername()#">
 	
@@ -25,8 +26,8 @@
 				<cfselect name="airportCode" required="true">
 					<cfoutput><option value="-1">--Select Airport--</option></cfoutput>
 					<cfloop index="airport" array="#airports#">
-							<cfoutput><option value="#airport.getAirportCode()#">#airport.getAirportCode()# -- #airport.getAirportName()#</cfoutput>
-						</cfloop>
+						<cfoutput><option value="#airport.getAirportCode()#">#airport.getAirportCode()# -- #airport.getAirportName()#</cfoutput>
+					</cfloop>
 				</cfselect>
 			</td>
 		</tr>
@@ -36,8 +37,8 @@
 				<cfselect name="categoryID">
 					<cfoutput><option value="-1">--Select Category--</option></cfoutput>
 					<cfloop index="category" array="#categories#">
-							<cfoutput><option value="#category.getCategoryID()#">#category.getCategoryTitle()#</cfoutput>
-						</cfloop>
+						<cfoutput><option value="#category.getCategoryID()#">#category.getCategoryTitle()#</cfoutput>
+					</cfloop>
 	 			</cfselect>
 	 		</td>
 		</tr>
@@ -55,12 +56,8 @@
 		</tr>
 	</table>
 </cfform>
-     
-		<br>
-<!--- Gets the latest records and displays under form entry --->		
-<cfinclude template="/dotlog/view/print_reports.cfm">
+  
+<br>
 
-<cfscript>
-	printAirportRecords(airports);
-</cfscript>
+<cfscript>printAirportRecords(airports);</cfscript>
 <cfinclude template="/dotlog/includes/footer.cfm">
