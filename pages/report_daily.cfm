@@ -12,9 +12,9 @@
 <cfset lastReportedDate = #lastReport.getEndDate()#/>
 
 <table>
-    <cfoutput><tr><td>Last Submitted Report for:<strong> #reports[1].getAirportCode()#</strong></tr></td></cfoutput>
-    <cfoutput><tr><td>&nbsp;&nbsp;Period: #dateformat(reports[1].getBeginDate(), "yyyy-mm-dd")# to #dateformat(reports[1].getEndDate(), "yyyy-mm-dd")#</td></tr></cfoutput>
-    <cfoutput><tr><td> &nbsp;&nbsp;Submitted by: #reports[1].getUsername()# </td><tr></cfoutput>
+    <cfoutput><tr><td>Last Submitted Report for:<strong> #lastReport.getAirportCode()#</strong></tr></td></cfoutput>
+    <cfoutput><tr><td>&nbsp;&nbsp;Period: #dateformat(lastReport.getBeginDate(), "yyyy-mm-dd")# to #dateformat(lastReport.getEndDate(), "yyyy-mm-dd")#</td></tr></cfoutput>
+    <cfoutput><tr><td> &nbsp;&nbsp;Submitted by: #lastReport.getUsername()# </td><tr></cfoutput>
 </table>
 
 <br>
