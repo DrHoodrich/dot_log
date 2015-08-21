@@ -15,26 +15,15 @@ component ReportService extends = "dotlog.model.service.service"
 
 	public dotlog.model.beans.report function getLastReport(required string airportCode)
 	{
-		var report = '';
 		var searchFilter = { lastReport = '', airportCode = arguments.airportCode };
-		var result = variables.instance.reportGW.filter(searchFilter);
-		if ( arrayLen(result) ) {
-			report = result[1];
-		}
-		return report;
+		return variables.instance.reportGW.filter(searchFilter);
 	}
 
 	public dotlog.model.beans.report function getLastWeeklyReport(required string airportCode)
 	{
-		var report = '';
 		var searchFilter = { lastReport = '', airportCode = arguments.airportCode, weeklyReport = '1' };
-		var result = variables.instance.reportGW.filter(searchFilter);
-		if ( arrayLen(result) ) {
-			report = result[1];
-		}
-		return report;
+		return fetchReport(searchFilter);
 	}
-
 
 	public boolean function saveReport(required dotlog.model.beans.report report)
 	{
@@ -45,5 +34,15 @@ component ReportService extends = "dotlog.model.service.service"
 	{
 		searchFilter = { airportCode = arguments.airportCode };
 		return variables.instance.reportGW.filter(searchFilter);
+	}
+
+	private dotlog.model.beans.report function fetchReport(required struct searchFilter)
+	{
+		var report = '';
+		var result = variables.instance.reportGW.filter(arguments.searchFilter);
+		if ( arrayLen(result) ) {
+			report = result[1];
+		}
+		return report;
 	}
 }
