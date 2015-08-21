@@ -20,28 +20,14 @@ component DistrictService extends = "dotlog.model.service.service"
 
 	public dotlog.model.beans.District function getDistrictByID(required numeric districtID)
 	{
-		var district = '';
-		var searchStruct = { districtID = arguments.districtID };
-		var result = variables.instance.districtGW.filter(searchStruct);
-		if ( arrayLen(result) ) {
-			district = result[1];
-		} else {
-			throw(message="No district by ID " & arguments.districtID);
-		}
-		return district;
+		var searchFilter = { districtID = arguments.districtID };
+		return fetchDistrict(searchFilter);
 	}
 
 	public dotlog.model.beans.District function getDistrictByName(required string districtName)
 	{
-		var district = '';
-		var searchStruct = { districtName = arguments.districtName };
-		var result = variables.instance.districtGW.filter(searchStruct);
-		if ( arrayLen(result) ) {
-			district = result[1];
-		} else {
-			throw(message="No district by name " & arguments.districtName);
-		}
-		return district;
+		var searchFilter = { districtName = arguments.districtName };
+		return fetchDistrict(searchFilter);
 	}
 
 	public array function getDistrictsByRegionID(required numeric regionID)
@@ -59,5 +45,16 @@ component DistrictService extends = "dotlog.model.service.service"
 	{
 		var searchFilter = { enabled = 1 };
 		return variables.instance.districtGW.filter(searchFilter);
+	}
+
+	private dotlog.model.beans.District function fetchDistrict(required struct searchFilter)
+	{
+		var result = variables.instance.districtGW.filter(arguments.searchFilter);
+		if ( arrayLen(result) ) {
+			district = result[1];
+		} else {
+			throw(message="No district by name " & arguments.districtName);
+		}
+		return district;
 	}
 }
