@@ -24,6 +24,18 @@ component ReportService extends = "dotlog.model.service.service"
 		return report;
 	}
 
+	public dotlog.model.beans.report function getLastWeeklyReport(required string airportCode)
+	{
+		var report = '';
+		var searchFilter = { lastReport = '', airportCode = arguments.airportCode, weeklyReport = '1' };
+		var result = variables.instance.reportGW.filter(searchFilter);
+		if ( arrayLen(result) ) {
+			report = result[1];
+		}
+		return report;
+	}
+
+
 	public boolean function saveReport(required dotlog.model.beans.report report)
 	{
 		return variables.instance.reportDAO.save(arguments.report);
