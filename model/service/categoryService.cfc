@@ -27,23 +27,13 @@ component CategoryService extends = "dotlog.model.service.service"
 	public dotlog.model.beans.category function getCategoryByTitle(required string categoryTitle)
 	{
 		var searchStruct = { categoryTitle = arguments.categoryTitle };
-		var category = '';
-		var result = variables.instance.categoryGW.filter(searchStruct);
-		if ( arrayLen(result) ) {
-			category = result[1];
-		}
-		return category;
+		return fetchCategory(searchStruct);
 	}
 
 	public dotlog.model.beans.category function getCategoryByID(required numeric categoryID)
 	{
 		var searchStruct = { categoryID = arguments.categoryID };
-		var category = '';
-		var result = variables.instance.categoryGW.filter(searchStruct);
-		if ( arrayLen(result) ) {
-			category = result[1];
-		}
-		return category;
+		return fetchCategory(searchStruct);
 	}
 
 	public boolean function saveCategory(required dotlog.model.beans.category category)
@@ -54,11 +44,16 @@ component CategoryService extends = "dotlog.model.service.service"
 	public string function getCategoryTitleByID(required numeric categoryID)
 	{
 		var searchStruct = { categoryID = arguments.categoryID };
+		return fetchCategory(searchStruct).getCategoryTitle();
+	}
+
+	private dotlog.model.beans.category function fetchCategory(required struct searchStruct)
+	{
 		var category = '';
 		var result = variables.instance.categoryGW.filter(searchStruct);
 		if ( arrayLen(result) ) {
 			category = result[1];
 		}
-		return category.getCategoryTitle();
+		return category;
 	}
 }
