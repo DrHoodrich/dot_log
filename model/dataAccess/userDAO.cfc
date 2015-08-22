@@ -30,8 +30,8 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 													DISTRICT_MANAGER = :districtManager, 
 													REGION_MANAGER = :regionManager "
 					& "WHERE USERNAME = :username";
-		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 
+		queryResult = variables.queryHandler.executeQuery(queryHandler, sqlString);
 		return len(queryResult.getPrefix().recordCount);
 	}
 
@@ -71,8 +71,7 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		queryHandler.addParam(name = "emailAddr", value = arguments.user.getEmailAddr(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "enabled", value = user.isEnabled(), cfsqltype = "cf_sql_number");
 		queryHandler.addParam(name = "districtManager", value = user.isDistrictManager(), cfsqltype = "cf_sql_number");
-		queryHandler.addParam(name = "regionManager", value = user.isDistrictManager(), cfsqltype = "cf_sql_number");
-
+		queryHandler.addParam(name = "regionManager", value = user.isRegionManager(), cfsqltype = "cf_sql_number");
 		return queryHandler;
 	}
 }
