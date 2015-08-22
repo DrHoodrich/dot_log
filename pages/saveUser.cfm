@@ -1,8 +1,5 @@
-<cfset pageTitle = "User Added"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "User Added">
 <cfinclude template="/dotlog/view/header.cfm">
-    
-<!-- BEGIN YOUR CONTENT HERE -->
-  <!-- TemplateBeginEditable name="main content" -->
 <cfscript>
 	if ( structKeyExists(FORM, 'createUser_button') ) {
 		FORM.enabled = 1;
@@ -27,7 +24,4 @@
 		}
 	}
 </cfscript>
-
-  <!-- TemplateEndEditable -->
-<!-- END YOUR CONTENT HERE -->
 <cfinclude template="/dotlog/includes/footer.cfm">
