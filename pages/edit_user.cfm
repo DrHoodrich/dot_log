@@ -143,8 +143,13 @@
 				<td>Regional Manager</td>
 				<td>
 					<cfselect name="regionManager">
-						<option value=0>No</option>
-						<option value=1>Yes</option>
+						<cfif user.isRegionManager() IS True>
+							<option value=1>Yes</option>
+							<option value=0>No</option>
+						<cfelse>
+							<option value=0>No</option>
+							<option value=1>Yes</option>
+						</cfif>
 					</cfselect>
 				</td>
 			</tr>
@@ -152,8 +157,13 @@
 				<td>District Manager</td>
 				<td>
 					<cfselect name="districtManager">
-						<option value=0>No</option>
-						<option value=1>Yes</option>
+						<cfif user.isDistrictManager() IS True>
+							<option value=1>Yes</option>
+							<option value=0>No</option>
+						<cfelse>
+							<option value=0>No</option>
+							<option value=1>Yes</option>
+						</cfif>
 					</cfselect>
 				</td>
 			</tr>
@@ -166,7 +176,6 @@
 </cffunction>
 
 <cfscript>
-	writeDump(FORM);
 	if ( !structKeyExists(FORM, "userRegionID")  && !structKeyExists(FORM, "userDistrictID")  && !structKeyExists(FORM, "userHubCode") && !structKeyExists(FORM, "username")) {
 		getUserRegionID();
 	}
