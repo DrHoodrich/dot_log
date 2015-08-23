@@ -20,28 +20,28 @@ component RegionService extends = "dotlog.model.service.service"
 
 	public dotlog.model.beans.region function getRegionByName(required string regionName)
 	{
-		var region = '';
 		var searchFilter = { regionName = arguments.regionName};
-		var result = variables.instance.regionGW.filter(searchFilter);
-		if ( arrayLen(result) ) {
-			region = result[1];
-		}
-		return region;
+		return fetchRegion(searchFilter);
 	}
 
 	public dotlog.model.beans.region function getRegionByID(required numeric regionID)
 	{
-		var region = '';
 		var searchFilter = { regionID = arguments.regionID };
-		var result = variables.instance.regionGW.filter(searchFilter);
-		if ( arrayLen(result) ) {
-			region = result[1];
-		}
-		return region;
+		return fetchRegion(searchFilter);
 	}
 
 	public array function getAllRegions()
 	{
 		return variables.instance.regionGW.filter();
+	}
+
+	private dotlog.model.beans.region function fetchRegion(required struct searchFilter)
+	{
+		var region = '';
+		var result = variables.instance.regionGW.filter(arguments.searchFilter);
+		if ( arrayLen(result) ) {
+			region = result[1];
+		}
+		return region;
 	}
 }
