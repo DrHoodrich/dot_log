@@ -30,6 +30,12 @@ component RecordService extends = "dotlog.model.service.service"
 		return variables.instance.recordGW.filter(searchParam);
 	}
 
+	public array function getDailyReports(required string airportCode)
+	{
+		searchParam = { startDate = dateFormat(now(), 'yyyy-mm-dd'), endDate = dateFormat(now(), 'yyyy-mm-dd'), airportCode = arguments.airportCode };
+		return variables.instance.recordGW.filter(searchParam);
+	}
+
 	public dotlog.model.beans.record function getRecordByID(required numeric recordID)
 	{
 		var record = '';
