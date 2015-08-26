@@ -16,7 +16,7 @@ component ReportService extends = "dotlog.model.service.service"
 	public dotlog.model.beans.report function getLastReport(required string airportCode)
 	{
 		var searchFilter = { lastReport = '', airportCode = arguments.airportCode };
-		return variables.instance.reportGW.filter(searchFilter);
+		return fetchReport(searchFilter);
 	}
 
 	public dotlog.model.beans.report function getLastWeeklyReport(required string airportCode)
@@ -42,6 +42,8 @@ component ReportService extends = "dotlog.model.service.service"
 		var result = variables.instance.reportGW.filter(arguments.searchFilter);
 		if ( arrayLen(result) ) {
 			report = result[1];
+		} else {
+			throw (message = "No record found.");
 		}
 		return report;
 	}
