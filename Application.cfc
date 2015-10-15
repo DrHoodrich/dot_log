@@ -7,7 +7,10 @@ component
 	this.mappings = structNew();
 	this.mappings[ "/dotlog" ] = this.rootDir;
 	this.mappings[ "/includes" ] = (this.rootDir & "includes\");
+	
+	//Domain prefix to be removed from usernames
 	this.domain = "DOTLOGDATABASEW\";
+
 	this.systemEmailAddr = "no-reply@dotlog.ak.us.gov";
 	
 
@@ -34,22 +37,18 @@ component
 
 	function onSessionStart()
 	{
-		//try {
+		try {
+			writeDump(SESSION);
 			session.user = application.userService.getUserByUsername(removeChars(getAuthUser(), 1, len(this.domain)));
-		//} catch (any e) {
-	//		writeDump(e);
-	//		writeDump(SESSION);
-	//		throw;
-	//	}
-	}
-/*
-	function onError(required any e, required string EventName)
-	{
-		if (arguments.EventName == "onSessionStart") {
-			if (e.Type == "InvalidData") {
-				include "/dotlog/templates/error.cfm";
-			}
+		} catch (any e) {
+			writeDump(e);
+			writeDump(SESSION);
+			throw;
 		}
 	}
-*/
+
+	function onError(required any e, required string EventName)
+	{
+		//location("/dotlog/pages/error.cfm", "false")
+	}
 }

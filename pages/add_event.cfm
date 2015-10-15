@@ -1,6 +1,7 @@
 <cfset pageTitle = "Add Event">
 <cfinclude template="/dotlog/view/header.cfm">
 <cfinclude template="/dotlog/view/print_reports.cfm">
+<cfinclude template="/dotlog/view/data_formatting.cfm">
 
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
@@ -8,17 +9,16 @@
 <cfset categories = #application.categoryService.getAllCategories()# />
 
 <cfform name="recordCreation" method="post" action="record_action.cfm">
-	
 	<cfinput type="hidden" name="userID" value="#session.user.getUsername()#">
 	
 	<table>
 		<tr>
 			<td>Event Date</td>
-			<td><cfinput type="datefield" name="eventDate" message="" required="true" value="#dateformat(now(), 'dd/mm/yyyy')#"/></td>
+			<td><cfinput name="eventDate" message="" required="true" value="#printDate(now())#"/></td>
 		</tr>
 		<tr>
 			<td>Event Time</td>
-			<td><cfinput type="text" name="eventTime" required="true" message="Required time format hh:mm" validate="time" value="#timeformat(now(), 'hh:mm tt')#"/></td>
+			<td><cfinput type="text" name="eventTime" required="true" message="Required time format hh:mm" validate="time" value="#printTime(now())#"/></td>
 		</tr>
 		<tr>
 			<td>Airport</td>

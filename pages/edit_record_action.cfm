@@ -1,10 +1,11 @@
 <cfset pageTitle = "Edit Event">
 <cfinclude template="/dotlog/view/header.cfm">
+<cfinclude template="/dotlog/view/data_formatting.cfm">
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfscript>
-	airports = application.airportService.getChildAirports(session.user.getAirportCode());
-	arrayAppend(airports, application.airportService.getAirportByAirportCode(session.user.getAirportCode()));
+	airports = application.airportService.getHubAndSpokesAirports(session.user.getAirportCode());
+	
 	categories = application.categoryService.getAllCategories();
 	if ( structKeyExists(FORM, "recordID") ) {
 		record = application.recordService.getRecordByID(FORM.recordID);
@@ -22,34 +23,30 @@
 			<td>
 				<cfselect name="airportCode" required="true">
 					<cfoutput><option value="#record.getAirportCode()#">#record.getAirportCode()#</option></cfoutput>
-					<cfscript>
-						for (ii = 1; ii <= arrayLen(airports); ++ii) {
-							writeOutput('<option value=#airports[ii].getAirportCode()#>#airports[ii].getAirportCode()&' - '&airports[ii].getAirportName()#</option>');
-						}
-					</cfscript>
+					<cfloop array="#airports#" index="airport">
+						<cfoutput><option value="#airport.getAirportCode()#">#airport.getAirportCode() & "-" & airport.getAirportName()#</option></cfoutput>
+					</cfloop>
 				</cfselect>
 			</td>
 		</tr>
 		<tr>
 			<td>Category</td>
 			<td>
-				<cfselect name="categoryTitle"> 
-  					<cfscript>
-						writeOutput('<option value="#record.getCategory()#">"#record.getCategory()#"</option>');
-						for (ii = 1; ii <= arrayLen(categories); ++ii) {
-							writeOutput('<option value=#categories[ii].getCategoryTitle()#>#categories[ii].getCategoryTitle()#</option>');
-						}  
-  					</cfscript>
+				<cfselect name="categoryID"> 
+  					<cfoutput><option value="#record.getCategoryID()#">"#record.getCategoryID()#"</option></cfoutput>
+						<cfloop array="#categories#" index="category">
+							<cfoutput><option value="#category.getCategoryID()#">#category.getCategoryID()#</option></cfoutput>
+						</cfloop>
  				</cfselect>
  			</td>
 		</tr>
 		<tr>
 			<td>Event Date</td>
-			<td><cfinput type="text" name="eventDate" value="#dateformat(record.getEventTime(), 'dd/mm/yyyy')#"></cfinput></td>
+			<td><cfinput type="text" name="eventDate" value="#printDate(record.getEventTime())#"></cfinput></td>
 		</tr>
 		<tr>
 			<td>Event Time</td>
-			<cfset eventTime = #timeformat(record.getEventTime(), 'hh:mm tt')#>
+			<cfset eventTime = #printTime(record.getEventTime())#>
 			<td><cfinput type="text" name="eventTime" value="#eventTime#"></cfinput></td>
 		</tr>
 		<tr>

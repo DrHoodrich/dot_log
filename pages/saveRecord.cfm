@@ -15,7 +15,7 @@
   
   updatedRecord = new dotlog.model.beans.record(argumentCollection=FORM);
   
-  if ( application.recordService.save(updatedRecord) ) {
+  if ( application.recordService.saveRecord(updatedRecord) ) {
     writeoutput("<strong>Record Updated</strong>");
   } else {
     writeoutput("<strong>Record Updating Failed</strong>");

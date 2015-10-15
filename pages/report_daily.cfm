@@ -1,8 +1,6 @@
-<cfset pageTitle = "Daily Report"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "Daily Report"> 
 <cfinclude template="/dotlog/view/header.cfm">
-    
-<!-- BEGIN YOUR CONTENT HERE -->
-	<!-- TemplateBeginEditable name="main content" -->
+<cfinclude template="/dotlog/view/data_formatting.cfm">
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
 
 <cfset airports = #application.airportService.getSpokeAirports(session.user.getAirportCode())#/>
@@ -13,15 +11,18 @@
 
 <table>
     <cfoutput><tr><td>Last Submitted Report for:<strong> #lastReport.getAirportCode()#</strong></tr></td></cfoutput>
-    <cfoutput><tr><td>&nbsp;&nbsp;Period: #dateformat(lastReport.getBeginDate(), "yyyy-mm-dd")# to #dateformat(lastReport.getEndDate(), "yyyy-mm-dd")#</td></tr></cfoutput>
+    <cfoutput><tr><td>&nbsp;&nbsp;Period:#printDate(lastReport.getBeginDate())# to #printDate(lastReport.getEndDate())#</td></tr></cfoutput>
     <cfoutput><tr><td> &nbsp;&nbsp;Submitted by: #lastReport.getUsername()# </td><tr></cfoutput>
 </table>
 
 <br>
 
+<cfset week = StructNew() />
+<cfset week.today = printDate(fix ( now () )) />
+
 <cfform name="dailyReport" method="post" action="generateReport.cfm">
-  <cfinput type="hidden" name="startDate" value="#dateFormat(now(), 'yyyy-mm-dd')#"></cfinput>
-  <cfinput type="hidden" name="endDate" value="#dateFormat(now(), 'yyyy-mm-dd')#"></cfinput>
+  <cfinput type="hidden" name="startDate" value="#week.today#"></cfinput>
+  <cfinput type="hidden" name="endDate" value="#week.today#"></cfinput>
   <cfinput type="submit" name="viewDailyReport_button" value="View Report">
   <cfoutput> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -31,8 +32,4 @@
   </table>
 </cfform>
 
-<cfform name="dailyReport" method="post" action="stubbedGeneratePDF.cfm">
-  <cfinput type="submit" name="submitReportEmail_button" value="Preview Report PDF"> // for dev
-</cfform>
 <cfinclude template="/dotlog/includes/footer.cfm">
-

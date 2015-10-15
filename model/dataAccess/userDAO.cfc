@@ -62,7 +62,6 @@ component UserDAO extends = "dotlog.model.dataAccess.DAO"
 		var queryHandler = new query();
 
 		queryHandler.setName(arguments.queryName);
-
 		queryHandler.addParam(name = "username", value = arguments.user.getUsername(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "firstName", value = arguments.user.getFirstName(), cfsqltype = "cf_sql_varchar");
 		queryHandler.addParam(name = "lastName", value = arguments.user.getLastName(), cfsqltype = "cf_sql_varchar");

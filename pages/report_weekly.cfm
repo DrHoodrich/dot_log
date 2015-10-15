@@ -1,49 +1,38 @@
-<cfset pageTitle = "DOTLog Reporting"> <!--- Variable that is used in the html included header --->
+<cfset pageTitle = "DOTLog Reporting"> 
 <cfinclude template="/dotlog/view/header.cfm">
-<!-- BEGIN YOUR CONTENT HERE -->
-	<!-- TemplateBeginEditable name="main content" -->
+<cfinclude template="/dotlog/view/print_reports.cfm">
+
 <cfoutput><h2>#pageTitle#</h2></cfoutput>
-<cfscript>
-    airports = application.airportService.getSpokeAirports(session.user.getAirportCode());
-    categories = application.categoryService.getAllCategories();
-    reports = application.reportService.getHubReports(session.user.getAirportCode());    
-    lastReport = application.reportService.getLastReport(session.user.getAirportCode());
-    lastReportedDate = lastReport.getEndDate();
 
-    writeOutput("<strong>NOT WORKING</strong>");
-    writeOutput('<table width="300" height="180" border="1">');
-        writeOutput('<tr> <td width="117" height="50" align="left" valign="top"> 
-          Reported dates #dateformat(reports[1].getBeginDate(), "yyyy-mm-dd")# - #dateformat(reports[1].getEndDate(), "yyyy-mm-dd")#<br>');
-        writeOutput(' Submitted by User: #reports[1].getUsername()# <br>Airport: #reports[1].getAirportCode()# <br>');
-        writeOutput('</td>');
-    writeOutput('</table>');
+<cfset airports = #application.airportService.getSpokeAirports(session.user.getAirportCode())#/>
+<cfset categories = #application.categoryService.getAllCategories()#/>
+<cfset reports = #application.reportService.getHubReports(session.user.getAirportCode())#/>
+<cfset lastReport = #application.reportService.getLastWeeklyReport(session.user.getAirportCode())#/>
+<cfset lastReportedDate = #lastReport.getEndDate()#/>
 
-
-</cfscript>
+<table>
+    <cfoutput><tr><td>Last Submitted Report for:<strong> #lastReport.getAirportCode()#</strong></tr></td></cfoutput>
+    <cfoutput><tr><td>&nbsp;&nbsp;Period: #printDate(lastReport.getBeginDate())# to #printDate(lastReport.getEndDate())#</td></tr></cfoutput>
+    <cfoutput><tr><td> &nbsp;&nbsp;Submitted by: #lastReport.getUsername()# </td><tr></cfoutput>
+</table>
 
 <br>
 
+<cfset week = StructNew() />
+<cfset week.today = (fix ( now () )) />
+<cfset week.start = printDate(week.today - DayOfWeek(week.today) + 1) />
+<cfset week.end = printDate( week.start + 6) />
 
 <cfform name="weeklyReport" method="post" action="generateReport.cfm">
-  <cfinput type="hidden" name="startDate" value="#dateFormat(now()-7, 'yyyy-mm-dd')#"></cfinput>
-  <cfinput type="hidden" name="endDate" value="#dateFormat(now(), 'yyyy-mm-dd')#"></cfinput>
-<cfscript>
-  
-
-</cfscript>
-<cfinclude template="/dotlog/view/print_reports.cfm">
-
-
-
-
-<cfinput type="submit" name="submitWeeklyReport_button" value="Email Report"><br>
-<cfinput type="submit" name="viewWeeklyReport_button" value="View Report"><br>
-
+  <cfinput type="hidden" name="startDate" value="#week.start#"></cfinput>
+  <cfinput type="hidden" name="endDate" value="#week.end#"></cfinput>
+  <cfinput type="submit" name="viewWeeklyReport_button" value="View Report">
+  <cfoutput> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </cfoutput>
+  <cfinput type="submit" name="submitWeeklyReport_button" value="Submit Weekly Report"> <br>
+  </table>
 </cfform>
 
-<!---
-<cfform name="weeklyReport" method="post" action="stubbedGeneratePDF.cfm">
-  <cfinput type="submit" name="submitReportEmail_button" value="Preview Report PDF"> 
-</cfform>
---->
 <cfinclude template="/dotlog/includes/footer.cfm">
